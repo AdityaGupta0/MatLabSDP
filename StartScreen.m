@@ -13,8 +13,13 @@ drawScene(startScreen,startScreenArray)
 %clicked
 
 levelSelectScene = simpleGameEngine('Level_select_sprite_sheet.png',512,512,0.5);
-levelselectArray = [1,5,6,1,1;1,7,8,9,1;1,10,11,12,1;1,2,3,4,1;1,1,1,1,1];
-if b == 1 && (512<c<1024) && (512<r<1024)
+levelselectArray = [1,5,6,1,1;
+                    1,7,8,9,1;
+                    1,10,11,12,1;
+                    1,2,3,4,1;
+                    1,1,1,1,1];
+
+if b == 1 && (c==2) && (r==2)
     drawScene(levelSelectScene,levelselectArray)
 end
 
@@ -42,6 +47,7 @@ level1SceneArray = [58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,57,58,58;
 level1SceneArray = level1SceneArray+1;
 
 [r,c,b] = getMouseInput(levelSelectScene);
-if b == 1
+
+if b == 1 && (c==2) && (r==2)
     drawScene(level1Scene,level1SceneArray)
 end
