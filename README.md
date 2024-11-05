@@ -11,3 +11,4 @@ also credit to these guys for very good sprite sheet maker https://www.finalpars
 #matlab is an esoteric language
 there is said it.
 reading rust as a complete newbie was easier than trying to read objective matlab code. I hope mathworks feels bad about their descisions.
+kffhfjhf
