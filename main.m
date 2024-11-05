@@ -10,14 +10,10 @@ while true
     drawScene(screen,levelSelectScreen.levelSelectSceneArray);
     [r,c,b] = getMouseInput(screen);
     level = levelSelectScreen.getSelectedLevel(r,c,b);
-    display(level);
-    
-    while repeat 
-        levelScreen = levelScreen();
-        
 
-    end
-    pause(1);
+    levelScreen = levelScreen(level);
+    drawScene(screen,getLevelScreenBGArray(levelScreen),getLevelScreenArray(levelScreen),getEditorWindowArray(levelScreen));
+    pause(100);
 end
 
 
