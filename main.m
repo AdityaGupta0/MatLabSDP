@@ -13,7 +13,12 @@ while true
 
     levelScreen = levelScreen(level);
     drawScene(screen,getLevelScreenBGArray(levelScreen),getLevelScreenArray(levelScreen),getEditorWindowArray(levelScreen));
-    pause(100);
+    while repeat
+        [r,c,b] = getMouseInput(screen);
+        repeat = getRepeat(levelScreen,r,c,b);
+        pause(1);
+    end
+    pause(1);
 end
 
 
