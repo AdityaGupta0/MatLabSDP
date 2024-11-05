@@ -1,12 +1,12 @@
-classdef levelScreen
+classdef levelScreen < handle
     properties
         level;
-        levelScreenBGArray = [];
-        level1ScreenArray = [];
-        level2ScreenArray = [];
-        level3ScreenArray = [];
-        level4ScreenArray = [];
-        editorWindowArray = [];
+        levelScreenBGArray;
+        level1ScreenArray;
+        level2ScreenArray;
+        level3ScreenArray;
+        level4ScreenArray;
+        editorWindowArray;
 
         %levelScreenArrays = {level1ScreenArray};
     end
@@ -73,10 +73,11 @@ classdef levelScreen
             array = obj.editorWindowArray;
         end
 
-        function boolean = getRepeat(obj,r,c,b)
-            temp = true;
+        function eventNum = getClickEvent(obj,r,c,b)
+            temp = 0;
             if b==1
                 if (r>11) && (c<7) %if moust is clicked in the block select window
+                    temp =1;
                     if (r==12) && (c==2) %inbox
                         fprintf('inbox\n')
                     elseif (r==12) && (c==4) %outbox
@@ -92,16 +93,25 @@ classdef levelScreen
                     elseif (r==14) && (c==4) %copyto
                         fprintf('copyto\n')
                     elseif (r==15) && (c==2) %jump if zero
+                        temp=2;
                         fprintf('jump if zero\n')
+                        obj.levelScreenBGArray(12,6) = 92;
+                        obj.levelScreenBGArray(12,7) = 93;
                     elseif (r==15) && (c==4) %jump if negative
+                        temp=2;
                         fprintf('jump if negative\n')
+                        obj.levelScreenBGArray(12,6) = 92;
+                        obj.levelScreenBGArray(12,7) = 93;
                     elseif (r==15) && (c==6) %jump
+                        temp=2;
                         fprintf('jump\n')
+                        obj.levelScreenBGArray(12,6) = 92;
+                        obj.levelScreenBGArray(12,7) = 93;
                     end
                 elseif (r==1)
                     if (c==1) %quit button
                         fprintf('quit\n')
-                        temp = false;
+                        temp = -1;
                     elseif c==9 %run button
                         fprintf('run\n')
                     elseif c==10 %pause button
@@ -114,7 +124,7 @@ classdef levelScreen
                     fprintf('line %d\n',r-1)
                 end
             end
-            boolean = temp;
+            eventNum = temp;
         end
     end
 end

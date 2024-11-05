@@ -7,6 +7,7 @@ getMouseInput(screen);
 levelSelectScreen = levelSelectScreen();
 
 while true
+    repeat = true;
     drawScene(screen,levelSelectScreen.levelSelectSceneArray);
     [r,c,b] = getMouseInput(screen);
     level = levelSelectScreen.getSelectedLevel(r,c,b);
@@ -15,7 +16,11 @@ while true
     drawScene(screen,getLevelScreenBGArray(levelScreen),getLevelScreenArray(levelScreen),getEditorWindowArray(levelScreen));
     while repeat
         [r,c,b] = getMouseInput(screen);
-        repeat = getRepeat(levelScreen,r,c,b);
+        eventNum = getClickEvent(levelScreen,r,c,b);
+        if eventNum == -1
+            repeat = false;
+        end
+        drawScene(screen,getLevelScreenBGArray(levelScreen),getLevelScreenArray(levelScreen),getEditorWindowArray(levelScreen));
         pause(1);
     end
     pause(1);
