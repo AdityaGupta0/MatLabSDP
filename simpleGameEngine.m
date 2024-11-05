@@ -88,7 +88,7 @@ classdef simpleGameEngine < handle
             end
         end
         
-        function drawScene(obj, background_sprites, foreground_sprites)
+        function drawScene(obj, background_sprites, foreground_sprites, overlay_sprites)
             % draw_scene 
             % Input: 
             %  1. an SGE scene, which gains focus
@@ -104,6 +104,11 @@ classdef simpleGameEngine < handle
             if nargin > 2
                 if ~isequal(scene_size, size(foreground_sprites))
                     error('Background and foreground matrices of scene must be the same size.')
+                end
+            end
+            if nargin > 3
+                if ~isequal(scene_size, size(overlay_sprites))
+                    error('Background and overlay_sprites matrices of scene must be the same size.')
                 end
             end
             
@@ -124,6 +129,9 @@ classdef simpleGameEngine < handle
                     if nargin > 2
                         fg_sprite_id = foreground_sprites(tile_row,tile_col);
                     end
+                    if nargin > 3
+                        ov_sprite_id = overlay_sprites(tile_row,tile_col);
+                    end
                     
                     % Build the tile layer by layer, starting with the
                     % background color
@@ -143,7 +151,10 @@ classdef simpleGameEngine < handle
                         tile_data = obj.sprites{fg_sprite_id} .* (obj.sprites_transparency{fg_sprite_id}/255) + ...
                             tile_data .* ((255-obj.sprites_transparency{fg_sprite_id})/255);
                     end
-                    
+                    if nargin > 3
+                        tile_data = obj.sprites{ov_sprite_id} .* (obj.sprites_transparency{ov_sprite_id}/255) + ...
+                            tile_data .* ((255-obj.sprites_transparency{ov_sprite_id})/255);
+                    end
                     % Calculate the pixel location of the top-left corner
                     % of the tile
                     rmin = obj.sprite_height*(tile_row-1);
@@ -215,7 +226,7 @@ classdef simpleGameEngine < handle
             %  2. The column of the tile clicked by the user
             %  3. (Optional) the button of the mouse used to click (1,2, or 3 for left, middle, and right, respectively)
             % 
-            % Notes: A set of “crosshairs” appear in the scene’s figure,
+            % Notes: A set of ï¿½crosshairsï¿½ appear in the sceneï¿½s figure,
             % and the program will pause until the user clicks on the
             % figure. It is possible to click outside the area of the
             % scene, in which case, the closest row and/or column is

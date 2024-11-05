@@ -1,23 +1,22 @@
 classdef levelScreen
     properties
-        levelScene;
+        level;
         levelScreenBGArray;
         level1ScreenArray = [];
         level2ScreenArray = [];
+        level3ScreenArray = [];
+        level4ScreenArray = [];
 
         levelScreenArrays = {level1ScreenArray,level2ScreenArray};
     end
     methods
-        function obj = levelScreen(obj)
-            obj.levelScene = obj;
-            
+        function obj = levelScreen(level)
+            obj.levelScene = level;
         end
-        function int = launchLevelScreen(level)
-            drawScene(levelScreen,levelScreenBGArray,levelScreenArrays(level));
-            [r,c,b] = getMouseInput(levelScreen);
-            if b == 1 && (c==2) && (r==2)
-                int = 1;
-            end
+        function levelScreenBGArray = getLevelScreenBGArray(level)
+        end
+        function array = getLevelScreenArray()
+            array = levelScreenArrays{level};
         end
     end
 end

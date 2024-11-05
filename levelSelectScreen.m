@@ -6,7 +6,7 @@ classdef levelSelectScreen
         function obj = levelSelectScreen()
             obj.levelSelectSceneArray = [1,94,95,1;           
                                          1,96,97,1;
-                                         1,98,98,1;
+                                         1,98,99,1;
                                          1,1,1,1];
         end
         function levelSelectSceneArray = getLevelSelectSceneArray()
