@@ -4,7 +4,10 @@ We are creating a game similar to human resource machine involving block program
 Matlab is an awful language and is even worse to design a game in. TBH jack from nand2tetris is a waaay better lanugage. 
 Anyways the sprites can be found here: 
 https://www.canva.com/design/DAGVXqKxyyQ/q8IMV6As2FK19xdHYbvZHg/edit?utm_content=DAGVXqKxyyQ&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
-its crazy that mathworks can make people pay for a crappy IDE and language
+its crazy that mathworks can make people pay for a crappy IDE and language.
+also credit to these guys for very good sprite sheet maker https://www.finalparsec.com/tools/sprite_sheet_maker
 
-##matlab is an esoteric language
+
+#matlab is an esoteric language
+there is said it.
 reading rust as a complete newbie was easier than trying to read objective matlab code. I hope mathworks feels bad about their descisions.
