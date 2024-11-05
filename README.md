@@ -8,7 +8,6 @@ its crazy that mathworks can make people pay for a crappy IDE and language.
 also credit to these guys for very good sprite sheet maker https://www.finalparsec.com/tools/sprite_sheet_maker
 
 
-#matlab is an esoteric language
+## matlab is an esoteric language
 there is said it.
 reading rust as a complete newbie was easier than trying to read objective matlab code. I hope mathworks feels bad about their descisions.
-kffhfjhf

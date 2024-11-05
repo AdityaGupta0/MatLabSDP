@@ -1,6 +1,7 @@
 classdef levelScreen < handle
     properties
         level;
+        screen;
         levelScreenBGArray;
         level1ScreenArray;
         level2ScreenArray;
@@ -11,9 +12,9 @@ classdef levelScreen < handle
         %levelScreenArrays = {level1ScreenArray};
     end
     methods
-        function obj = levelScreen(level)
+        function obj = levelScreen(level,screen)
             obj.level = level;
-
+            obj.screen = screen;
             obj.level1ScreenArray = [101,101,101,101,101,101,101,101,101,101,101;
                             101,101,101,101,101,101,101,101,101,101,101;
                             101,20,101,101,101,101,101,101,101,101,101;
@@ -72,11 +73,19 @@ classdef levelScreen < handle
         function array = getEditorWindowArray(obj)
             array = obj.editorWindowArray;
         end
-
+        function setLevelScreenArray(obj,array)
+            obj.level1ScreenArray = array;
+        end
+        function setEditorWindowArray(obj,array)
+            obj.editorWindowArray = array;
+        end
+        function setLevelScreenBGArray(obj,array)
+            obj.levelScreenBGArray = array;
+        end
         function eventNum = getClickEvent(obj,r,c,b)
             temp = 0;
             if b==1
-                if (r>11) && (c<7) %if moust is clicked in the block select window
+                if (r>11) && (c<7) %if mouse is clicked in the block select window
                     temp =1;
                     if (r==12) && (c==2) %inbox
                         fprintf('inbox\n')
@@ -97,6 +106,7 @@ classdef levelScreen < handle
                         fprintf('jump if zero\n')
                         obj.levelScreenBGArray(12,6) = 92;
                         obj.levelScreenBGArray(12,7) = 93;
+                        linenum1 = getKeyboardInput(obj.screen);
                     elseif (r==15) && (c==4) %jump if negative
                         temp=2;
                         fprintf('jump if negative\n')
