@@ -43,8 +43,8 @@ classdef levelScreen < handle
                                     1,72,1,72,1,72,1,71,1,1,1;
                                     1,1,1,1,1,1,1,71,1,1,1;
                                     69,69,69,69,69,69,69,71,1,1,1;
-                                    1,57,1,58,1,1,1,70,1,1,1;
-                                    1,59,1,60,1,83,1,70,1,1,1;
+                                    1,57,1,58,1,83,1,70,1,1,1;
+                                    1,59,1,60,1,1,1,70,1,1,1;
                                     1,61,1,62,1,1,1,70,1,1,1;
                                     1,63,1,64,1,65,1,70,1,1,1];
             obj.editorWindowArray = [101,101,101,101,101,101,101,101,101,101,101;
@@ -102,7 +102,7 @@ classdef levelScreen < handle
                         fprintf('add\n')
                     elseif (r==13) && (c==4) %sub
                         fprintf('sub\n')
-                    elseif (r==13) && (c==6) %backspace
+                    elseif (r==12) && (c==6) %backspace
                         fprintf('backspace\n')
                         removeBlock(blockhandle);
                     elseif (r==14) && (c==2) %copyfrom

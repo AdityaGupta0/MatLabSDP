@@ -21,9 +21,7 @@ while true
             repeat = false;
         end
         drawScene(screen,getLevelScreenBGArray(levelScreen),getLevelScreenArray(levelScreen),getEditorWindowArray(levelScreen));
-        pause(1);
     end
-    pause(1);
 end
 
 

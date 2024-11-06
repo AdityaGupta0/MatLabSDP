@@ -23,7 +23,9 @@ classdef blockHandler < handle
             obj.editorArray((obj.linePointer),9) = 101;
             obj.levelArray((obj.linePointer),10) = 101;
             obj.editorArray((obj.linePointer),10) = 101;
-            obj.linePointer = obj.linePointer - 1;
+            if obj.linePointer>1 %makes sure the line pointer doesn't go below 1
+                obj.linePointer = obj.linePointer - 1;
+            end
         end
     end
 end
