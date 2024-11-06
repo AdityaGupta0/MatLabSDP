@@ -104,9 +104,8 @@ classdef levelScreen < handle
                     elseif (r==15) && (c==2) %jump if zero
                         temp=2;
                         fprintf('jump if zero\n')
-                        obj.levelScreenBGArray(12,6) = 92;
-                        obj.levelScreenBGArray(12,7) = 93;
-                        linenum1 = getKeyboardInput(obj.screen);
+                        jumphandle=jumpHandler(obj.screen,obj.levelScreenBGArray,obj.level1ScreenArray,obj.editorWindowArray);
+                        fprintf('line %d\n',getLineNum(jumphandle))
                     elseif (r==15) && (c==4) %jump if negative
                         temp=2;
                         fprintf('jump if negative\n')

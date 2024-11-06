@@ -20,8 +20,6 @@ while true
         eventNum = getClickEvent(levelScreen,r,c,b);
         if eventNum == -1 %quit condition
             repeat = false;
-        elseif eventNum == 2 %jump condition
-            drawScene(screen,getLevelScreenBGArray(levelScreen),getLevelScreenArray(levelScreen),getEditorWindowArray(levelScreen));
         end
         drawScene(screen,getLevelScreenBGArray(levelScreen),getLevelScreenArray(levelScreen),getEditorWindowArray(levelScreen));
         pause(1);
