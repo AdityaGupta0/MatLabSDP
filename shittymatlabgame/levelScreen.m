@@ -91,11 +91,11 @@ classdef levelScreen < handle
             temp = 0;
             if b==1
                 if (r>11) && (c<7) %if mouse is clicked in the block select window
-                    blockAdd = blockAdder(obj.level1ScreenArray,obj.editorWindowArray,obj.nextLine);
+                    blockhandle = blockHandler(obj.level1ScreenArray,obj.editorWindowArray,obj.nextLine);
                     temp =1;
                     if (r==12) && (c==2) %inbox
                         fprintf('inbox\n')
-                        blockAdd.addBlock(57);
+                        addBlock(blockhandle,57);
                     elseif (r==12) && (c==4) %outbox
                         fprintf('outbox\n')
                     elseif (r==13) && (c==2) %add
@@ -104,6 +104,7 @@ classdef levelScreen < handle
                         fprintf('sub\n')
                     elseif (r==13) && (c==6) %backspace
                         fprintf('backspace\n')
+                        removeBlock(blockhandle);
                     elseif (r==14) && (c==2) %copyfrom
                         fprintf('copyfrom\n')
                     elseif (r==14) && (c==4) %copyto
@@ -123,9 +124,9 @@ classdef levelScreen < handle
                         jumphandle=jumpHandler(obj.screen,obj.levelScreenBGArray,obj.level1ScreenArray,obj.editorWindowArray);
                         fprintf('line %d\n',getLineNum(jumphandle))
                     end
-                    obj.editorWindowArray = blockAdd.editorArray;
-                    obj.nextLine = blockAdd.nextLine;
-                    obj.level1ScreenArray = blockAdd.levelArray;
+                    obj.editorWindowArray = blockhandle.editorArray;
+                    obj.nextLine = blockhandle.nextLine;
+                    obj.level1ScreenArray = blockhandle.levelArray;
                 elseif (r==1)
                     if (c==1) %quit button
                         fprintf('quit\n')
