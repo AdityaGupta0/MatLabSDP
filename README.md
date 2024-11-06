@@ -14,3 +14,6 @@ reading rust as a complete newbie was easier than trying to read objective matla
 
 o yeah theres a blackjack thingy too now.  
 # we be point maxxing.
+
+
+## this program is paywalled bc you need a matlab lisence lmfao
