@@ -3,19 +3,30 @@ classdef blockHandler < handle
         levelArray;
         editorArray;
         linePointer;
+        blockMap;
+        registerMap;
     end
     methods
         function obj = blockHandler(levelArray,editorArray,linePointer)
             obj.levelArray = levelArray;
             obj.editorArray = editorArray;
             obj.linePointer = linePointer;
+            blockIDs = {'inbox','outbox','add','sub','copyfrom','copyto','jump if zero','jump if negative','jump','bump+','bump-'};
+            blockValues = {[57],[58],[59,68],[60,68],[61,67],[62,67],[63,66],[64,66],[65,66],[102,104],[103,104]};
+            obj.blockMap = containers.Map(blockIDs,blockValues); %hashmap for block values
         end
 
-        function addBlock(obj,blockID,destbockID,destValID)
-            obj.editorArray((obj.linePointer+1),9) = blockID;
+        function addBlock(obj,blockID,destVal)
+            temp = obj.blockMap(blockID);
+            obj.editorArray((obj.linePointer+1),9) = temp(1);
             if nargin>2
-                obj.levelArray((obj.linePointer+1),10) = destbockID;
-                obj.editorArray((obj.linePointer+1),10) = destValID;
+                obj.levelArray((obj.linePointer+1),10) = temp(2); 
+                if destVal<0
+                    destVal = (-destVal)+1; %converts register adress to name
+                else 
+                    destVal = destVal+6; %converts to line destination number
+                end
+                obj.editorArray((obj.linePointer+1),10) = destVal;
             end
             obj.linePointer = obj.linePointer + 1;
         end

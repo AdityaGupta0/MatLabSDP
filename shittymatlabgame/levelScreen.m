@@ -92,10 +92,11 @@ classdef levelScreen < handle
             if b==1
                 if (r>11) && (c<7) %if mouse is clicked in the block select window
                     blockhandle = blockHandler(obj.level1ScreenArray,obj.editorWindowArray,obj.linePointer);
+                    destHandle = destHandler(obj.screen,obj.levelScreenBGArray,obj.level1ScreenArray,obj.editorWindowArray);
                     temp =1;
                     if (r==12) && (c==2) %inbox
                         fprintf('inbox\n')
-                        addBlock(blockhandle,57);
+                        addBlock(blockhandle,'inbox');
                     elseif (r==12) && (c==4) %outbox
                         fprintf('outbox\n')
                     elseif (r==13) && (c==2) %add
@@ -112,17 +113,15 @@ classdef levelScreen < handle
                     elseif (r==15) && (c==2) %jump if zero
                         temp=2;
                         fprintf('jump if zero\n')
-                        jumphandle=jumpHandler(obj.screen,obj.levelScreenBGArray,obj.level1ScreenArray,obj.editorWindowArray);
-                        fprintf('line %d\n',getLineNum(jumphandle))
+                        destHandle.getJumpDest();
                     elseif (r==15) && (c==4) %jump if negative
                         temp=2;
-                        jumphandle=jumpHandler(obj.screen,obj.levelScreenBGArray,obj.level1ScreenArray,obj.editorWindowArray);
-                        fprintf('line %d\n',getLineNum(jumphandle))
+                        fprintf('jump if negative\n')
+                        
                     elseif (r==15) && (c==6) %jump
                         temp=2;
                         fprintf('jump\n')
-                        jumphandle=jumpHandler(obj.screen,obj.levelScreenBGArray,obj.level1ScreenArray,obj.editorWindowArray);
-                        fprintf('line %d\n',getLineNum(jumphandle))
+                        
                     end
                     obj.editorWindowArray = blockhandle.editorArray;
                     obj.linePointer = blockhandle.linePointer;

@@ -1,0 +1,45 @@
+classdef destHandler < handle
+    properties 
+        screen;
+        BGArray;
+        FGArray;
+        OVArray;
+    end
+    methods
+        function obj = destHandler(screen,bgarray,fgarray,ovarray)
+            obj.screen = screen;
+            obj.BGArray = bgarray;
+            obj.FGArray = fgarray;
+            obj.OVArray = ovarray;
+        end
+        function lineNumber = getJumpDest(obj)
+            obj.BGArray(12,6) = 92;
+            obj.BGArray(12,7) = 93;
+            drawScene(obj.screen,obj.BGArray,obj.FGArray,obj.OVArray); %draws the scene with the input prompt
+            lineNum1 = str2double(getKeyboardInput(obj.screen)); %poopypants
+            lineNum2 = str2double(getKeyboardInput(obj.screen)); 
+            lineNum = lineNum1*10+lineNum2;
+            if lineNum<0 || lineNum>15 %validates that the line number is within the bounds of the lines
+                lineNum = 1;
+            end
+            obj.BGArray(12,6) = 1;
+            obj.BGArray(12,7) = 1;
+            drawScene(obj.screen,obj.BGArray,obj.FGArray,obj.OVArray); %redraws the scene without the input prompt
+            lineNumber = lineNum; %returns the line number 
+        end
+        function registerNumber = getRegisterDest(obj)
+            obj.BGArray(12,6) = 90;
+            obj.BGArray(12,7) = 91;
+            drawScene(obj.screen,obj.BGArray,obj.FGArray,obj.OVArray); %draws the scene with the input prompt
+            registerNum = str2double(getKeyboardInput(obj.screen)); 
+            registerNum = -registerNum;
+            if registerNum<0 || registerNum>9 %validates that the register number is within the bounds of the registers
+                registerNum = -1;
+            end
+            obj.BGArray(12,6) = 1;
+            obj.BGArray(12,7) = 1;
+            drawScene(obj.screen,obj.BGArray,obj.FGArray,obj.OVArray); %redraws the scene without the input prompt
+            registerNumber = registerNum; %returns the register number
+        end
+    end
+end

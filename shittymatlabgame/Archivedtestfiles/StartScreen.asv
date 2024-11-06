@@ -54,9 +54,4 @@ title('Level 1 challenge')
 %The only part i found challenging is dealing with large arrays to get the
 %desired scene and resolution. I already have these scenes functioning in
 %my game with more complex user input but that uses objective code so I 
-% wouldnt get points as the input handling is done in seperate classes. I
-% think i will discuss with my group about how we want to use the
-% title/annotation functions as an aspect of the game as right now we relly
-% heavily on sprites for conveying information. We could use the title for
-% either static or dynamic informaiton but thats up for debate. 
-
+% wouldnt get points as the input handling is done in seperat
