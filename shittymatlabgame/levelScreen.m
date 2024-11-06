@@ -8,6 +8,7 @@ classdef levelScreen < handle
         level3ScreenArray;
         level4ScreenArray;
         editorWindowArray;
+        nextLine;
 
         %levelScreenArrays = {level1ScreenArray};
     end
@@ -15,6 +16,7 @@ classdef levelScreen < handle
         function obj = levelScreen(level,screen)
             obj.level = level;
             obj.screen = screen;
+            obj.nextLine = 1;
             obj.level1ScreenArray = [101,101,101,101,101,101,101,101,101,101,101;
                             101,101,101,101,101,101,101,101,101,101,101;
                             101,20,101,101,101,101,101,101,101,101,101;
@@ -82,13 +84,18 @@ classdef levelScreen < handle
         function setLevelScreenBGArray(obj,array)
             obj.levelScreenBGArray = array;
         end
+        function setNextLine(obj,line)
+            obj.nextLine = line;
+        end
         function eventNum = getClickEvent(obj,r,c,b)
             temp = 0;
             if b==1
                 if (r>11) && (c<7) %if mouse is clicked in the block select window
+                    blockAdd = blockAdder(obj.level1ScreenArray,obj.editorWindowArray,obj.nextLine);
                     temp =1;
                     if (r==12) && (c==2) %inbox
                         fprintf('inbox\n')
+                        blockAdd.addBlock(57);
                     elseif (r==12) && (c==4) %outbox
                         fprintf('outbox\n')
                     elseif (r==13) && (c==2) %add
@@ -108,15 +115,17 @@ classdef levelScreen < handle
                         fprintf('line %d\n',getLineNum(jumphandle))
                     elseif (r==15) && (c==4) %jump if negative
                         temp=2;
-                        fprintf('jump if negative\n')
-                        obj.levelScreenBGArray(12,6) = 92;
-                        obj.levelScreenBGArray(12,7) = 93;
+                        jumphandle=jumpHandler(obj.screen,obj.levelScreenBGArray,obj.level1ScreenArray,obj.editorWindowArray);
+                        fprintf('line %d\n',getLineNum(jumphandle))
                     elseif (r==15) && (c==6) %jump
                         temp=2;
                         fprintf('jump\n')
-                        obj.levelScreenBGArray(12,6) = 92;
-                        obj.levelScreenBGArray(12,7) = 93;
+                        jumphandle=jumpHandler(obj.screen,obj.levelScreenBGArray,obj.level1ScreenArray,obj.editorWindowArray);
+                        fprintf('line %d\n',getLineNum(jumphandle))
                     end
+                    obj.editorWindowArray = blockAdd.editorArray;
+                    obj.nextLine = blockAdd.nextLine;
+                    obj.level1ScreenArray = blockAdd.levelArray;
                 elseif (r==1)
                     if (c==1) %quit button
                         fprintf('quit\n')
