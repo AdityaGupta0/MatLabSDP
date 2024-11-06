@@ -8,7 +8,7 @@ classdef levelScreen < handle
         level3ScreenArray;
         level4ScreenArray;
         editorWindowArray;
-        nextLine;
+        linePointer;
 
         %levelScreenArrays = {level1ScreenArray};
     end
@@ -16,7 +16,7 @@ classdef levelScreen < handle
         function obj = levelScreen(level,screen)
             obj.level = level;
             obj.screen = screen;
-            obj.nextLine = 1;
+            obj.linePointer = 1;
             obj.level1ScreenArray = [101,101,101,101,101,101,101,101,101,101,101;
                             101,101,101,101,101,101,101,101,101,101,101;
                             101,20,101,101,101,101,101,101,101,101,101;
@@ -85,13 +85,13 @@ classdef levelScreen < handle
             obj.levelScreenBGArray = array;
         end
         function setNextLine(obj,line)
-            obj.nextLine = line;
+            obj.linePointer = line;
         end
         function eventNum = getClickEvent(obj,r,c,b)
             temp = 0;
             if b==1
                 if (r>11) && (c<7) %if mouse is clicked in the block select window
-                    blockhandle = blockHandler(obj.level1ScreenArray,obj.editorWindowArray,obj.nextLine);
+                    blockhandle = blockHandler(obj.level1ScreenArray,obj.editorWindowArray,obj.linePointer);
                     temp =1;
                     if (r==12) && (c==2) %inbox
                         fprintf('inbox\n')
@@ -125,7 +125,7 @@ classdef levelScreen < handle
                         fprintf('line %d\n',getLineNum(jumphandle))
                     end
                     obj.editorWindowArray = blockhandle.editorArray;
-                    obj.nextLine = blockhandle.nextLine;
+                    obj.linePointer = blockhandle.linePointer;
                     obj.level1ScreenArray = blockhandle.levelArray;
                 elseif (r==1)
                     if (c==1) %quit button

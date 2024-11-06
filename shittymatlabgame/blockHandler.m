@@ -2,28 +2,28 @@ classdef blockHandler < handle
     properties
         levelArray;
         editorArray;
-        nextLine;
+        linePointer;
     end
     methods
-        function obj = blockHandler(levelArray,editorArray,nextLine)
+        function obj = blockHandler(levelArray,editorArray,linePointer)
             obj.levelArray = levelArray;
             obj.editorArray = editorArray;
-            obj.nextLine = nextLine;
+            obj.linePointer = linePointer;
         end
 
         function addBlock(obj,blockID,destbockID,destValID)
-            obj.editorArray((obj.nextLine+1),9) = blockID;
+            obj.editorArray((obj.linePointer+1),9) = blockID;
             if nargin>2
-                obj.levelArray((obj.nextLine+1),10) = destbockID;
-                obj.editorArray((obj.nextLine+1),10) = destValID;
+                obj.levelArray((obj.linePointer+1),10) = destbockID;
+                obj.editorArray((obj.linePointer+1),10) = destValID;
             end
-            obj.nextLine = obj.nextLine + 1;
+            obj.linePointer = obj.linePointer + 1;
         end
         function removeBlock(obj)
-            obj.editorArray((obj.nextLine+1),9) = 101;
-            obj.levelArray((obj.nextLine+1),10) = 101;
-            obj.editorArray((obj.nextLine+1),10) = 101;
-            obj.nextLine = obj.nextLine - 1;
+            obj.editorArray((obj.linePointer),9) = 101;
+            obj.levelArray((obj.linePointer),10) = 101;
+            obj.editorArray((obj.linePointer),10) = 101;
+            obj.linePointer = obj.linePointer - 1;
         end
     end
 end
