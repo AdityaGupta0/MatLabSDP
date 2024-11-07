@@ -32,10 +32,10 @@ classdef destHandler < handle
             obj.BGArray(1,5) = 91;
             drawScene(obj.screen,obj.BGArray,obj.FGArray,obj.OVArray); %draws the scene with the input prompt
             registerNum = str2double(getKeyboardInput(obj.screen)); 
-            registerNum = -registerNum;
-            if registerNum<0 || registerNum>9 %validates that the register number is within the bounds of the registers
-                registerNum = -1;
+            if registerNum<1 || registerNum>4 %validates that the register number is within the bounds of the registers
+                registerNum = 1;
             end
+            registerNum = -registerNum; %negates the register number to indicate that it is a register
             obj.BGArray(1,4) = 1;
             obj.BGArray(1,5) = 1;
             drawScene(obj.screen,obj.BGArray,obj.FGArray,obj.OVArray); %redraws the scene without the input prompt

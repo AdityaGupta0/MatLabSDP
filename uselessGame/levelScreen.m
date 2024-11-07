@@ -44,9 +44,9 @@ classdef levelScreen < handle
                                     1,1,1,1,1,1,1,71,1,1,1;
                                     69,69,69,69,69,69,69,71,1,1,1;
                                     1,57,1,58,1,83,1,70,1,1,1;
-                                    1,59,1,60,1,1,1,70,1,1,1;
-                                    1,61,1,62,1,1,1,70,1,1,1;
-                                    1,63,1,64,1,65,1,70,1,1,1];
+                                    1,59,1,60,1,102,1,70,1,1,1;
+                                    1,61,1,62,1,103,1,70,1,1,1;
+                                    1,63,1,64,1,65,1,70,1,1,1]; 
             obj.editorWindowArray = [101,101,101,101,101,101,101,101,101,101,101;
                                         101,101,101,101,101,101,101,7,101,101,101;
                                         101,101,101,101,101,101,101,8,101,101,101;
@@ -99,28 +99,40 @@ classdef levelScreen < handle
                         addBlock(blockhandle,'inbox');
                     elseif (r==12) && (c==4) %outbox
                         fprintf('outbox\n')
+                        addBlock(blockhandle,'outbox');
                     elseif (r==13) && (c==2) %add
                         fprintf('add\n')
+                        addBlock(blockhandle,'add',destHandle.getRegisterDest());
                     elseif (r==13) && (c==4) %sub
                         fprintf('sub\n')
+                        addBlock(blockhandle,'sub',destHandle.getRegisterDest());
+                    elseif (r==13) && (c==6) %bump down
+                        fprintf('bump down\n')
+                        addBlock(blockhandle,'bump-',destHandle.getRegisterDest());
                     elseif (r==12) && (c==6) %backspace
                         fprintf('backspace\n')
                         removeBlock(blockhandle);
                     elseif (r==14) && (c==2) %copyfrom
                         fprintf('copyfrom\n')
+                        addBlock(blockhandle,'copyfrom',destHandle.getRegisterDest());
                     elseif (r==14) && (c==4) %copyto
                         fprintf('copyto\n')
+                        addBlock(blockhandle,'copyto',destHandle.getRegisterDest());
+                    elseif (r==14) && (c==6) %bump up
+                        fprintf('bump up\n')
+                        addBlock(blockhandle,'bump+',destHandle.getRegisterDest());
                     elseif (r==15) && (c==2) %jump if zero
                         temp=2;
                         fprintf('jump if zero\n')
-                        destHandle.getJumpDest();
+                        addBlock(blockhandle,'jump if zero',destHandle.getJumpDest());
                     elseif (r==15) && (c==4) %jump if negative
                         temp=2;
                         fprintf('jump if negative\n')
-                        
+                        addBlock(blockhandle,'jump if negative',destHandle.getJumpDest());
                     elseif (r==15) && (c==6) %jump
                         temp=2;
                         fprintf('jump\n')
+                        addBlock(blockhandle,'jump',destHandle.getJumpDest());
                         
                     end
                     obj.editorWindowArray = blockhandle.editorArray;
