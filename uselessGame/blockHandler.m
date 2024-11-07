@@ -28,7 +28,9 @@ classdef blockHandler < handle
                 end
                 obj.editorArray((obj.linePointer+1),10) = destVal;
             end
-            obj.linePointer = obj.linePointer + 1;
+            if obj.linePointer<15 %makes sure the line pointer doesn't go above 15
+                obj.linePointer = obj.linePointer + 1;
+            end
         end
         function removeBlock(obj)
             obj.editorArray((obj.linePointer),9) = 101;
