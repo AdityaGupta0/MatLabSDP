@@ -18,13 +18,13 @@ classdef levelSelectScreen < handle
                     if r==2
                         if c==2
                             level = 1;
-                        elseif c==4
+                        elseif c==3
                             level = 2;
                         end
                     elseif r==3
                         if c==2
                             level = 3;
-                        elseif c==4
+                        elseif c==3
                             level = 4;
                         end
                     end
