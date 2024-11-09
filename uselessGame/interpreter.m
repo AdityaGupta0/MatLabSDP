@@ -6,6 +6,10 @@ classdef interpreter < handle
         stackPointer; %we abouta go full nand2tetris with this one
         intArray;
         screen;
+        %ARG=[3,4];
+        %THIS=[5,4];
+        %THAT=[7,4];
+        %LCL=[9,4];
     end
     methods 
         function obj = interpreter(screen,BGArray,levelArray,editorWindowArray)
@@ -19,22 +23,32 @@ classdef interpreter < handle
         function updateEditorWindowArray(obj,editorWindowArray)
             obj.editorWindowArray = editorWindowArray;
         end
+        function updateLevelArray(obj,levelArray)
+            obj.levelArray = levelArray;
+        end
         function run(obj)
             obj.stackPointer = 2;
-            while obj.stackPointer < 14
-                executeLine(obj,(obj.editorWindowArray(obj.stackPointer,9)));
+            repeat = true;
+            while obj.stackPointer < 14 && repeat
+                repeat=executeLine(obj,(obj.editorWindowArray(obj.stackPointer,9)));
                 drawScene(obj.screen,obj.BGArray,obj.levelArray,obj.editorWindowArray);
                 pause(1);
                 obj.stackPointer = obj.stackPointer + 1;
                 fprintf('stackPointer: %d\n',obj.stackPointer);
             end
         end
-        function executeLine(obj,blockID)
+        function boolean = executeLine(obj,blockID)
+            boolean = true;
             switch blockID
                 case 57 %inbox
                     popInbox(obj);
                 case 58 %outbox
-                    pushOutbox(obj);
+                    if (obj.levelArray(9,4)) == 101 %if LCL is empty
+                        fprintf('Cant outbox nothing\n');
+                        boolean = false;
+                    else
+                        pushOutbox(obj);
+                    end
                 case 59 %add
                 case 60 %sub
                 case 61 %copyfrom
@@ -42,8 +56,10 @@ classdef interpreter < handle
                 case 63 %jump if zero
                 case 64 %jump if negative
                 case 65 %jump
+                case 101 %no block
+                    fprintf('no block\n');
+                    boolean=false;    
             end
-
         end
         function popInbox(obj) 
             repeat=true;
