@@ -4,8 +4,9 @@ classdef interpreter < handle
         levelArray;
         BGArray;
         stackPointer; %we abouta go full nand2tetris with this one
-        intArray;
         screen;
+        toNumber;
+        toSprite;
         %ARG=[3,4];
         %THIS=[5,4];
         %THAT=[7,4];
@@ -18,13 +19,13 @@ classdef interpreter < handle
             obj.BGArray = BGArray;
             obj.editorWindowArray = editorWindowArray;
             obj.levelArray = levelArray;
-            obj.intArray = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,-1,-2,-3,-4,];
+            obj.toSprite = containers.Map([-25:1:25],cat(2,[32:1:56],[6:1:31]));
+            obj.toNumber = containers.Map(cat(2,[32:1:56],[6:1:31]),[-25:1:25])
         end
-        function updateEditorWindowArray(obj,editorWindowArray)
+        function updateArrays(obj,BGArray,levelArray,editorWindowArray)
             obj.editorWindowArray = editorWindowArray;
-        end
-        function updateLevelArray(obj,levelArray)
             obj.levelArray = levelArray;
+            obj.BGArray = BGArray;
         end
         function run(obj)
             obj.stackPointer = 2;
@@ -41,10 +42,15 @@ classdef interpreter < handle
             boolean = true;
             switch blockID
                 case 57 %inbox
-                    popInbox(obj);
+                    if isInboxEmpty(obj) %if inbox is empty
+                        fprintf('cant inbox nothing\n');
+                        boolean = false;
+                    else
+                        popInbox(obj);
+                    end
                 case 58 %outbox
-                    if (obj.levelArray(9,4)) == 101 %if LCL is empty
-                        fprintf('Cant outbox nothing\n');
+                    if (obj.levelArray(9,4)) == 101 || isOutboxFull(obj) %if LCL is empty and outbox is full
+                        fprintf('Cant outbox nothing or outbox full\n');
                         boolean = false;
                     else
                         pushOutbox(obj);
@@ -56,6 +62,7 @@ classdef interpreter < handle
                 case 63 %jump if zero
                 case 64 %jump if negative
                 case 65 %jump
+                    jump(obj);
                 case 101 %no block
                     fprintf('no block\n');
                     boolean=false;    
@@ -96,18 +103,30 @@ classdef interpreter < handle
             end 
         end
         function boolean = isOutboxFull(obj)
-            if obj.levelArray(2,6) ~= 101
+            counter=0;
+            for i=2:9
+                if obj.levelArray(i,6) ~= 101
+                    counter = counter + 1;
+                end
+            end
+            if counter == 7 %if all outbox slots are full
                 boolean=true;
             else
                 boolean=false;
             end
         end
         function boolean = isInboxEmpty(obj)
-            if obj.levelArray(9,2) == 101
+            if (obj.levelArray(9,2) == 101) %if inbox is empty
                 boolean=true;
             else
                 boolean=false;
             end
+        end
+        function jump(obj)
+            dest = obj.editorWindowArray(obj.stackPointer,10); %gets destination from levelArray
+            fprintf('jumping to %d\n',dest);
+            dest = obj.toNumber(dest);
+            obj.stackPointer = dest; %sets stackpointer to the jump desitnation+1 since lines are offset
         end
     end
 end

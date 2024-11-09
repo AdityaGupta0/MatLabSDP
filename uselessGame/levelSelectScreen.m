@@ -9,6 +9,7 @@ classdef levelSelectScreen < handle
         function obj = levelSelectScreen()
         end
         function levelSelectSceneArray = getLevelSelectSceneArray()
+            levelSelectSceneArray = obj.levelSelectSceneArray;
         end
         function int = getSelectedLevel(screen) %TODO REWRITE THIS FUNCTION TO ACTUALLY TAKE MOUSE INPUT
             level=0;

@@ -45,7 +45,7 @@ classdef levelScreen < handle
             temp = 0;
             if b==1
                 if (r>11) && (c<7) %if mouse is clicked in the block select window
-                    blockhandle = blockHandler(obj.levelScreenArray,obj.editorWindowArray,obj.linePointer);
+                    blockhandle = blockHandler(obj.levelScreenBGArray,obj.editorWindowArray,obj.linePointer);
                     destHandle = destHandler(obj.screen,obj.levelScreenBGArray,obj.levelScreenArray,obj.editorWindowArray);
                     temp =1;
                     if (r==12) && (c==2) %inbox
@@ -91,14 +91,14 @@ classdef levelScreen < handle
                     end
                     obj.editorWindowArray = blockhandle.editorArray;
                     obj.linePointer = blockhandle.linePointer;
-                    obj.levelScreenArray = blockhandle.levelArray;
-                    updateEditorWindowArray(obj.interpret,obj.editorWindowArray);
+                    obj.levelScreenBGArray = blockhandle.BGArray;
                 elseif (r==1)
                     if (c==1) %quit button
                         fprintf('quit\n')
                         temp = -1;
                     elseif c==9 %run button
                         fprintf('run\n')
+                        updateArrays(obj.interpret,obj.levelScreenBGArray,obj.levelScreenArray,obj.editorWindowArray);
                         if ~obj.runned
                             obj.runned = true;
                             run(obj.interpret);
@@ -109,7 +109,6 @@ classdef levelScreen < handle
                     elseif c==11 %reset button
                         fprintf('reset\n')
                         obj.levelScreenArray = arrayMaker.getLevelScreenArray(obj.level);
-                        updateLevelArray(obj.interpret,obj.levelScreenArray);
                         obj.runned = false;
                     end
                 elseif(r>1) && (c>8) %if mouse is clicked in the editor window
