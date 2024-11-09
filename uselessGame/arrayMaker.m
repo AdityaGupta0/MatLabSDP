@@ -36,14 +36,15 @@ classdef arrayMaker
         end
         function array = getLevelScreenArray(level)
             temp = (zeros(15,11)+101);
-            if level==1
-                for i=3:9
-                    temp(i,2) = randi(25)+6;
-                end
-            elseif level==2
-                for i=2:9
-                    temp(i,2) = randi(50)+6;
-                end
+            switch level
+                case 1
+                    for i=3:9
+                        temp(i,2) = randi(25)+6;
+                    end
+                case 2
+                    for i=3:9
+                        temp(i,2) = randi(50)+6;
+                    end
             end
             array = temp;
         end

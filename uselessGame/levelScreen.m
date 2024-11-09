@@ -6,6 +6,7 @@ classdef levelScreen < handle
         levelScreenArray
         editorWindowArray;
         linePointer;
+        interpret;
     end
     methods
         function obj = levelScreen(level,screen)
@@ -14,16 +15,14 @@ classdef levelScreen < handle
             obj.levelScreenArray = arrayMaker.getLevelScreenArray(level);
             obj.levelScreenBGArray = arrayMaker.getBGArray();
             obj.editorWindowArray = arrayMaker.getEditorWindowArray();
+            obj.interpret = interpreter(obj.screen,obj.levelScreenBGArray,obj.levelScreenArray,obj.editorWindowArray);
         end
-
         function array = getLevelScreenBGArray(obj)
             array = obj.levelScreenBGArray;
         end
-
         function array = getLevelScreenArray(obj)
             array = obj.levelScreenArray;
         end
-
         function array = getEditorWindowArray(obj)
             array = obj.editorWindowArray;
         end
@@ -90,17 +89,19 @@ classdef levelScreen < handle
                     obj.editorWindowArray = blockhandle.editorArray;
                     obj.linePointer = blockhandle.linePointer;
                     obj.levelScreenArray = blockhandle.levelArray;
+                    updateEditorWindowArray(obj.interpret,obj.editorWindowArray);
                 elseif (r==1)
                     if (c==1) %quit button
                         fprintf('quit\n')
                         temp = -1;
                     elseif c==9 %run button
                         fprintf('run\n')
+                        run(obj.interpret);
+                        obj.levelScreenArray = obj.interpret.levelArray;
                     elseif c==10 %pause button
                         fprintf('pause\n') %maybe consider doing a step instead of pause
                     elseif c==11 %reset button
                         fprintf('reset\n')
-
                     end
                 elseif(r>1) && (c>8) %if mouse is clicked in the editor window
                     fprintf('editor window\n')
