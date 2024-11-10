@@ -19,8 +19,8 @@ classdef interpreter < handle
             obj.BGArray = BGArray;
             obj.editorWindowArray = editorWindowArray;
             obj.levelArray = levelArray;
-            obj.toSprite = containers.Map([-25:1:25],cat(2,[32:1:56],[6:1:31]));
-            obj.toNumber = containers.Map(cat(2,[32:1:56],[6:1:31]),[-25:1:25]);
+            obj.toSprite = containers.Map([-25:1:25],cat(2,[56:-1:32],[6:1:31]));
+            obj.toNumber = containers.Map(cat(2,[56:-1:32],[6:1:31]),[-25:1:25]);
         end
         function updateArrays(obj,BGArray,levelArray,editorWindowArray)
             obj.editorWindowArray = editorWindowArray;
@@ -56,6 +56,7 @@ classdef interpreter < handle
                         pushOutbox(obj);
                     end
                 case 59 %add
+                    boolean = add(obj); %if add fails, terminate program
                 case 60 %sub
                 case 61 %copyfrom
                     boolean = copyFrom(obj); %if copyfrom fails, terminate program
@@ -72,6 +73,8 @@ classdef interpreter < handle
                     jumpConditional(obj,-1);
                 case 65 %jump
                     jump(obj);
+                case 102 %bump-
+                case 103 %bump+
                 case 101 %no block
                     fprintf('no block\n');
                     boolean=false;    
@@ -186,5 +189,21 @@ classdef interpreter < handle
                     end
             end
         end
+        function boolean = add(obj)
+            boolean = false;
+            addr = (obj.editorWindowArray(obj.stackPointer,10)*2)-1; %converts adress to line number of spirte
+            if obj.levelArray(addr,4) == 101
+                fprintf('cant add nothing from register\n');
+            else
+                added = obj.toNumber(obj.levelArray(addr,4)) +obj.toNumber(obj.levelArray(9,4));
+                if added > 25 || added < -25 
+                    fprintf('addition overflow\n');
+                else
+                    obj.levelArray(9,4) = obj.toSprite(added);
+                    boolean = true;
+                end
+            end
+        end
+        
     end
 end
