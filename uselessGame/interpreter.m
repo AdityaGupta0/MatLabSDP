@@ -20,7 +20,7 @@ classdef interpreter < handle
             obj.editorWindowArray = editorWindowArray;
             obj.levelArray = levelArray;
             obj.toSprite = containers.Map([-25:1:25],cat(2,[32:1:56],[6:1:31]));
-            obj.toNumber = containers.Map(cat(2,[32:1:56],[6:1:31]),[-25:1:25])
+            obj.toNumber = containers.Map(cat(2,[32:1:56],[6:1:31]),[-25:1:25]);
         end
         function updateArrays(obj,BGArray,levelArray,editorWindowArray)
             obj.editorWindowArray = editorWindowArray;
@@ -59,8 +59,16 @@ classdef interpreter < handle
                 case 60 %sub
                 case 61 %copyfrom
                 case 62 %copyto
+                    if obj.levelArray(9,4) == 101 %if LCL is empty
+                        fprintf('cant copy nothing\n');
+                        boolean = false;
+                    else
+                        copyTo(obj);
+                    end
                 case 63 %jump if zero
+                    jumpConditional(obj,0);
                 case 64 %jump if negative
+                    jumpConditional(obj,-1);
                 case 65 %jump
                     jump(obj);
                 case 101 %no block
@@ -116,7 +124,7 @@ classdef interpreter < handle
             end
         end
         function boolean = isInboxEmpty(obj)
-            if (obj.levelArray(9,2) == 101) %if inbox is empty
+            if (obj.levelArray(9,2) == 101) %if last inbox slot is empty
                 boolean=true;
             else
                 boolean=false;
@@ -126,7 +134,30 @@ classdef interpreter < handle
             dest = obj.editorWindowArray(obj.stackPointer,10); %gets destination from levelArray
             fprintf('jumping to %d\n',dest);
             dest = obj.toNumber(dest);
-            obj.stackPointer = dest; %sets stackpointer to the jump desitnation+1 since lines are offset
+            obj.stackPointer = dest; %sets stackpointer to the jump desitnation no need to worry about the +1 since the runner handles that 
+        end
+        function jumpConditional(obj,condition)
+            fprintf('possibly jumping \n');
+            switch condition
+                case 0 %jump if zero
+                    if obj.toNumber(obj.levelArray(3,4))==0
+                        jump(obj);
+                    end
+                case -1 %jump if negative
+                    if obj.toNumber(obj.levelArray(3,4))<0
+                        jump(obj);
+                    end
+            end
+        end
+        function copyTo(obj)
+            switch obj.editorWindowArray(obj.stackPointer,10)
+                case 2 %copy to ARG
+                    obj.levelArray(3,4) = obj.levelArray(9,4);
+                case 3 %copy to THIS
+                    obj.levelArray(5,4) = obj.levelArray(9,4);
+                case 4 %copy to THAT
+                    obj.levelArray(7,4) = obj.levelArray(9,4);
+            end
         end
     end
 end
