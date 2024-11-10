@@ -68,13 +68,15 @@ classdef interpreter < handle
                         copyTo(obj);
                     end
                 case 63 %jump if zero
-                    jumpConditional(obj,0);
+                    boolean=jumpConditional(obj,0);
                 case 64 %jump if negative
-                    jumpConditional(obj,-1);
+                    boolean=jumpConditional(obj,-1);
                 case 65 %jump
                     jump(obj);
                 case 102 %bump-
+                    boolean=bump(obj,-1);
                 case 103 %bump+
+                    boolean=bump(obj,1);
                 case 101 %no block
                     fprintf('no block\n');
                     boolean=false;    
@@ -140,17 +142,23 @@ classdef interpreter < handle
             dest = obj.toNumber(dest);
             obj.stackPointer = dest; %sets stackpointer to the jump desitnation no need to worry about the +1 since the runner handles that 
         end
-        function jumpConditional(obj,condition)
+        function boolean = jumpConditional(obj,condition)
+            boolean=false;
             fprintf('possibly jumping \n');
-            switch condition
-                case 0 %jump if zero
-                    if obj.toNumber(obj.levelArray(3,4))==0
-                        jump(obj);
-                    end
-                case -1 %jump if negative
-                    if obj.toNumber(obj.levelArray(3,4))<0
-                        jump(obj);
-                    end
+            if obj.levelArray(3,4) == 101 %if ARG is empty terminate program
+                fprintf('cant jump-if when ARG is empty\n');
+            else
+                boolean=true;
+                switch condition
+                    case 0 %jump if zero
+                        if obj.toNumber(obj.levelArray(3,4))==0
+                            jump(obj);
+                        end
+                    case -1 %jump if negative
+                        if obj.toNumber(obj.levelArray(3,4))<0
+                            jump(obj);
+                        end
+                end
             end
         end
         function copyTo(obj)
@@ -178,6 +186,37 @@ classdef interpreter < handle
                     fprintf('addition overflow\n');
                 else
                     obj.levelArray(9,4) = obj.toSprite(added);
+                    boolean = true;
+                end
+            end
+        end
+        function boolean = subtract(obj)
+            boolean = false;
+            addr = (obj.editorWindowArray(obj.stackPointer,10)*2)-1; %converts adress to line number of spirte
+            if obj.levelArray(addr,4) == 101
+                fprintf('cant subtract nothing from register\n');
+            else
+                subbed = obj.toNumber(obj.levelArray(addr,4)) - obj.toNumber(obj.levelArray(9,4));
+                if subbed > 25 || subbed < -25 
+                    fprintf('subtraction overflow\n');
+                else
+                    obj.levelArray(9,4) = obj.toSprite(subbed);
+                    boolean = true;
+                end
+            end
+        end
+        function boolean = bump(obj,dir) %dir is 1 for bump+ and -1 for bump-
+            boolean = false;
+            addr = (obj.editorWindowArray(obj.stackPointer,10)*2)-1; %converts adress to line number of spirte
+            if obj.levelArray(addr,4) == 101
+                fprintf('cant bump nothing from register\n');
+            else
+                bumped = obj.toNumber(obj.levelArray(addr,4)) + dir;
+                if bumped > 25 || bumped < -25 
+                    fprintf('bump overflow\n');
+                else
+                    obj.levelArray(addr,4) = obj.toSprite(bumped);
+                    obj.levelArray(9,4) = obj.toSprite(bumped);
                     boolean = true;
                 end
             end
