@@ -154,39 +154,17 @@ classdef interpreter < handle
             end
         end
         function copyTo(obj)
-            switch obj.editorWindowArray(obj.stackPointer,10)
-                case 2 %copy to ARG
-                    obj.levelArray(3,4) = obj.levelArray(9,4);
-                case 3 %copy to THIS
-                    obj.levelArray(5,4) = obj.levelArray(9,4);
-                case 4 %copy to THAT
-                    obj.levelArray(7,4) = obj.levelArray(9,4);
-            end
+            addr = (obj.editorWindowArray(obj.stackPointer,10)*2)-1;
+            obj.levelArray(addr,4) = obj.levelArray(9,4);
         end
         function boolean = copyFrom(obj)
-            boolean = true;
-            switch obj.editorWindowArray(obj.stackPointer,10)
-                case 2 %copy from ARG
-                    if obj.levelArray(3,4) == 101
-                        fprintf('cant copy nothing from ARG\n');
-                        boolean = false;
-                    else
-                        obj.levelArray(9,4) = obj.levelArray(3,4);
-                    end
-                case 3 %copy from THIS
-                    if obj.levelArray(5,4) == 101
-                        fprintf('cant copy nothing from THIS\n');
-                        boolean = false;
-                    else
-                        obj.levelArray(9,4) = obj.levelArray(5,4);
-                    end
-                case 4 %copy from THAT
-                    if obj.levelArray(7,4) == 101
-                        fprintf('cant copy nothing from THAT\n');
-                        boolean = false;
-                    else
-                        obj.levelArray(9,4) = obj.levelArray(7,4);
-                    end
+            boolean = false;
+            addr = (obj.editorWindowArray(obj.stackPointer,10)*2)-1;
+            if obj.levelArray(addr,4) == 101
+                fprintf('cant copy nothing from register\n');
+            else
+                obj.levelArray(9,4) = obj.levelArray(addr,4);
+                boolean = true;
             end
         end
         function boolean = add(obj)
