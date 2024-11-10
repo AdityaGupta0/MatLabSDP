@@ -2,19 +2,20 @@ clear
 screen = simpleGameEngine('CompleteSpriteSheet.png',512,512,1);
 drawScene(screen, [100]);
 getMouseInput(screen);
-
 levelSelectScreen = levelSelectScreen();
 
 while true
     clear levelScreen;
     repeat = true;
     drawScene(screen,levelSelectScreen.levelSelectSceneArray);
-    [r,c,b] = getMouseInput(screen);
-    level = levelSelectScreen.getSelectedLevel(r,c,b);
+    
+    level = levelSelectScreen.getSelectedLevel(screen);
+    
 
     levelScreen = levelScreen(level,screen);
     drawScene(screen,getLevelScreenBGArray(levelScreen),getLevelScreenArray(levelScreen),getEditorWindowArray(levelScreen));
     while repeat
+        title(arrayMaker.getLevelChallenge(levelScreen.level));
         [r,c,b] = getMouseInput(screen);
         eventNum = getClickEvent(levelScreen,r,c,b);
         if eventNum == -1 %quit condition
