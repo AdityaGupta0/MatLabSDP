@@ -58,6 +58,7 @@ classdef interpreter < handle
                 case 59 %add
                 case 60 %sub
                 case 61 %copyfrom
+                    boolean = copyFrom(obj); %if copyfrom fails, terminate program
                 case 62 %copyto
                     if obj.levelArray(9,4) == 101 %if LCL is empty
                         fprintf('cant copy nothing\n');
@@ -157,6 +158,32 @@ classdef interpreter < handle
                     obj.levelArray(5,4) = obj.levelArray(9,4);
                 case 4 %copy to THAT
                     obj.levelArray(7,4) = obj.levelArray(9,4);
+            end
+        end
+        function boolean = copyFrom(obj)
+            boolean = true;
+            switch obj.editorWindowArray(obj.stackPointer,10)
+                case 2 %copy from ARG
+                    if obj.levelArray(3,4) == 101
+                        fprintf('cant copy nothing from ARG\n');
+                        boolean = false;
+                    else
+                        obj.levelArray(9,4) = obj.levelArray(3,4);
+                    end
+                case 3 %copy from THIS
+                    if obj.levelArray(5,4) == 101
+                        fprintf('cant copy nothing from THIS\n');
+                        boolean = false;
+                    else
+                        obj.levelArray(9,4) = obj.levelArray(5,4);
+                    end
+                case 4 %copy from THAT
+                    if obj.levelArray(7,4) == 101
+                        fprintf('cant copy nothing from THAT\n');
+                        boolean = false;
+                    else
+                        obj.levelArray(9,4) = obj.levelArray(7,4);
+                    end
             end
         end
     end
