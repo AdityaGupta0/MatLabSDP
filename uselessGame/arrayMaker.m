@@ -37,16 +37,66 @@ classdef arrayMaker
         function array = getLevelScreenArray(level)
             temp = (zeros(15,11)+101);
             switch level
-                case 1
-                    for i=3:9
+                case 1 %level 1, generates 2 random positive numbers
+                    for i=3:5
                         temp(i,2) = randi(25)+6;
                     end
-                case 2
+                case 2 %level 2, generates 2 random numbers
+                    for i=3:5
+                        temp(i,2) = randi(50)+6;
+                    end
+                case 3 %level 3 edit later
+                    for i=3:9
+                        temp(i,2) = randi(50)+6;
+                    end
+                case 4 %level 4 edit later
+                    for i=3:9
+                        temp(i,2) = randi(50)+6;
+                    end
+                case 5 %level 5 edit later
+                    for i=3:9
+                        temp(i,2) = randi(50)+6;
+                    end
+                case 6 %level 6 edit later
+                    for i=3:9
+                        temp(i,2) = randi(50)+6;
+                    end
+                case 7 %level 7 edit later
+                    for i=3:9
+                        temp(i,2) = randi(50)+6;
+                    end
+                case 8 %level 8 edit later
+                    for i=3:9
+                        temp(i,2) = randi(50)+6;
+                    end
+                case 9 %level 9 generate 7 random numbers
                     for i=3:9
                         temp(i,2) = randi(50)+6;
                     end
             end
             array = temp;
+        end
+        function challenge = getLevelChallenge(level)
+            switch level
+                case 1
+                    challenge = 'Use the inbox and outbox commands to move all the numbers from the inbox to the outbox';
+                case 2
+                    challenge = 'Use the add command to add the first two numbers in the inbox and move the result to the outbox';
+                case 3
+                    challenge = '';
+                case 4
+                    challenge = '';
+                case 5
+                    challenge = '';
+                case 6
+                    challenge = '';
+                case 7
+                    challenge = '';
+                case 8
+                    challenge = '';
+                case 9
+                    challenge = 'Free play';
+            end
         end
     end
 end

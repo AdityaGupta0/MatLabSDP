@@ -1,9 +1,10 @@
 classdef levelSelectScreen < handle
     properties
-        levelSelectSceneArray =[1,94,95,1;           
-                                1,96,97,1;
-                                1,98,99,1;
-                                1,1,1,1];
+        levelSelectSceneArray =[1,94,95,1,1;           
+                                1,96,97,98,1;
+                                1,99,105,106,1;
+                                1,107,108,109,1
+                                1,1,1,1,1];
     end
     methods (Static)
         function obj = levelSelectScreen()
@@ -11,23 +12,39 @@ classdef levelSelectScreen < handle
         function levelSelectSceneArray = getLevelSelectSceneArray()
             levelSelectSceneArray = obj.levelSelectSceneArray;
         end
-        function int = getSelectedLevel(screen) %TODO REWRITE THIS FUNCTION TO ACTUALLY TAKE MOUSE INPUT
+        function int = getSelectedLevel(screen) %returns the level selected by the user
             level=0;
             while level==0
                 [r,c,b] = getMouseInput(screen);
                 if b==1
-                    if r==2
-                        if c==2
-                            level = 1;
-                        elseif c==3
-                            level = 2;
-                        end
-                    elseif r==3
-                        if c==2
-                            level = 3;
-                        elseif c==3
-                            level = 4;
-                        end
+                    switch r %i swear there was no cleaner way to do this im sorry
+                        case 2
+                            switch c
+                                case 2
+                                    level = 1;
+                                case 3
+                                    level = 2;
+                                case 4
+                                    level = 3;
+                            end
+                        case 3
+                            switch c
+                                case 2
+                                    level = 4;
+                                case 3
+                                    level = 5;
+                                case 4
+                                    level = 6;
+                            end
+                        case 4
+                            switch c
+                                case 2
+                                    level = 7;
+                                case 3
+                                    level = 8;
+                                case 4
+                                    level = 9;
+                            end
                     end
                 end
             end

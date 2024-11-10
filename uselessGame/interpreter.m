@@ -130,7 +130,13 @@ classdef interpreter < handle
             end
         end
         function boolean = isInboxEmpty(obj)
-            if (obj.levelArray(9,2) == 101) %if last inbox slot is empty
+            counter=0;
+            for i=2:2
+                if obj.levelArray(i,2) == 101
+                    counter = counter + 1;
+                end
+            end
+            if counter ==7 %if all inbox slots are empty
                 boolean=true;
             else
                 boolean=false;
