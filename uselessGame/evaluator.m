@@ -3,6 +3,7 @@ classdef evaluator < handle
         inbox;
         outbox;
         level;
+        lineNum;
     end
     methods 
         function obj = evaluator(level,initialLevelArray)
