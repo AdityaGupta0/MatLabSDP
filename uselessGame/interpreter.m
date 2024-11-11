@@ -36,7 +36,6 @@ classdef interpreter < handle
             repeat = true;
             while obj.stackPointer < 14 && repeat
                 obj.levelArray(obj.stackPointer,11) = 110;
-                drawScene(obj.screen,obj.BGArray,obj.levelArray,obj.editorWindowArray);
                 repeat=executeLine(obj,(obj.editorWindowArray(obj.stackPointer,9)));
                 drawScene(obj.screen,obj.BGArray,obj.levelArray,obj.editorWindowArray);
                 pause(0.8);
@@ -131,7 +130,7 @@ classdef interpreter < handle
             dest = obj.editorWindowArray(obj.stackPointer,10); %gets destination from levelArray
             fprintf('jumping to %d\n',dest);
             dest = obj.toNumber(dest);
-            obj.levelArray(obj.stackPointer,11) = 101; %makes sure the pointer does not linger on the jump block
+            %obj.levelArray(obj.stackPointer,11) = 101; %makes sure the pointer does not linger on the jump block
             obj.stackPointer = dest; %sets stackpointer to the jump desitnation no need to worry about the +1 since the runner handles that 
         end
         function boolean = jumpConditional(obj,condition)

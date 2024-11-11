@@ -44,7 +44,9 @@ classdef evaluator < handle
                 case 1
                    obj.solution = obj.inbox;
                 case 2
+                    obj.solution = obj.inbox;
                 case 3
+                    obj.solution = [obj.inbox,obj.inbox,obj.inbox];
                 case 4
                 case 5
                 case 6

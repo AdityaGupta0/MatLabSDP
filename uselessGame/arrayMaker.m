@@ -35,55 +35,53 @@ classdef arrayMaker
             101,101,101,101,101,101,101,20,101,101,101];
         end
         function array = getLevelScreenArray(level)
-            temp = (zeros(15,11)+101);
+            randArray = (zeros(15,11)+101);
             switch level
                 case 1 %level 1, generates 2 random positive numbers
                     for i=3:5
-                        temp(i,2) = randi(25)+6;
+                        randArray(i,2) = randi(25)+6;
                     end
                 case 2 %level 2, generates 2 random numbers
-                    for i=3:5
-                        temp(i,2) = randi(50)+6;
+                    for i=3:9
+                        randArray(i,2) = randi(50)+6;
                     end
                 case 3 %level 3 edit later
-                    for i=3:9
-                        temp(i,2) = randi(50)+6;
-                    end
+                        randArray(3,2) = randi(50)+6;
                 case 4 %level 4 edit later
                     for i=3:9
-                        temp(i,2) = randi(50)+6;
+                        randArray(i,2) = randi(50)+6;
                     end
                 case 5 %level 5 edit later
                     for i=3:9
-                        temp(i,2) = randi(50)+6;
+                        randArray(i,2) = randi(50)+6;
                     end
                 case 6 %level 6 edit later
                     for i=3:9
-                        temp(i,2) = randi(50)+6;
+                        randArray(i,2) = randi(50)+6;
                     end
                 case 7 %level 7 edit later
                     for i=3:9
-                        temp(i,2) = randi(50)+6;
+                        randArray(i,2) = randi(50)+6;
                     end
                 case 8 %level 8 edit later
                     for i=3:9
-                        temp(i,2) = randi(50)+6;
+                        randArray(i,2) = randi(50)+6;
                     end
                 case 9 %level 9 generate 7 random numbers
                     for i=3:9
-                        temp(i,2) = randi(50)+6;
+                        randArray(i,2) = randi(50)+6;
                     end
             end
-            array = temp;
+            array = randArray;
         end
         function challenge = getLevelChallenge(level)
             switch level
                 case 1
                     challenge = 'Use the inbox and outbox commands to move all the numbers from the inbox to the outbox';
                 case 2
-                    challenge = 'Use the add command to add the first two numbers in the inbox and move the result to the outbox';
+                    challenge = 'Move all the items in the inbox to the outbox. Hint: a better way than just using inbox and outbox is to use the jump command to repeat a section of code.';
                 case 3
-                    challenge = '';
+                    challenge = 'Outbox the first number in the inbox 3 times. Use the copyTo command to store the number in a register and the copyFrom command to get the number from the register.';
                 case 4
                     challenge = '';
                 case 5
