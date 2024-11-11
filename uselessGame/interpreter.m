@@ -5,22 +5,24 @@ classdef interpreter < handle
         BGArray;
         stackPointer; %we abouta go full nand2tetris with this one
         screen;
-        toNumber;
-        toSprite;
+        level;
         %ARG=[3,4];
         %THIS=[5,4];
         %THAT=[7,4];
         %LCL=[9,4];
     end
+    properties (Constant)
+        toNumber=containers.Map(cat(2,[56:-1:32],[6:1:31]),[-25:1:25]);
+        toSprite=containers.Map([-25:1:25],cat(2,[56:-1:32],[6:1:31]));
+    end
     methods 
-        function obj = interpreter(screen,BGArray,levelArray,editorWindowArray)
+        function obj = interpreter(screen,level,BGArray,levelArray,editorWindowArray)
             obj.screen = screen;
             obj.stackPointer = 2;
             obj.BGArray = BGArray;
             obj.editorWindowArray = editorWindowArray;
             obj.levelArray = levelArray;
-            obj.toSprite = containers.Map([-25:1:25],cat(2,[56:-1:32],[6:1:31]));
-            obj.toNumber = containers.Map(cat(2,[56:-1:32],[6:1:31]),[-25:1:25]);
+            obj.level = level;
         end
         function updateArrays(obj,BGArray,levelArray,editorWindowArray)
             obj.editorWindowArray = editorWindowArray;
@@ -28,15 +30,19 @@ classdef interpreter < handle
             obj.BGArray = BGArray;
         end
         function run(obj)
+            autoGrader = evaluator(obj.level,obj.levelArray);
             obj.stackPointer = 2;
             repeat = true;
             while obj.stackPointer < 14 && repeat
+                obj.levelArray(obj.stackPointer,11) = 110;
                 repeat=executeLine(obj,(obj.editorWindowArray(obj.stackPointer,9)));
                 drawScene(obj.screen,obj.BGArray,obj.levelArray,obj.editorWindowArray);
                 pause(1);
                 obj.stackPointer = obj.stackPointer + 1;
+                obj.levelArray(obj.stackPointer-1,11) = 101;
                 fprintf('stackPointer: %d\n',obj.stackPointer);
             end
+            autoGrader.evalutate(obj.levelArray);
         end
         function boolean = executeLine(obj,blockID)
             boolean = true;
@@ -49,8 +55,8 @@ classdef interpreter < handle
                         popInbox(obj);
                     end
                 case 58 %outbox
-                    if (obj.levelArray(9,4)) == 101 || isOutboxFull(obj) %if LCL is empty and outbox is full
-                        fprintf('Cant outbox nothing or outbox full\n');
+                    if (obj.levelArray(9,4)) == 101 %if LCL is empty and
+                        fprintf('Cant outbox nothing\n');
                         boolean = false;
                     else
                         pushOutbox(obj);
@@ -99,7 +105,7 @@ classdef interpreter < handle
                 end
             end 
         end
-        function pushOutbox(obj)
+        function pushOutboxold(obj)
             repeat=true;
             i=9;
             while repeat
@@ -116,22 +122,16 @@ classdef interpreter < handle
                 end
             end 
         end
-        function boolean = isOutboxFull(obj)
-            counter=0;
-            for i=2:9
-                if obj.levelArray(i,6) ~= 101
-                    counter = counter + 1;
-                end
+        function pushOutbox(obj)
+            for i=8:-1:3
+                obj.levelArray(i+1,6) = obj.levelArray(i,6);
             end
-            if counter == 7 %if all outbox slots are full
-                boolean=true;
-            else
-                boolean=false;
-            end
+            obj.levelArray(3,6) = obj.levelArray(9,4);
         end
+        
         function boolean = isInboxEmpty(obj)
             counter=0;
-            for i=2:2
+            for i=3:9
                 if obj.levelArray(i,2) == 101
                     counter = counter + 1;
                 end
@@ -227,6 +227,15 @@ classdef interpreter < handle
                 end
             end
         end
-        
+    end
+    methods (Static)
+        function spriteID = number2Sprite(num)
+            toSprite=containers.Map([-25:1:25],cat(2,[56:-1:32],[6:1:31]));
+            spriteID = toSprite(num);
+        end
+        function num = sprite2Number(spriteID)
+            toNumber=containers.Map(cat(2,[56:-1:32],[6:1:31]),[-25:1:25]);
+            num = toNumber(spriteID);
+        end
     end
 end

@@ -17,7 +17,7 @@ classdef levelScreen < handle
             obj.levelScreenArray = arrayMaker.getLevelScreenArray(level);
             obj.levelScreenBGArray = arrayMaker.getBGArray();
             obj.editorWindowArray = arrayMaker.getEditorWindowArray();
-            obj.interpret = interpreter(obj.screen,obj.levelScreenBGArray,obj.levelScreenArray,obj.editorWindowArray);
+            obj.interpret = interpreter(obj.screen,obj.level,obj.levelScreenBGArray,obj.levelScreenArray,obj.editorWindowArray);
             obj.runned = false;
         end
         function array = getLevelScreenBGArray(obj)
