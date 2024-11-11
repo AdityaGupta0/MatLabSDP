@@ -36,9 +36,10 @@ classdef interpreter < handle
             repeat = true;
             while obj.stackPointer < 14 && repeat
                 obj.levelArray(obj.stackPointer,11) = 110;
+                drawScene(obj.screen,obj.BGArray,obj.levelArray,obj.editorWindowArray);
                 repeat=executeLine(obj,(obj.editorWindowArray(obj.stackPointer,9)));
                 drawScene(obj.screen,obj.BGArray,obj.levelArray,obj.editorWindowArray);
-                pause(1);
+                pause(0.8);
                 obj.stackPointer = obj.stackPointer + 1;
                 obj.levelArray(obj.stackPointer-1,11) = 101;
                 fprintf('stackPointer: %d\n',obj.stackPointer);
