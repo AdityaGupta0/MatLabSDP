@@ -146,6 +146,7 @@ classdef interpreter < handle
             dest = obj.editorWindowArray(obj.stackPointer,10); %gets destination from levelArray
             fprintf('jumping to %d\n',dest);
             dest = obj.toNumber(dest);
+            obj.levelArray(obj.stackPointer,11) = 101; %makes sure the pointer does not linger on the jump block
             obj.stackPointer = dest; %sets stackpointer to the jump desitnation no need to worry about the +1 since the runner handles that 
         end
         function boolean = jumpConditional(obj,condition)
