@@ -6,6 +6,7 @@ classdef interpreter < handle
         stackPointer; %we abouta go full nand2tetris with this one
         screen;
         level;
+        autoGrader;
         %ARG=[3,4];
         %THIS=[5,4];
         %THAT=[7,4];
@@ -30,7 +31,7 @@ classdef interpreter < handle
             obj.BGArray = BGArray;
         end
         function run(obj)
-            autoGrader = evaluator(obj.level,obj.levelArray);
+            obj.autoGrader = evaluator(obj.level,obj.levelArray);
             obj.stackPointer = 2;
             repeat = true;
             while obj.stackPointer < 14 && repeat
@@ -42,7 +43,7 @@ classdef interpreter < handle
                 obj.levelArray(obj.stackPointer-1,11) = 101;
                 fprintf('stackPointer: %d\n',obj.stackPointer);
             end
-            autoGrader.evalutate(obj.levelArray);
+            obj.autoGrader.finalEval();
         end
         function boolean = executeLine(obj,blockID)
             boolean = true;
@@ -60,6 +61,7 @@ classdef interpreter < handle
                         boolean = false;
                     else
                         pushOutbox(obj);
+                        boolean=obj.autoGrader.evalutate(obj.levelArray); %checks the outbox value, if it is incorrect, terminate program
                     end
                 case 59 %add
                     boolean = add(obj); %if add fails, terminate program
@@ -105,30 +107,12 @@ classdef interpreter < handle
                 end
             end 
         end
-        function pushOutboxold(obj)
-            repeat=true;
-            i=9;
-            while repeat
-                if obj.levelArray(i,6) == 101
-                    obj.levelArray(i,6) = obj.levelArray(9,4);
-                    obj.levelArray(9,4) = 101;
-                    repeat = false;
-                end
-                if (i>2)
-                    i = i -1;
-                else
-                    fprintf('outbox is full\n');
-                    repeat = false;
-                end
-            end 
-        end
         function pushOutbox(obj)
             for i=8:-1:3
                 obj.levelArray(i+1,6) = obj.levelArray(i,6);
             end
             obj.levelArray(3,6) = obj.levelArray(9,4);
         end
-        
         function boolean = isInboxEmpty(obj)
             counter=0;
             for i=3:9

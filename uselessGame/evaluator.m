@@ -3,40 +3,46 @@ classdef evaluator < handle
         inbox;
         outbox;
         level;
+        outboxNum;
+        solution;
     end
     methods 
         function obj = evaluator(level,initialLevelArray)
             obj.level = level;
             for i=1:7
-                if initialLevelArray(i+2,2) == 101
-                    obj.inbox(i) = 0;
-                else
+                if initialLevelArray(i+2,2) ~= 101
                     obj.inbox(i) = interpreter.sprite2Number(initialLevelArray(i+2,2));
                 end
             end
+            obj.outboxNum = 1;
+            solve(obj);
         end
 
-        function evalutate(obj,finalLevelArray)
-            for i=1:7
-                if finalLevelArray(i+2,6) == 101
-                    obj.outbox(i) = 0;
-                else
-                    obj.outbox(i) = interpreter.sprite2Number(finalLevelArray(i+2,6));
-                end
-            end
-            solution = solve(obj);
-            if obj.outbox == solution
+        function boolean = evalutate(obj,newLevelArray)
+            if interpreter.sprite2Number(newLevelArray(3,6)) == obj.solution(obj.outboxNum) %checks if the latst output value lines up with solution
                 fprintf('Correct\n');
+                boolean = true; 
+                obj.outboxNum = obj.outboxNum + 1;
             else
-                fprintf('Your solution produced %d when %d was expected\n',obj.inbox,obj.outbox);
+                fprintf('Your solution produced %d when %d was expected\n',interpreter.sprite2Number(newLevelArray(3,6)),obj.solution(obj.outboxNum));
+                boolean = false; %if the output value is incorrect
             end
-
         end
 
-        function solution = solve(obj)
+        function correct = finalEval(obj)
+            if (obj.outboxNum-1) == length(obj.solution) %checks if the number of outputs is correct. outboxnum is offset bc it increments after the last output
+                correct = true;
+                fprintf('You have completed the level\n');
+            else
+                correct = false;
+                fprintf('Your outputs were correct but did not complete the level.\n');
+            end
+        end
+
+        function solve(obj)
             switch obj.level
                 case 1
-                   solution = flip(obj.inbox);
+                   obj.solution = obj.inbox;
                 case 2
                 case 3
                 case 4
@@ -45,7 +51,7 @@ classdef evaluator < handle
                 case 7
                 case 8
                 case 9
-                    solution = flip(obj.inbox);
+                    obj.solution = obj.inbox;
             end
         end
     end
