@@ -19,7 +19,7 @@ classdef destHandler < handle
             lineNum1 = str2double(getKeyboardInput(obj.screen)); %poopypants
             lineNum2 = str2double(getKeyboardInput(obj.screen)); 
             lineNum = lineNum1*10+lineNum2;
-            if lineNum<1 || lineNum>15 %validates that the line number is within the bounds of the lines
+            if lineNum<0 || lineNum>15 %validates that the line number is within the bounds of the lines
                 lineNum = 1;
             end
             obj.BGArray(1,4) = 1;
