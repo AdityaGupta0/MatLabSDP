@@ -240,7 +240,8 @@ classdef simpleGameEngine < handle
             
             % Get the user mouse input
             [X,Y,button] = ginput(1);
-            
+            disp(X)
+            disp(Y)
             % Convert this into the tile row/column
             row = ceil(Y/obj.sprite_height/obj.zoom);
             col = ceil(X/obj.sprite_width/obj.zoom);

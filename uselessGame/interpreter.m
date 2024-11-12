@@ -37,12 +37,12 @@ classdef interpreter < handle
             obj.stackPointer = 2;
             repeat = true;
             obj.stopExecution = false;
-            set(obj.screen.my_figure, 'WindowButtonDownFcn', @mouseClickCallback);
+            set(obj.screen.my_figure, 'WindowButtonDownFcn', @(src,event)mouseClickCallback(src,event));
             while obj.stackPointer < 14 && repeat && ~obj.stopExecution
                 obj.levelArray(obj.stackPointer,11) = 110;
                 repeat=executeLine(obj,(obj.editorWindowArray(obj.stackPointer,9)));
                 drawScene(obj.screen,obj.BGArray,obj.levelArray,obj.editorWindowArray);
-                set(obj.screen.my_figure, 'WindowButtonDownFcn', @mouseClickCallback);
+                set(obj.screen.my_figure, 'WindowButtonDownFcn', @(src,event)mouseClickCallback(src,event));
                 pause(0.8);
                 obj.stackPointer = obj.stackPointer + 1;
                 obj.levelArray(obj.stackPointer-1,11) = 101;
@@ -50,10 +50,19 @@ classdef interpreter < handle
                 drawnow;
             end
             obj.autoGrader.finalEval();
-            set(obj.screen.my_figure, 'ButtonDownFcn', '');
+            set(obj.screen.my_figure, 'WindowButtonDownFcn', ''); %clears the mouse click callback
             function mouseClickCallback(~,~)
-                obj.stopExecution = true;
-                disp('execution stopped\n');
+                clickPoint = get(obj.screen.my_figure.CurrentAxes, 'CurrentPoint');
+                x = clickPoint(1,1);
+                y = clickPoint(1,2);
+                disp(x)
+                disp(y)
+                % Define the region where clicking stops execution
+                if x >= (9*512) && x <=(10*512) && y >= 0 && y <= 512
+                    obj.stopExecution = true;
+                    disp('Execution stopped');
+                    drawnow;
+                end
             end
         end
         function boolean = executeLine(obj,blockID)
