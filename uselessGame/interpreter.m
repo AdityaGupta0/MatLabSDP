@@ -7,6 +7,7 @@ classdef interpreter < handle
         screen;
         level;
         autoGrader;
+        stopExecution;
         %ARG=[3,4];
         %THIS=[5,4];
         %THAT=[7,4];
@@ -24,6 +25,7 @@ classdef interpreter < handle
             obj.editorWindowArray = editorWindowArray;
             obj.levelArray = levelArray;
             obj.level = level;
+            obj.stopExecution = false;
         end
         function updateArrays(obj,BGArray,levelArray,editorWindowArray)
             obj.editorWindowArray = editorWindowArray;
@@ -34,16 +36,25 @@ classdef interpreter < handle
             obj.autoGrader = evaluator(obj.level,obj.levelArray);
             obj.stackPointer = 2;
             repeat = true;
-            while obj.stackPointer < 14 && repeat
+            obj.stopExecution = false;
+            set(obj.screen.my_figure, 'WindowButtonDownFcn', @mouseClickCallback);
+            while obj.stackPointer < 14 && repeat && ~obj.stopExecution
                 obj.levelArray(obj.stackPointer,11) = 110;
                 repeat=executeLine(obj,(obj.editorWindowArray(obj.stackPointer,9)));
                 drawScene(obj.screen,obj.BGArray,obj.levelArray,obj.editorWindowArray);
+                set(obj.screen.my_figure, 'WindowButtonDownFcn', @mouseClickCallback);
                 pause(0.8);
                 obj.stackPointer = obj.stackPointer + 1;
                 obj.levelArray(obj.stackPointer-1,11) = 101;
                 fprintf('stackPointer: %d\n',obj.stackPointer);
+                drawnow;
             end
             obj.autoGrader.finalEval();
+            set(obj.screen.my_figure, 'ButtonDownFcn', '');
+            function mouseClickCallback(~,~)
+                obj.stopExecution = true;
+                disp('execution stopped\n');
+            end
         end
         function boolean = executeLine(obj,blockID)
             boolean = true;
