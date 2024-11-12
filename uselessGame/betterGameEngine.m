@@ -219,29 +219,23 @@ classdef simpleGameEngine < handle
         end
         
         function [row,col,button] = getMouseInput(obj)
-            % getMouseInput
-            % Input: an SGE scene, which gains focus
-            % Output:
-            %  1. The row of the tile clicked by the user
-            %  2. The column of the tile clicked by the user
-            %  3. (Optional) the button of the mouse used to click (1,2, or 3 for left, middle, and right, respectively)
-            % 
-            % Notes: A set of �crosshairs� appear in the scene�s figure,
-            % and the program will pause until the user clicks on the
-            % figure. It is possible to click outside the area of the
-            % scene, in which case, the closest row and/or column is
-            % returned.
-            % 
-            % Example:
-            %     	[row,col,button] = getMouseInput (my_scene);
-            
-            % Bring this scene to focus
             figure(obj.my_figure);
-            
+            repeat = true;
             % Get the user mouse input
-            [X,Y,button] = ginput(1);
-            disp(X)
-            disp(Y)
+            set(obj.my_figure, 'WindowButtonDownFcn', @(src,event)mouseClick(src,event));
+            X=0;
+            Y=0;
+            button = 1;
+            while repeat
+                drawnow;
+            end
+            function mouseClick(~,~)
+                repeat = false;
+                clickPoint = get(obj.my_figure.CurrentAxes, 'CurrentPoint');
+                X = clickPoint(1,1);
+                Y = clickPoint(1,2);
+            end
+
             % Convert this into the tile row/column
             row = ceil(Y/obj.sprite_height/obj.zoom);
             col = ceil(X/obj.sprite_width/obj.zoom);
@@ -251,6 +245,7 @@ classdef simpleGameEngine < handle
             sceneSize = size(obj.my_image.CData);
             max_row = sceneSize(1)/obj.sprite_height/obj.zoom;
             max_col = sceneSize(2)/obj.sprite_width/obj.zoom;
+            set(obj.my_figure, 'WindowButtonDownFcn', '');
             
             % If the user clicked outside the scene, return instead the
             % closest row and/or column
