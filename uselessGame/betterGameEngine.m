@@ -1,25 +1,5 @@
-% The Simple Game Engine is a class from object-oriented programming.
-% If you are unfamiliar with object oriented programming, here is a quick
-% crash course:
-%
-% Classes are a higher level of organizing programs beyond functions, they
-% group together the functions (called methods) and variables (properties)
-% of whatever it is you are trying to do. When you make a variable (called
-% an object) from a class, it has all the properties from that class
-% bundled together. This mimics how we naturally categorize things in real
-% life. For example, cats are a class of animals, methods are the things a
-% cat can do (e.g. pounce, meow, etc), properties describe a cat (e.g.
-% color, age, location, etc), and objects  are individual cats (where each
-% of the properties has a set value).
-%
-% The one extra bit of syntax you need to understand what's going on below
-% is how to access properties of an object:
-% Property "prop" of object "obj" is "obj.prop"
 
-% The simpleGameEngine class inherets from the handle class because we
-% want the game objects to be updated by their methods, specifically
-% my_figure and my_image
-classdef simpleGameEngine < handle
+classdef betterGameEngine < handle
     properties
         sprites = {}; % color data of the sprites
         sprites_transparency = {}; % transparency data of the sprites

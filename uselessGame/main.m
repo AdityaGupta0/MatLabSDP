@@ -1,5 +1,5 @@
 clear
-screen = simpleGameEngine('CompleteSpriteSheet.png',512,512,1);
+screen = betterGameEngine('CompleteSpriteSheet.png',512,512,1);
 drawScene(screen, [100]);
 getMouseInput(screen);
 
