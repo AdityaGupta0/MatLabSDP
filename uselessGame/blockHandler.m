@@ -11,7 +11,7 @@ classdef blockHandler < handle
             obj.BGArray = BGArray;
             obj.editorArray = editorArray;
             obj.linePointer = linePointer;
-            blockIDs = {'inbox','outbox','add','sub','copyfrom','copyto','jump if zero','jump if negative','jump','bump+','bump-'};
+            blockIDs = {'inbox','outbox','add','sub','copyfrom','copyto','jump if zero','jump if negative','jump','bump-','bump+'};
             blockValues = {[57],[58],[59,68],[60,68],[61,67],[62,67],[63,66],[64,66],[65,66],[102,104],[103,104]};
             obj.blockMap = containers.Map(blockIDs,blockValues); %hashmap for block values
         end
@@ -32,7 +32,7 @@ classdef blockHandler < handle
         end
         function removeBlock(obj)
             obj.editorArray((obj.linePointer),9) = 101;
-            obj.BGArray((obj.linePointer),10) = 101;
+            obj.BGArray((obj.linePointer),10) = 1; %since this is part of the background array, it needs to be reset to blank not transparent
             obj.editorArray((obj.linePointer),10) = 101;
             if obj.linePointer>1 %makes sure the line pointer doesn't go below 1
                 obj.linePointer = obj.linePointer - 1;

@@ -6,6 +6,8 @@ classdef interpreter < handle
         stackPointer; %we abouta go full nand2tetris with this one
         screen;
         level;
+        autoGrader;
+        stopExecution;
         %ARG=[3,4];
         %THIS=[5,4];
         %THAT=[7,4];
@@ -23,6 +25,7 @@ classdef interpreter < handle
             obj.editorWindowArray = editorWindowArray;
             obj.levelArray = levelArray;
             obj.level = level;
+            obj.stopExecution = false;
         end
         function updateArrays(obj,BGArray,levelArray,editorWindowArray)
             obj.editorWindowArray = editorWindowArray;
@@ -30,19 +33,37 @@ classdef interpreter < handle
             obj.BGArray = BGArray;
         end
         function run(obj)
-            autoGrader = evaluator(obj.level,obj.levelArray);
+            obj.autoGrader = evaluator(obj.level,obj.levelArray);
             obj.stackPointer = 2;
             repeat = true;
-            while obj.stackPointer < 14 && repeat
+            obj.stopExecution = false;
+            set(obj.screen.my_figure, 'WindowButtonDownFcn', @(src,event)mouseClickCallback(src,event));
+            while obj.stackPointer < 14 && repeat && ~obj.stopExecution
                 obj.levelArray(obj.stackPointer,11) = 110;
                 repeat=executeLine(obj,(obj.editorWindowArray(obj.stackPointer,9)));
                 drawScene(obj.screen,obj.BGArray,obj.levelArray,obj.editorWindowArray);
-                pause(1);
+                set(obj.screen.my_figure, 'WindowButtonDownFcn', @(src,event)mouseClickCallback(src,event));
+                pause(0.8);
                 obj.stackPointer = obj.stackPointer + 1;
                 obj.levelArray(obj.stackPointer-1,11) = 101;
                 fprintf('stackPointer: %d\n',obj.stackPointer);
+                drawnow;
             end
-            autoGrader.evalutate(obj.levelArray);
+            obj.autoGrader.finalEval();
+            set(obj.screen.my_figure, 'WindowButtonDownFcn', ''); %clears the mouse click callback
+            function mouseClickCallback(~,~)
+                clickPoint = get(obj.screen.my_figure.CurrentAxes, 'CurrentPoint');
+                x = clickPoint(1,1);
+                y = clickPoint(1,2);
+                disp(x)
+                disp(y)
+                % Define the region where clicking stops execution
+                if x >= (9*512) && x <=(10*512) && y >= 0 && y <= 512
+                    obj.stopExecution = true;
+                    disp('Execution stopped');
+                    drawnow;
+                end
+            end
         end
         function boolean = executeLine(obj,blockID)
             boolean = true;
@@ -60,6 +81,7 @@ classdef interpreter < handle
                         boolean = false;
                     else
                         pushOutbox(obj);
+                        boolean=obj.autoGrader.evalutate(obj.levelArray); %checks the outbox value, if it is incorrect, terminate program
                     end
                 case 59 %add
                     boolean = add(obj); %if add fails, terminate program
@@ -105,30 +127,12 @@ classdef interpreter < handle
                 end
             end 
         end
-        function pushOutboxold(obj)
-            repeat=true;
-            i=9;
-            while repeat
-                if obj.levelArray(i,6) == 101
-                    obj.levelArray(i,6) = obj.levelArray(9,4);
-                    obj.levelArray(9,4) = 101;
-                    repeat = false;
-                end
-                if (i>2)
-                    i = i -1;
-                else
-                    fprintf('outbox is full\n');
-                    repeat = false;
-                end
-            end 
-        end
         function pushOutbox(obj)
             for i=8:-1:3
                 obj.levelArray(i+1,6) = obj.levelArray(i,6);
             end
             obj.levelArray(3,6) = obj.levelArray(9,4);
         end
-        
         function boolean = isInboxEmpty(obj)
             counter=0;
             for i=3:9
@@ -146,7 +150,7 @@ classdef interpreter < handle
             dest = obj.editorWindowArray(obj.stackPointer,10); %gets destination from levelArray
             fprintf('jumping to %d\n',dest);
             dest = obj.toNumber(dest);
-            obj.levelArray(obj.stackPointer,11) = 101; %makes sure the pointer does not linger on the jump block
+            %obj.levelArray(obj.stackPointer,11) = 101; %makes sure the pointer does not linger on the jump block
             obj.stackPointer = dest; %sets stackpointer to the jump desitnation no need to worry about the +1 since the runner handles that 
         end
         function boolean = jumpConditional(obj,condition)
