@@ -25,7 +25,7 @@ if exist("score","var") ~= true
     score = [0,0,0];
 end
 
-clc
+%clc
 
 % creation/initialization of main variables/arrays/matrixes used
 global deck;
@@ -59,7 +59,7 @@ cards = [];
 
 graphicOutput(-1)
 
-gamble = gambleAmount(money);
+gamble = gambleAmount(money,score);
 
 
 if gamble ~= -1
@@ -97,7 +97,7 @@ while total(1)<21
     % if player typed anything other than 'h' or 'hit' its read as stand
     %if strcmpi(choice,'h') | strcmpi(choice,'hit')
     if choice()
-        clc
+        %clc
         drawCard(1,1)
         %outputCards(1)
 
@@ -133,7 +133,7 @@ if bust==false && bj==false
     end
 end
     
-clc
+%clc
 % output final player cards
 %outputCards(1)
 % if player blackjack, then output message

@@ -23,7 +23,7 @@ function [] = graphicOutput(turn)
     
 %% gambling amount & menu    
 if turn == -1
-    drawScene(luigi,[g;g]);
+    drawScene(luigi,[l;g]);
 else
 
     card = ones(1:4);

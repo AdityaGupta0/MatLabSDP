@@ -1,5 +1,5 @@
 %%
-function gamble = gambleAmount(money)
+function gamble = gambleAmount(money,score)
 
     global luigi;
 
@@ -7,7 +7,12 @@ function gamble = gambleAmount(money)
 
     txt = {'How much do you want to gamble?', ['You have $', num2str(money)]};
 
-    t = text(25,50,txt, FontSize=14);
+    t = text(25,725,txt, FontSize=14);
+
+    scoreTxt = {['Player: ',num2str(score(1))],['Dealer: ',num2str(score(2))] ...
+        ,['Ties: ',num2str(score(3))]};
+
+    scoreDisplay = text(25,1200,scoreTxt,FontSize=14);
 
     amount = '';
 
@@ -62,7 +67,7 @@ function gamble = gambleAmount(money)
             delete(amountO)
             amountO = [];
             amount = num2str(gambleSet);
-            amountO = text(25,125,amount, FontSize=14);
+            amountO = text(25,825,amount, FontSize=14);
 
             digit = digit + 1;
 
@@ -80,7 +85,7 @@ function gamble = gambleAmount(money)
                 delete(amountO)
                 amountO = [];
                 amount = 'Invalid';
-                amountO = text(25,125,amount, FontSize=14);
+                amountO = text(25,825,amount, FontSize=14);
             end
         else
             gamble = -1;
@@ -89,5 +94,6 @@ function gamble = gambleAmount(money)
     end
     delete(t)
     delete(amountO)
+    delete(scoreDisplay)
     clear amount
 end
