@@ -16,7 +16,7 @@ classdef destHandler < handle
             obj.BGArray(1,4) = 92;
             obj.BGArray(1,5) = 93;
             drawScene(obj.screen,obj.BGArray,obj.FGArray,obj.OVArray); %draws the scene with the input prompt
-            lineNum1 = str2double(getKeyboardInput(obj.screen)); %poopypants
+            lineNum1 = str2double(getKeyboardInput(obj.screen));%gets the keyboard input from user and converts it to an integer
             lineNum2 = str2double(getKeyboardInput(obj.screen)); 
             lineNum = lineNum1*10+lineNum2;
             if lineNum<1 || lineNum>15 %validates that the line number is within the bounds of the lines

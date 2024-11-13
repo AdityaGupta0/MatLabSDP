@@ -1,6 +1,6 @@
 classdef arrayMaker
     methods (Static)
-        function BGArray = getBGArray()
+        function BGArray = getBGArray() %returns the background array which has the psirtes for buttons and static ui elements
             BGArray = [82,1,1,1,1,1,1,71,79,80,81;
             1,74,1,73,1,75,1,71,1,1,1;
             1,72,1,72,1,72,1,71,1,1,1;
@@ -17,7 +17,7 @@ classdef arrayMaker
             1,61,1,62,1,103,1,70,1,1,1;
             1,63,1,64,1,65,1,70,1,1,1];
         end
-        function editorWindowArray = getEditorWindowArray()
+        function editorWindowArray = getEditorWindowArray() %transparent except for the line numbers
             editorWindowArray = [101,101,101,101,101,101,101,101,101,101,101;
             101,101,101,101,101,101,101,7,101,101,101;
             101,101,101,101,101,101,101,8,101,101,101;
@@ -34,7 +34,7 @@ classdef arrayMaker
             101,101,101,101,101,101,101,19,101,101,101;
             101,101,101,101,101,101,101,20,101,101,101];
         end
-        function array = getLevelScreenArray(level)
+        function array = getLevelScreenArray(level) %parametric random number generation 
             randArray = (zeros(15,11)+101);
             switch level
                 case 1 %level 1, generates 2 random positive numbers

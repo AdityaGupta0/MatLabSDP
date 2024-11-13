@@ -12,7 +12,7 @@ classdef betterGameEngine < handle
     end
     
     methods
-        function obj = simpleGameEngine(sprites_fname, sprite_height, sprite_width, zoom, background_color)
+        function obj = betterGameEngine(sprites_fname, sprite_height, sprite_width, zoom, background_color)
             % simpleGameEngine
             % Input: 
             %  1. File name of sprite sheet as a character array

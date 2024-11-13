@@ -127,13 +127,13 @@ classdef interpreter < handle
                 end
             end 
         end
-        function pushOutbox(obj)
+        function pushOutbox(obj) %pushes the value in LCL to the outbox. Allows overwriting of outbox
             for i=8:-1:3
                 obj.levelArray(i+1,6) = obj.levelArray(i,6);
             end
             obj.levelArray(3,6) = obj.levelArray(9,4);
         end
-        function boolean = isInboxEmpty(obj)
+        function boolean = isInboxEmpty(obj) 
             counter=0;
             for i=3:9
                 if obj.levelArray(i,2) == 101
@@ -146,14 +146,14 @@ classdef interpreter < handle
                 boolean=false;
             end
         end
-        function jump(obj)
+        function jump(obj) %jumps to the user defined line
             dest = obj.editorWindowArray(obj.stackPointer,10); %gets destination from levelArray
             fprintf('jumping to %d\n',dest);
             dest = obj.toNumber(dest);
             %obj.levelArray(obj.stackPointer,11) = 101; %makes sure the pointer does not linger on the jump block
             obj.stackPointer = dest; %sets stackpointer to the jump desitnation no need to worry about the +1 since the runner handles that 
         end
-        function boolean = jumpConditional(obj,condition)
+        function boolean = jumpConditional(obj,condition) %checks the condition and calls jump func if it is met
             boolean=false;
             fprintf('possibly jumping \n');
             if obj.levelArray(3,4) == 101 %if ARG is empty terminate program
@@ -172,7 +172,7 @@ classdef interpreter < handle
                 end
             end
         end
-        function copyTo(obj)
+        function copyTo(obj) 
             addr = (obj.editorWindowArray(obj.stackPointer,10)*2)-1;
             obj.levelArray(addr,4) = obj.levelArray(9,4);
         end
@@ -191,9 +191,9 @@ classdef interpreter < handle
             addr = (obj.editorWindowArray(obj.stackPointer,10)*2)-1; %converts adress to line number of spirte
             if obj.levelArray(addr,4) == 101
                 fprintf('cant add nothing from register\n');
-            else
+            else 
                 added = obj.toNumber(obj.levelArray(addr,4)) +obj.toNumber(obj.levelArray(9,4));
-                if added > 25 || added < -25 
+                if added > 25 || added < -25 %checks to make sure the value is within the bounds of the sprite sheet
                     fprintf('addition overflow\n');
                 else
                     obj.levelArray(9,4) = obj.toSprite(added);
@@ -217,13 +217,13 @@ classdef interpreter < handle
             end
         end
         function boolean = bump(obj,dir) %dir is 1 for bump+ and -1 for bump-
-            boolean = false;
+            boolean = false; %returns false if fails
             addr = (obj.editorWindowArray(obj.stackPointer,10)*2)-1; %converts adress to line number of spirte
             if obj.levelArray(addr,4) == 101
                 fprintf('cant bump nothing from register\n');
             else
                 bumped = obj.toNumber(obj.levelArray(addr,4)) + dir;
-                if bumped > 25 || bumped < -25 
+                if bumped > 25 || bumped < -25 %validates output is not out of bounds
                     fprintf('bump overflow\n');
                 else
                     obj.levelArray(addr,4) = obj.toSprite(bumped);
@@ -233,7 +233,7 @@ classdef interpreter < handle
             end
         end
     end
-    methods (Static)
+    methods (Static) %these are just conversion helpers
         function spriteID = number2Sprite(num)
             toSprite=containers.Map([-25:1:25],cat(2,[56:-1:32],[6:1:31]));
             spriteID = toSprite(num);

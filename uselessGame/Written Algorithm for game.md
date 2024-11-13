@@ -1,4 +1,4 @@
-#algorithm for game
+# algorithm for game
 
 Start program at welcome screen
 wait until the user clicks the screen, once user clicks the screen change screen to level select screen
