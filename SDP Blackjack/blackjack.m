@@ -32,6 +32,8 @@ global deck;
 global numAces;
 global total;
 global cards;
+global consecutiveWins;
+consecutiveWins = 0;
 % deck is the overall deck of undrawn cards, preventing duplicates
 deck = logical(true(13,4));
 % numAces is used to determine the value of aces for both player & opponent
@@ -148,6 +150,7 @@ graphicOutput(3)
 % if player bust or blackjack, then opponent didn't draw cards, so don't
 % output total
 
+previousScore = score(1);
 % logic to determine final results, output a proper message, and add to the
 % score and money amount
 if bj
@@ -175,6 +178,9 @@ else
     score(3)=score(3)+1;
 end
 
+if score(1) > previousScore
+    consecutiveWins = consecutiveWins + 1;
+end
 % clear out unused variables for this loop
 % can't use clear function because still need 'score' and 'money'
 clear bust
