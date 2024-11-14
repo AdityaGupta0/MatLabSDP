@@ -9,7 +9,7 @@ function gamble = gambleAmount(money,score)
 
     t = text(25,725,txt, FontSize=14);
 
-    scoreTxt = {['Player: ',num2str(score(1))],['Dealer: ',num2str(score(2))] ...
+    scoreTxt = {['Player Wins: ',num2str(score(1))],['Dealer Wins: ',num2str(score(2))] ...
         ,['Ties: ',num2str(score(3))]};
 
     scoreDisplay = text(25,1200,scoreTxt,FontSize=14);

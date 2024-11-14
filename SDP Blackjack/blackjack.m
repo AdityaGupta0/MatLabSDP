@@ -43,6 +43,9 @@ total = [0,0];
 % their hand
 cards = [];
 
+% IGNORE - PREVIOUS CODE FOR GAMBLING AMOUNT
+% REPLACED W/ gambleAmount FUNCTION
+
 % prompt user and store value for gambling amount
 %fprintf('You have $%d\n',money)
 %gamble=input('How much would you like to gamble?\n');
@@ -56,6 +59,7 @@ cards = [];
 %        choice=input('You don''t have that much money!');
 %    end
 %end
+
 
 graphicOutput(-1)
 
@@ -82,9 +86,6 @@ bj = false;
 if total(1) == 21
     bj=true;
 end
-    % if the 2 drawn cards are the same, and have money left
-    % give choice to split and do twice
-    %if cards(1,1,1) == cards(1,2,1) && (money-gamble) >= gamble
         
 bust = false;
 % if the player hasn't 'won' yet, then prompt for choice
@@ -195,7 +196,8 @@ if money>0
     %    clear choice
     %    loop = true;
     %end
-    loop = exitLoop();
+    % loop = exitLoop();
+    loop = true;
 end
 
 else
@@ -203,6 +205,10 @@ else
 end
 
 end
+
+% reminding the player of their loss
+t = text(225,850,'L', FontSize=150);
+pause(.5);
 
 close
 
