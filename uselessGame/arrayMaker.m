@@ -77,9 +77,10 @@ classdef arrayMaker
         function challenge = getLevelChallenge(level)
             switch level
                 case 1
-                    challenge = 'Use the inbox and outbox commands to move all the numbers from the inbox to the outbox';
+                    challenge = {'In computers, there are inputs and outputs, represented by the inbox and outbox respectivly';'There are also registers to store numbers, while performing operations on them';'The LCL (local) register represents the value currently in your control.';
+                                'Use the inbox and outbox blocks to move the values in the inbox to the outbox';'click the play button to run your code'};
                 case 2
-                    challenge = 'Move all the items in the inbox to the outbox. Hint: a better way than just using inbox and outbox is to use the jump command to repeat a section of code.';
+                    challenge = {'Move all the items in the inbox to the outbox.';'Hint: a better way than just using inbox and outbox is to use the jump command to repeat a section of code.'};
                 case 3
                     challenge = 'Outbox the first number in the inbox 3 times. Use the copyTo command to store the number in a register and the copyFrom command to get the number from the register.';
                 case 4

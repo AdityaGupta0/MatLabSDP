@@ -4,12 +4,11 @@ drawScene(screen, [100]);
 getMouseInput(screen);
 
 levelSelectScreen = levelSelectScreen();
-
 while true
     clear levelScreen;
     repeat = true;
     drawScene(screen,levelSelectScreen.levelSelectSceneArray);
-
+    title({'In computer science, engineers need to understand how low level code works.';'This game will teach you the logic of assembly and VM code'});
     level = levelSelectScreen.getSelectedLevel(screen);
 
 

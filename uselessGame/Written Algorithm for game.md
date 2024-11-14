@@ -17,7 +17,7 @@ if user types 2, set register of the block to THIS and go back to line 7
 if user types 3, set register of block to THAT and go back to line 7
 if user types 4, set register of block to LOCAL and go back to line 7
 
-#algorithm for interpreter
+# algorithm for interpreter
 set the line incrementor to 1
 got to the code block at the line = to line incrementor
 if the code block is "inbox", put the topmost inbox value in the local register and remove that value from the inbox 
