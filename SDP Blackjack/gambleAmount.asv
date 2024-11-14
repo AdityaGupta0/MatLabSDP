@@ -18,7 +18,7 @@ function gamble = gambleAmount(money,score)
 
     amountO = [];
 
-    letMeOut=0;
+    letMeOut=false;
 
     while ~valid
 
@@ -29,7 +29,7 @@ function gamble = gambleAmount(money,score)
 
         back = false;
 
-        while ~enter && digit < 17
+        while ~enter
             key = getKeyboardInput(luigi);
             if strcmp(key,'1')
                 gambleSet(digit) = 1;
@@ -58,15 +58,17 @@ function gamble = gambleAmount(money,score)
                 digit = digit - 2;
                 gambleSet(digit+1) = [];
             elseif strcmp(key, 'escape')
-                letMeOut = 1;
+                letMeOut = true;
                 break;
             elseif strcmp(key, 'r')
-                letMeOut = 2;
+
                 break;
             else
                 digit = digit - 1;
             end
 
+            if(digit >=1)
+            
             delete(amountO)
             amountO = [];
             amount = num2str(gambleSet);
@@ -76,14 +78,7 @@ function gamble = gambleAmount(money,score)
 
         end
 
-        if letMeOut == 0
-            
-            if digit == 17
-                delete(amountO)
-                amountO = [];
-                amount = 'Invalid';
-                amountO = text(25,850,amount, FontSize=14);
-            else
+        if ~letMeOut
 
             for i=digit:-1:1
                 gamble = gamble + gambleSet(i) * 10^(digit-i);
@@ -97,12 +92,8 @@ function gamble = gambleAmount(money,score)
                 amount = 'Invalid';
                 amountO = text(25,850,amount, FontSize=14);
             end
-            end
-        elseif letMeOut == 1
+        else
             gamble = -1;
-            break;
-        elseif letMeOut == 2
-            gamble = -2;
             break;
         end
     end

@@ -17,10 +17,11 @@ global total;
 global cards;
 
 money = 100;
-score = [0,0,0];
+score = [0,0,0]
 
 loop = true;
 while loop
+    fprintf('loop')
     
 loop = false;
 
@@ -59,7 +60,14 @@ graphicOutput(-1)
 
 gamble = gambleAmount(money,score);
 
-if gamble >= 0
+if gamble == -2
+    money = 100;
+    score = [0,0,0];
+    loop = true;
+    continue;
+end
+
+if gamble ~= -1
 
 %clc
 
@@ -170,10 +178,14 @@ end
 
 % clear out unused variables for this loop
 % can't use clear function because still need 'score' and 'money'
-%clear bust
-%clear choice
-%clear bj
-%clear gamble
+clear bust
+clear numAces
+clear total
+clear choice
+clear bj
+clear cards
+clear deck
+clear gamble
 
 % output current score & money
 %fprintf('Player: %d - Opponent: %d - Ties: %d\n',score(1),score(2),score(3))
@@ -189,15 +201,15 @@ end
     loop = true;
 %end
 
-elseif gamble == -1
+else
     loop = false;
-elseif gamble == -2
-    money = 100;
-    score = [0,0,0];
-    loop = true;
 end
 
 end
+
+% reminding the player of their loss
+t = text(225,850,'L', FontSize=150);
+pause(.5);
 
 close
 
