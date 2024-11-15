@@ -1,4 +1,8 @@
 %%
+
+% ****************************************************************
+% NOT USED ANYMORE - CHECKED IN GAMBLE AMOUNT INSTEAD
+% ****************************************************************
 function loop = exitLoop()
   
 global luigi;

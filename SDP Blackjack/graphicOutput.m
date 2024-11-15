@@ -1,4 +1,5 @@
 %%
+% -1 - gamble amount & menu
 % 0 - first cards
 % 1 - you drawing cards
 % 2 - opp drawing cards
