@@ -44,9 +44,9 @@ classdef levelScreen < handle
         function eventNum = getClickEvent(obj,r,c,b)
             temp = 0;
             if b==1
+                blockhandle = blockHandler(obj.levelScreenBGArray,obj.editorWindowArray,obj.linePointer);
+                destHandle = destHandler(obj.screen,obj.levelScreenBGArray,obj.levelScreenArray,obj.editorWindowArray);
                 if (r>11) && (c<7) %if mouse is clicked in the block select window
-                    blockhandle = blockHandler(obj.levelScreenBGArray,obj.editorWindowArray,obj.linePointer);
-                    destHandle = destHandler(obj.screen,obj.levelScreenBGArray,obj.levelScreenArray,obj.editorWindowArray);
                     temp =1;
                     if (r==12) && (c==2) %inbox
                         fprintf('inbox\n')
@@ -89,9 +89,6 @@ classdef levelScreen < handle
                         addBlock(blockhandle,'jump',destHandle.getJumpDest());
                         
                     end
-                    obj.editorWindowArray = blockhandle.editorArray;
-                    obj.linePointer = blockhandle.linePointer;
-                    obj.levelScreenBGArray = blockhandle.BGArray;
                 elseif (r==1)
                     if (c==1) %quit button
                         fprintf('quit\n')
@@ -112,9 +109,21 @@ classdef levelScreen < handle
                         obj.runned = false;
                     end
                 elseif(r>1) && (c>8) %if mouse is clicked in the editor window
+                    if obj.levelScreenBGArray(r,10) ~= 1 %if the mouse is clicked in the dest block column and the row isnt empty
+                        if (obj.levelScreenBGArray(r,10)==66) %if it is the destination of a jump block
+                            updateDest(blockhandle,r,destHandle.getJumpDest());
+                        else %if it is the destination of a register block
+                            updateDest(blockhandle,r,destHandle.getRegisterDest());
+                        end
+                        fprintf('block window\n')
+                        fprintf('line %d\n',r-1)
+                    end
                     fprintf('editor window\n')
                     fprintf('line %d\n',r-1)
                 end
+                obj.editorWindowArray = blockhandle.editorArray;
+                obj.linePointer = blockhandle.linePointer;
+                obj.levelScreenBGArray = blockhandle.BGArray;
             end
             eventNum = temp;
         end
