@@ -65,7 +65,7 @@ classdef interpreter < handle
                 if x >= (9*512) && x <=(10*512) && y >= 0 && y <= 512
                     obj.stopExecution = true;
                     disp('Execution stopped');
-                    displayMsg('Execution stopped');
+                    displayMsg('Program stopped');
                     drawnow;
                 end
             end

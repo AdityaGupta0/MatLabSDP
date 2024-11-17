@@ -99,6 +99,8 @@ classdef levelScreen < handle
                             obj.runned = true;
                             run(obj.interpret);
                             obj.levelScreenArray = obj.interpret.levelArray;
+                        else
+                            displayMsg('Reset the level to run again');
                         end
                     elseif c==10 %pause button
                         fprintf('pause\n') %maybe consider doing a step instead of pause
@@ -106,6 +108,7 @@ classdef levelScreen < handle
                         fprintf('reset\n')
                         obj.levelScreenArray = arrayMaker.getLevelScreenArray(obj.level);
                         obj.runned = false;
+                        title('') %clears any messages
                     end
                 elseif(r>1) && (c>8) %if mouse is clicked in the editor window
                     if obj.levelScreenBGArray(r,10) ~= 1 %if the mouse is clicked in the dest block column and the row isnt empty
