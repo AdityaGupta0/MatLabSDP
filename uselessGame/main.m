@@ -8,7 +8,9 @@ while true
     clear levelScreen;
     repeat = true;
     drawScene(screen,levelSelectScreen.levelSelectSceneArray);
-    title({'In computer science, engineers need to understand how low level code works.';'This game will teach you the logic of assembly and VM code'},...
+    title({'In computer science, engineers need to understand how low level code works.';
+    'This game will teach you the logic of assembly and VM code.';
+    'Low level code is size constrained so each program is limited to 15 lines of code'},...
         'Units', 'normalized', 'Position', [0.5, 0.1, 0], 'FontSize', 12);
     level = levelSelectScreen.getSelectedLevel(screen);
 

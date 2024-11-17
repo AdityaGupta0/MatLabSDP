@@ -51,5 +51,8 @@ a value is negative, make it positive, and then output it.
 The ALU we talked about earlier can add and subtract, but cannot multiply. For each two values in the 
 inbox, multiply them, and output the product. (Yes this is possible in 15 lines.)
 
+Countdown time! for each value in the inbox, countdown to zero (or up to if negative), outboxing each
+number along the way. (Yes, this is possible in 14 lines.)
+
 # Level 12
 Free play!
