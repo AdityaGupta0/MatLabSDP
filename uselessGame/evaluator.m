@@ -46,18 +46,59 @@ classdef evaluator < handle
         function solve(obj)
             switch obj.level
                 case 1
-                   obj.solution = obj.inbox;
+                    obj.solution = obj.inbox;
                 case 2
                     obj.solution = obj.inbox;
                 case 3
-                    obj.solution = [obj.inbox,obj.inbox,obj.inbox];
-                case 4
-                case 5
-                case 6
-                case 7
-                case 8
+                    obj.solution = [obj.inbox,obj.inbox];
+                case 4 %reverse each group of two numbers
+                    obj.solution = [obj.inbox(2),obj.inbox(1),obj.inbox(4),obj.inbox(3),obj.inbox(6),obj.inbox(5)];
+                case 5 %adds each group of two numbers
+                    obj.solution = [(obj.inbox(1)+obj.inbox(2)),(obj.inbox(3)+obj.inbox(4)),(obj.inbox(5)+obj.inbox(6))];
+                case 6 %outputs all values that arent zero
+                    obj.solution = obj.inbox(obj.inbox~=0);
+                case 7 %zero if negative, one if positive
+                    for i=1:5
+                        if obj.inbox(i+2) < 0
+                            obj.solution(i) = 0;
+                        else
+                            obj.solution(i) = 1;
+                        end
+                    end
+                case 8 %subtracts each group of two numbers both ways
+                    for i=1:2:6
+                        obj.solution(i) = obj.inbox(i+1)-obj.inbox(i);
+                        obj.solution(i+1) = obj.inbox(i)-obj.inbox(i+1);
+                    end
                 case 9
-                    obj.solution = obj.inbox;
+                    a = 1; %increments by 1 for outbox
+                    b = 1; %increments by 2 for inbox
+                    while a<4
+                        if obj.inbox(b)>obj.inbox(b+1)
+                            obj.solution(a) = obj.inbox(b);
+                            
+                        else
+                            obj.solution(a) = obj.inbox(b+1);
+                        end
+                        a = a+1;
+                        b = b+2;
+                    end
+                case 10 %absolute value
+                    obj.solution = abs(obj.inbox);
+                case 11 %counts down/up for each value in the array
+                    for i=1:length(obj.inbox)
+                        if obj.inbox(i) < 0
+                            for j=0:obj.inbox(i)
+                                obj.solution = obj.inbox(i)+j;
+                            end
+                        else
+                            for j=0:obj.inbox(i)
+                                obj.solution = obj.inbox(i)-j;
+                            end
+                        end
+                    end
+                case 12 %free play
+                    %obj.solution = obj.outbox;
             end
         end
     end
