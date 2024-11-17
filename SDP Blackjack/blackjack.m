@@ -39,7 +39,7 @@ while loop
     % their hand
     cards = [];
     
-    %% IGNORE - PREVIOUS CODE FOR GAMBLING AMOUNT
+%% IGNORE - PREVIOUS CODE FOR GAMBLING AMOUNT
     % REPLACED W/ gambleAmount FUNCTION
     
     % prompt user and store value for gambling amount
@@ -55,6 +55,7 @@ while loop
     %        choice=input('You don''t have that much money!');
     %    end
     %end
+%%
     
     % output menu screen
     graphicOutput(-1)
@@ -171,7 +172,8 @@ while loop
             score(3)=score(3)+1;
         end
         
-        % clear out unused variables for this loop
+%% IGNORE PREVIOUS LOOP METHOD
+         % clear out unused variables for this loop
         % can't use clear function because still need 'score' and 'money'
         %clear bust
         %clear choice
@@ -189,6 +191,7 @@ while loop
             %    loop = true;
             %end
             % loop = exitLoop();
+%%
             loop = true;
         %end
     
@@ -206,6 +209,6 @@ close
 
 % after player looeses all money or walks away, output final money and
 % profit, and score
-fprintf('Player: %d - Opponent: %d - Ties: %d\n',score(1),score(2),score(3))
-fprintf('Final Money: $%d\nProfit: $%d\n', money,money-100);
+%fprintf('Player: %d - Opponent: %d - Ties: %d\n',score(1),score(2),score(3))
+%fprintf('Final Money: $%d\nProfit: $%d\n', money,money-100);
 clear
