@@ -42,12 +42,12 @@ classdef levelScreen < handle
             obj.linePointer = line;
         end
         function eventNum = getClickEvent(obj,r,c,b)
-            temp = 0;
+            status = 0;
             if b==1
                 blockhandle = blockHandler(obj.levelScreenBGArray,obj.editorWindowArray,obj.linePointer);
                 destHandle = destHandler(obj.screen,obj.levelScreenBGArray,obj.levelScreenArray,obj.editorWindowArray);
                 if (r>11) && (c<7) %if mouse is clicked in the block select window
-                    temp =1;
+                    status =1;
                     if (r==12) && (c==2) %inbox
                         fprintf('inbox\n')
                         addBlock(blockhandle,'inbox');
@@ -76,23 +76,22 @@ classdef levelScreen < handle
                         fprintf('bump up\n')
                         addBlock(blockhandle,'bump+',destHandle.getRegisterDest());
                     elseif (r==15) && (c==2) %jump if zero
-                        temp=2;
+                        status=2;
                         fprintf('jump if zero\n')
                         addBlock(blockhandle,'jump if zero',destHandle.getJumpDest());
                     elseif (r==15) && (c==4) %jump if negative
-                        temp=2;
+                        status=2;
                         fprintf('jump if negative\n')
                         addBlock(blockhandle,'jump if negative',destHandle.getJumpDest());
                     elseif (r==15) && (c==6) %jump
-                        temp=2;
+                        status=2;
                         fprintf('jump\n')
                         addBlock(blockhandle,'jump',destHandle.getJumpDest());
-                        
                     end
                 elseif (r==1)
                     if (c==1) %quit button
                         fprintf('quit\n')
-                        temp = -1;
+                        status = -1;
                     elseif c==9 %run button
                         fprintf('run\n')
                         updateArrays(obj.interpret,obj.levelScreenBGArray,obj.levelScreenArray,obj.editorWindowArray);
@@ -125,7 +124,7 @@ classdef levelScreen < handle
                 obj.linePointer = blockhandle.linePointer;
                 obj.levelScreenBGArray = blockhandle.BGArray;
             end
-            eventNum = temp;
+            eventNum = status;
         end
     end
 end
