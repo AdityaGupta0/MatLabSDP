@@ -47,6 +47,15 @@ classdef levelSelectScreen < handle
                                 case 4
                                     level = 9;
                             end
+                        case 5
+                            switch c
+                                case 2
+                                    level = 10;
+                                case 3
+                                    level = 11;
+                                case 4
+                                    level = 12;
+                            end
                     end
                 end
             end
