@@ -8,6 +8,7 @@ classdef levelSelectScreen < handle
                                         1,96,97,98,1;
                                         1,99,105,106,1;
                                         1,107,108,109,1
+                                        1,111,112,113,1;
                                         1,1,1,1,1];
         end
         function levelSelectSceneArray = getLevelSelectSceneArray()
@@ -45,6 +46,15 @@ classdef levelSelectScreen < handle
                                     level = 8;
                                 case 4
                                     level = 9;
+                            end
+                        case 5
+                            switch c
+                                case 2
+                                    level = 10;
+                                case 3
+                                    level = 11;
+                                case 4
+                                    level = 12;
                             end
                     end
                 end
