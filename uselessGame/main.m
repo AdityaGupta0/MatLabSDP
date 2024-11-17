@@ -19,7 +19,7 @@ while true
     drawScene(screen,getLevelScreenBGArray(levelScreen),getLevelScreenArray(levelScreen),getEditorWindowArray(levelScreen));
     while repeat
         text(512,512,'Enter destination');
-        title(arrayMaker.getLevelChallenge(levelScreen.level));
+        %title(arrayMaker.getLevelChallenge(levelScreen.level));
         [r,c,b] = getMouseInput(screen);
         eventNum = getClickEvent(levelScreen,r,c,b);
         if eventNum == -1 %quit condition

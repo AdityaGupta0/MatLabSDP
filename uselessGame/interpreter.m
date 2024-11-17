@@ -33,14 +33,16 @@ classdef interpreter < handle
             obj.BGArray = BGArray;
         end
         function run(obj)
+            displayMsg('running...')
             obj.autoGrader = evaluator(obj.level,obj.levelArray);
             obj.stackPointer = 2;
-            repeat = true;
+            status = 0;
             obj.stopExecution = false;
             set(obj.screen.my_figure, 'WindowButtonDownFcn', @(src,event)mouseClickCallback(src,event));
-            while obj.stackPointer < 14 && repeat && ~obj.stopExecution
+
+            while obj.stackPointer < 14 && status==0 && ~obj.stopExecution
                 obj.levelArray(obj.stackPointer,11) = 110;
-                repeat=executeLine(obj,(obj.editorWindowArray(obj.stackPointer,9)));
+                status=executeLine(obj,(obj.editorWindowArray(obj.stackPointer,9)));
                 drawScene(obj.screen,obj.BGArray,obj.levelArray,obj.editorWindowArray);
                 set(obj.screen.my_figure, 'WindowButtonDownFcn', @(src,event)mouseClickCallback(src,event));
                 pause(0.8);
@@ -49,7 +51,9 @@ classdef interpreter < handle
                 fprintf('stackPointer: %d\n',obj.stackPointer);
                 drawnow;
             end
-            obj.autoGrader.finalEval();
+            if status == 1
+                obj.autoGrader.finalEval();
+            end
             set(obj.screen.my_figure, 'WindowButtonDownFcn', ''); %clears the mouse click callback
             function mouseClickCallback(~,~)
                 clickPoint = get(obj.screen.my_figure.CurrentAxes, 'CurrentPoint');
@@ -61,53 +65,56 @@ classdef interpreter < handle
                 if x >= (9*512) && x <=(10*512) && y >= 0 && y <= 512
                     obj.stopExecution = true;
                     disp('Execution stopped');
+                    displayMsg('Execution stopped');
                     drawnow;
                 end
             end
         end
-        function boolean = executeLine(obj,blockID)
-            boolean = true;
+        function statusCode = executeLine(obj,blockID)
+            statusCode = 0; %zero means continue execution, 1 means stop, -1 means error
             switch blockID
                 case 57 %inbox
                     if isInboxEmpty(obj) %if inbox is empty
                         fprintf('cant inbox nothing\n');
-                        boolean = false;
+                        statusCode = 1;
                     else
                         popInbox(obj);
                     end
                 case 58 %outbox
-                    if (obj.levelArray(9,4)) == 101 %if LCL is empty and
+                    if (obj.levelArray(9,4)) == 101 %if LCL is empty
                         fprintf('Cant outbox nothing\n');
-                        boolean = false;
+                        displayMsg('Error: cant outbox nothing');
+                        statusCode = -1;
                     else
                         pushOutbox(obj);
-                        boolean=obj.autoGrader.evalutate(obj.levelArray); %checks the outbox value, if it is incorrect, terminate program
+                        statusCode=obj.autoGrader.evalutate(obj.levelArray); %checks the outbox value, if it is incorrect, terminate program
                     end
                 case 59 %add
-                    boolean = add(obj); %if add fails, terminate program
+                    statusCode = add(obj); %if add fails, terminate program
                 case 60 %sub
                 case 61 %copyfrom
-                    boolean = copyFrom(obj); %if copyfrom fails, terminate program
+                    statusCode = copyFrom(obj); %if copyfrom fails, terminate program
                 case 62 %copyto
                     if obj.levelArray(9,4) == 101 %if LCL is empty
                         fprintf('cant copy nothing\n');
-                        boolean = false;
+                        displayMsg('Error: cant copy nothing');
+                        statusCode = -1;
                     else
                         copyTo(obj);
                     end
                 case 63 %jump if zero
-                    boolean=jumpConditional(obj,0);
+                    statusCode=jumpConditional(obj,0);
                 case 64 %jump if negative
-                    boolean=jumpConditional(obj,-1);
+                    statusCode=jumpConditional(obj,-1);
                 case 65 %jump
                     jump(obj);
                 case 102 %bump-
-                    boolean=bump(obj,-1);
+                    statusCode=bump(obj,-1);
                 case 103 %bump+
-                    boolean=bump(obj,1);
+                    statusCode=bump(obj,1);
                 case 101 %no block
                     fprintf('no block\n');
-                    boolean=false;    
+                    statusCode=1;
             end
         end
         function popInbox(obj) 
@@ -153,13 +160,14 @@ classdef interpreter < handle
             %obj.levelArray(obj.stackPointer,11) = 101; %makes sure the pointer does not linger on the jump block
             obj.stackPointer = dest; %sets stackpointer to the jump desitnation no need to worry about the +1 since the runner handles that 
         end
-        function boolean = jumpConditional(obj,condition) %checks the condition and calls jump func if it is met
-            boolean=false;
+        function statusCode = jumpConditional(obj,condition) %checks the condition and calls jump func if it is met
             fprintf('possibly jumping \n');
             if obj.levelArray(3,4) == 101 %if ARG is empty terminate program
                 fprintf('cant jump-if when ARG is empty\n');
+                displayMsg('Error: cant jump-if when ARG is empty');
+                statusCode=-1;
             else
-                boolean=true;
+                statusCode=0;
                 switch condition
                     case 0 %jump if zero
                         if obj.toNumber(obj.levelArray(3,4))==0
@@ -176,59 +184,66 @@ classdef interpreter < handle
             addr = (obj.editorWindowArray(obj.stackPointer,10)*2)-1;
             obj.levelArray(addr,4) = obj.levelArray(9,4);
         end
-        function boolean = copyFrom(obj)
-            boolean = false;
+        function statusCode = copyFrom(obj)
             addr = (obj.editorWindowArray(obj.stackPointer,10)*2)-1;
             if obj.levelArray(addr,4) == 101
                 fprintf('cant copy nothing from register\n');
+                displayMsg('Error: cant copy nothing from register');
+                statusCode = -1;
             else
                 obj.levelArray(9,4) = obj.levelArray(addr,4);
-                boolean = true;
+                statusCode = 0;
             end
         end
-        function boolean = add(obj)
-            boolean = false;
+        function statusCode = add(obj)
+            statusCode = -1;
             addr = (obj.editorWindowArray(obj.stackPointer,10)*2)-1; %converts adress to line number of spirte
             if obj.levelArray(addr,4) == 101
                 fprintf('cant add nothing from register\n');
+                displayMsg('Error: cant add nothing from register');
             else 
                 added = obj.toNumber(obj.levelArray(addr,4)) +obj.toNumber(obj.levelArray(9,4));
                 if added > 25 || added < -25 %checks to make sure the value is within the bounds of the sprite sheet
                     fprintf('addition overflow\n');
+                    displayMsg('Error: addition overflow');
                 else
                     obj.levelArray(9,4) = obj.toSprite(added);
-                    boolean = true;
+                    statusCode = 0;
                 end
             end
         end
-        function boolean = subtract(obj)
-            boolean = false;
+        function statusCode = subtract(obj)
+            statusCode = -1;
             addr = (obj.editorWindowArray(obj.stackPointer,10)*2)-1; %converts adress to line number of spirte
             if obj.levelArray(addr,4) == 101
                 fprintf('cant subtract nothing from register\n');
+                displayMsg('Error: cant subtract nothing from register');
             else
                 subbed = obj.toNumber(obj.levelArray(addr,4)) - obj.toNumber(obj.levelArray(9,4));
                 if subbed > 25 || subbed < -25 
                     fprintf('subtraction overflow\n');
+                    displayMsg('Error: subtraction overflow');
                 else
                     obj.levelArray(9,4) = obj.toSprite(subbed);
-                    boolean = true;
+                    statusCode = 0;
                 end
             end
         end
-        function boolean = bump(obj,dir) %dir is 1 for bump+ and -1 for bump-
-            boolean = false; %returns false if fails
+        function statusCode = bump(obj,dir) %dir is 1 for bump+ and -1 for bump-
+            statusCode = -1; %if bump fails, terminate program
             addr = (obj.editorWindowArray(obj.stackPointer,10)*2)-1; %converts adress to line number of spirte
             if obj.levelArray(addr,4) == 101
                 fprintf('cant bump nothing from register\n');
+                displayMsg('Error: cant bump nothing from register');
             else
                 bumped = obj.toNumber(obj.levelArray(addr,4)) + dir;
                 if bumped > 25 || bumped < -25 %validates output is not out of bounds
                     fprintf('bump overflow\n');
+                    displayMsg('Error: bump overflow');
                 else
                     obj.levelArray(addr,4) = obj.toSprite(bumped);
                     obj.levelArray(9,4) = obj.toSprite(bumped);
-                    boolean = true;
+                    statusCode = 0;
                 end
             end
         end
