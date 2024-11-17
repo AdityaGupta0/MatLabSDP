@@ -51,9 +51,9 @@ classdef arrayMaker
                     for i=3:8
                         randArray(i,2) = randi(50)+6;
                     end
-                case 5 %level 5, generates 6 random positive numbers
+                case 5 %level 5, generates 6 random positive numbers less than 12
                     for i=3:8
-                        randArray(i,2) = randi(25)+6;
+                        randArray(i,2) = randi(12)+6;
                     end
                 case 6 %level 6, generate 7 numbers, with a bias for zero 
                     for i=3:9
@@ -64,8 +64,8 @@ classdef arrayMaker
                         end
                     end
                 case 7 %level 7 generates 1 and 0, then 5 random numbers
-                    randArray(3,2)=1;
-                    randArray(4,2)=0;
+                    randArray(3,2)=6;
+                    randArray(4,2)=7;
                     for i=5:9
                         randArray(i,2) = randi(50)+6;
                     end
@@ -81,18 +81,21 @@ classdef arrayMaker
                     for i=3:9
                         randArray(i,2) = randi(50)+6;
                     end
-                    if randArray((randi(7)+2),2)>0 %randomly makes a number negative
-                        randArray((randi(7)+2),2) = -randArray((randi(7)+2),2);
+                    a=(randi(7)+2); %chooses random number to be negative
+                    if randArray(a,2)<31 
+                        randArray(a,2) = randArray(a,2)+25;
                     end
                 case 11 %level 11 generates 7 random numbers with at least one being zero and one being negative
                     for i=3:9
                         randArray(i,2) = randi(50)+6;
                     end
-                    if randArray((randi(7)+2),2)>0 %randomly makes a number negative
-                        randArray((randi(7)+2),2) = -randArray((randi(7)+2),2);
+                    a = (randi(7)+2); %chooses random number to be negative
+                    if randArray(a,2)<31 %randomly makes a number negative
+                        randArray(a,2) = randArray(a,2)+25;
                     end
-                    if randArray((randi(7)+2),2)~=0 %randomly makes a number zero
-                        randArray((randi(7)+2),2) = 0;
+                    b=(randi(7)+2); %chooses random number to be zero
+                    if randArray(b,2)~=6 %randomly makes a number zero
+                        randArray(b,2) = 6;
                     end
                 case 12 %level 12 generates 7 random numbers
                     for i=3:9

@@ -139,6 +139,7 @@ classdef interpreter < handle
                 obj.levelArray(i+1,6) = obj.levelArray(i,6);
             end
             obj.levelArray(3,6) = obj.levelArray(9,4);
+            obj.levelArray(9,4) = 101;
         end
         function boolean = isInboxEmpty(obj) 
             counter=0;
