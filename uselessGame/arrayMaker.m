@@ -38,41 +38,70 @@ classdef arrayMaker
             randArray = (zeros(15,11)+101);
             switch level
                 case 1 %level 1, generates 2 random positive numbers
-                    for i=3:5
+                    for i=3:4
                         randArray(i,2) = randi(25)+6;
                     end
-                case 2 %level 2, generates 2 random numbers
+                case 2 %level 2, generates 7 random numbers
                     for i=3:9
                         randArray(i,2) = randi(50)+6;
                     end
-                case 3 %level 3 edit later
+                case 3 %level 3, generates 1 random number
                         randArray(3,2) = randi(50)+6;
-                case 4 %level 4 edit later
+                case 4 %level 4, generates 6 random numbers
+                    for i=3:8
+                        randArray(i,2) = randi(50)+6;
+                    end
+                case 5 %level 5, generates 6 random positive numbers
+                    for i=3:8
+                        randArray(i,2) = randi(25)+6;
+                    end
+                case 6 %level 6, generate 7 numbers, with a bias for zero 
+                    for i=3:9
+                        if rand>0.4
+                            randArray(i,2) = randi(49)+7;
+                        else
+                            randArray(i,2) = 6;
+                        end
+                    end
+                case 7 %level 7 generates 1 and 0, then 5 random numbers
+                    randArray(3,2)=1;
+                    randArray(4,2)=0;
+                    for i=5:9
+                        randArray(i,2) = randi(50)+6;
+                    end
+                case 8 %level 8 generates 6 random positive numbers
+                    for i=3:8
+                        randArray(i,2) = randi(25)+6;
+                    end
+                case 9 %level 9 generates 6 random positive numbers
+                    for i=3:8
+                        randArray(i,2) = randi(25)+6;
+                    end
+                case 10 %level 10 generates 7 random numbers with at least one negative
                     for i=3:9
                         randArray(i,2) = randi(50)+6;
                     end
-                case 5 %level 5 edit later
+                    if randArray((randi(7)+2),2)>0 %randomly makes a number negative
+                        randArray((randi(7)+2),2) = -randArray((randi(7)+2),2);
+                    end
+                case 11 %level 11 generates 7 random numbers with at least one being zero and one being negative
                     for i=3:9
                         randArray(i,2) = randi(50)+6;
                     end
-                case 6 %level 6 edit later
-                    for i=3:9
-                        randArray(i,2) = randi(50)+6;
+                    if randArray((randi(7)+2),2)>0 %randomly makes a number negative
+                        randArray((randi(7)+2),2) = -randArray((randi(7)+2),2);
                     end
-                case 7 %level 7 edit later
-                    for i=3:9
-                        randArray(i,2) = randi(50)+6;
+                    if randArray((randi(7)+2),2)~=0 %randomly makes a number zero
+                        randArray((randi(7)+2),2) = 0;
                     end
-                case 8 %level 8 edit later
-                    for i=3:9
-                        randArray(i,2) = randi(50)+6;
-                    end
-                case 9 %level 9 generate 7 random numbers
+                case 12 %level 12 generates 7 random numbers
                     for i=3:9
                         randArray(i,2) = randi(50)+6;
                     end
             end
             array = randArray;
+        end
+        function insertEdgeCase()
         end
         function challenge = getLevelChallenge(level)
             switch level
