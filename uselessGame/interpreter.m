@@ -38,30 +38,29 @@ classdef interpreter < handle
             obj.stackPointer = 2;
             status = 0;
             obj.stopExecution = false;
-            set(obj.screen.my_figure, 'WindowButtonDownFcn', @(src,event)mouseClickCallback(src,event));
-
-            while obj.stackPointer < 14 && status==0 && ~obj.stopExecution
-                obj.levelArray(obj.stackPointer,11) = 110;
+            set(obj.screen.my_figure, 'WindowButtonDownFcn', @(src,event)mouseClickCallback(src,event)); %interupt function
+            while obj.stackPointer < 16 && status==0 && ~obj.stopExecution %value is 16 because the stackpointer is incremented after the last line is executed
+                fprintf('stackPointer: %d\n',obj.stackPointer);
+                obj.levelArray(obj.stackPointer,11) = 110; %draws line pointer
+                drawScene(obj.screen,obj.BGArray,obj.levelArray,obj.editorWindowArray); 
                 status=executeLine(obj,(obj.editorWindowArray(obj.stackPointer,9)));
-                drawScene(obj.screen,obj.BGArray,obj.levelArray,obj.editorWindowArray);
-                set(obj.screen.my_figure, 'WindowButtonDownFcn', @(src,event)mouseClickCallback(src,event));
+                set(obj.screen.my_figure, 'WindowButtonDownFcn', @(src,event)mouseClickCallback(src,event)); %interupt function
                 pause(0.8);
                 obj.stackPointer = obj.stackPointer + 1;
-                obj.levelArray(obj.stackPointer-1,11) = 101;
-                fprintf('stackPointer: %d\n',obj.stackPointer);
+                obj.levelArray(obj.stackPointer-1,11) = 101; %advances the line pointer
                 drawnow;
             end
-            if status == 1
+            if status == 1 %if program stops for non-error reasons check if the level is complete
                 obj.autoGrader.finalEval();
             end
             set(obj.screen.my_figure, 'WindowButtonDownFcn', ''); %clears the mouse click callback
-            function mouseClickCallback(~,~)
+            function mouseClickCallback(~,~) 
                 clickPoint = get(obj.screen.my_figure.CurrentAxes, 'CurrentPoint');
                 x = clickPoint(1,1);
                 y = clickPoint(1,2);
                 disp(x)
                 disp(y)
-                % Define the region where clicking stops execution
+                %Defines the region where clicking stops execution
                 if x >= (9*512) && x <=(10*512) && y >= 0 && y <= 512
                     obj.stopExecution = true;
                     disp('Execution stopped');
@@ -92,6 +91,7 @@ classdef interpreter < handle
                 case 59 %add
                     statusCode = add(obj); %if add fails, terminate program
                 case 60 %sub
+                    statusCode = subtract(obj); %if sub fails, terminate program
                 case 61 %copyfrom
                     statusCode = copyFrom(obj); %if copyfrom fails, terminate program
                 case 62 %copyto
@@ -158,7 +158,7 @@ classdef interpreter < handle
             dest = obj.editorWindowArray(obj.stackPointer,10); %gets destination from levelArray
             fprintf('jumping to %d\n',dest);
             dest = obj.toNumber(dest);
-            %obj.levelArray(obj.stackPointer,11) = 101; %makes sure the pointer does not linger on the jump block
+            obj.levelArray(obj.stackPointer,11) = 101; %makes sure the pointer does not linger on the jump block
             obj.stackPointer = dest; %sets stackpointer to the jump desitnation no need to worry about the +1 since the runner handles that 
         end
         function statusCode = jumpConditional(obj,condition) %checks the condition and calls jump func if it is met
@@ -202,6 +202,9 @@ classdef interpreter < handle
             if obj.levelArray(addr,4) == 101
                 fprintf('cant add nothing from register\n');
                 displayMsg('Error: cant add nothing from register');
+            elseif obj.levelArray(9,4) == 101 %checks if LCL is empty
+                fprintf('cant add register from nothing\n');
+                displayMsg('Error: cant add if LCL is empty');
             else 
                 added = obj.toNumber(obj.levelArray(addr,4)) +obj.toNumber(obj.levelArray(9,4));
                 if added > 25 || added < -25 %checks to make sure the value is within the bounds of the sprite sheet
@@ -216,11 +219,14 @@ classdef interpreter < handle
         function statusCode = subtract(obj)
             statusCode = -1;
             addr = (obj.editorWindowArray(obj.stackPointer,10)*2)-1; %converts adress to line number of spirte
-            if obj.levelArray(addr,4) == 101
+            if obj.levelArray(addr,4) == 101 %checks if the register is empty
                 fprintf('cant subtract nothing from register\n');
-                displayMsg('Error: cant subtract nothing from register');
-            else
-                subbed = obj.toNumber(obj.levelArray(addr,4)) - obj.toNumber(obj.levelArray(9,4));
+                displayMsg('Error: cant subtract if register is empty'); %display error message
+            elseif obj.levelArray(9,4) == 101 %checks if LCL is empty
+                fprintf('cant subtract register from nothing\n');
+                displayMsg('Error: cant subtract if LCL is empty');
+            else %if both registers are not empty
+                subbed =  obj.toNumber(obj.levelArray(9,4)) - obj.toNumber(obj.levelArray(addr,4));
                 if subbed > 25 || subbed < -25 
                     fprintf('subtraction overflow\n');
                     displayMsg('Error: subtraction overflow');
@@ -249,7 +255,7 @@ classdef interpreter < handle
             end
         end
     end
-    methods (Static) %these are just conversion helpers
+    methods (Static) %these are just conversion helpers for evaluator class
         function spriteID = number2Sprite(num)
             toSprite=containers.Map([-25:1:25],cat(2,[56:-1:32],[6:1:31]));
             spriteID = toSprite(num);

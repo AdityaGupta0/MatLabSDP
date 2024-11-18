@@ -86,19 +86,25 @@ classdef evaluator < handle
                 case 10 %absolute value
                     obj.solution = abs(obj.inbox);
                 case 11 %counts down/up for each value in the array
+                    k=1;
                     for i=1:length(obj.inbox)
                         if obj.inbox(i) < 0
-                            for j=0:obj.inbox(i)
-                                obj.solution = obj.inbox(i)+j;
+                            for j=0:-obj.inbox(i) %negates it so that it counts up
+                                obj.solution(k) = obj.inbox(i)+j;
+                                k=k+1;
                             end
+                        elseif obj.inbox(i) == 0 %edge case of zero
+                            obj.solution(k) = 0;
+                            k=k+1;
                         else
-                            for j=0:obj.inbox(i)
-                                obj.solution = obj.inbox(i)-j;
+                            for j=0:obj.inbox(i) %counts down 
+                                obj.solution(k) = obj.inbox(i)-j;
+                                k=k+1;
                             end
                         end
                     end
                 case 12 %free play
-                    %obj.solution = obj.outbox;
+                    obj.solution = obj.inbox;
             end
         end
     end

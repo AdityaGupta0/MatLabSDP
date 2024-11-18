@@ -87,15 +87,15 @@ classdef arrayMaker
                     end
                 case 11 %level 11 generates 7 random numbers with at least one being zero and one being negative
                     for i=3:9
-                        randArray(i,2) = randi(50)+6;
+                        if rand>0.5
+                            randArray(i,2) = randi(5)+7;
+                        else
+                            randArray(i,2) = randi(5)+32;
+                        end
                     end
-                    a = (randi(7)+2); %chooses random number to be negative
-                    if randArray(a,2)<31 %randomly makes a number negative
-                        randArray(a,2) = randArray(a,2)+25;
-                    end
-                    b=(randi(7)+2); %chooses random number to be zero
-                    if randArray(b,2)~=6 %randomly makes a number zero
-                        randArray(b,2) = 6;
+                    a=(randi(7)+2); %chooses random number to be zero
+                    if randArray(a,2)~=6 %randomly makes a number zero
+                        randArray(a,2) = 6;
                     end
                 case 12 %level 12 generates 7 random numbers
                     for i=3:9
@@ -158,10 +158,10 @@ classdef arrayMaker
                                 "Output all the values from the inbox, but make sure all"
                                 "values are positive."};
                 case 11
-                    challenge = "Time is a difficult problem for computer scientists."; 
+                    challenge = {"Time is a difficult problem for computer scientists."; 
                                 "For each value in the inbox, countdown to zero (or up to";
                                 "if negative), outboxing each number along the way."; 
-                                "(Yes, this is possible in 14 lines.)";
+                                "(Yes, this is possible in 14 lines.)"};
                 case 12 
                     challenge = 'Free Play! Make your own program and see if it works!';
             end

@@ -36,7 +36,7 @@ classdef destHandler < handle
             %drawScene(obj.screen,obj.BGArray,obj.FGArray,obj.OVArray); %draws the scene with the input prompt
             displayMsg('Enter Register Destination (1=ARG 2=THIS 3=THAT)') %sets the title to the input prompt
             registerNum = str2double(getKeyboardInput(obj.screen)); 
-            if registerNum<1 || registerNum>4 || isnan(registerNum)%validates that the register number is within the bounds of the registers
+            if registerNum<1 || registerNum>3 || isnan(registerNum)%validates that the register number is within the bounds of the registers
                 registerNum = 1;
             end
             registerNum = -registerNum; %negates the register number to indicate that it is a register
