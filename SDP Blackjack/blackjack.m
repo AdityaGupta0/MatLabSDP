@@ -32,8 +32,8 @@ global deck;
 global numAces;
 global total;
 global cards;
-global consecutiveWins;
-consecutiveWins = 0;
+global difficulty;
+difficulty = 0;
 % deck is the overall deck of undrawn cards, preventing duplicates
 deck = logical(true(13,4));
 % numAces is used to determine the value of aces for both player & opponent
@@ -178,9 +178,18 @@ else
     score(3)=score(3)+1;
 end
 
-if score(1) > previousScore
-    consecutiveWins = consecutiveWins + 1;
-end
+% Changes opponent difficulty based on amount of money
+if money < 100 && money > 0
+    difficulty = 1;  
+elseif money < 1000
+    difficulty = 2;
+elseif money < 5000
+    difficulty = 3;
+elseif money < 50000
+    difficulty = 4;
+elseif money >= 50000
+    difficulty = 5;
+
 % clear out unused variables for this loop
 % can't use clear function because still need 'score' and 'money'
 clear bust
