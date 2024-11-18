@@ -17,6 +17,7 @@ for c = 1:draw
     value = randi([2, 14],1);
     suit = randi([1,4],1);
     
+    % While the card is not in the deck, draw another
     while deck(value-1,suit) == false
         value = randi([2, 14],1);
         suit = randi([1,4],1);

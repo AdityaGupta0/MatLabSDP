@@ -3,6 +3,7 @@
 % 1 - you drawing cards
 % 2 - opp drawing cards
 % 3 - win/loose
+% 4 - first cards are same (split)
 function [] = graphicOutput(turn)
     global total;
     global cards;
@@ -110,6 +111,11 @@ else
             elseif total(1) == total(2)
                 message = [97,1,1];
             end
+        case 4
+            if total(1) == 21
+                message = [78,79,80];
+            else
+                message = [168, 169, 170];
     end
     
     

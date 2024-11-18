@@ -8,11 +8,11 @@
 % only saving the money and score variables
 
 global luigi;
-luigi = simpleGameEngine('lets_go_gambling.png',32,32,4);
+luigi = simpleGameEngine('lets_go_gambling2.png',32,32,4);
 
 loop = true;
 while loop
-    
+
 loop = false;
 
 % if money doesn't exist (first loop) then create it
@@ -71,17 +71,18 @@ gamble = gambleAmount(money,score);
 if gamble ~= -1
 
 %clc
-
 % initial drawing of first 2 cards for player
 drawCard(2,1)
-%outputCards(1)
-
 % drawing of one card for opponent, and second is "hidden"
 % the second isn't really hidden, it doesn't exist yet but gives illusion
 drawCard(1,2)
-%outputCards(2)
+if cards(1,1,1) == cards(1,2,1)
+    graphicOutput(4)
+else
+    graphicOutput(0)
+end
 
-graphicOutput(0)
+
 
 % if player already has 21, autowin by the boolean bj
 bj = false;
@@ -127,8 +128,8 @@ if bust==false && bj==false
     drawCard(1,2)
     graphicOutput(2)
     while true
-        if total(2) <= total(1) && ~(total(2)>18 && total(2)==total(1))
-            drawCard(1,2)
+        if total(2) <= total(1) && ~(total(2)>18)
+            drawCard(1,2)            
             graphicOutput(2)
         else
             break
@@ -232,3 +233,5 @@ close
 fprintf('Player: %d - Opponent: %d - Ties: %d\n',score(1),score(2),score(3))
 fprintf('\nFinal Money: $%d\nProfit: $%d\n', money,money-100);
 clear
+
+end
