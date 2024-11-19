@@ -128,7 +128,7 @@ classdef arrayMaker %static class for generating arrays for the level screens an
                     challenge = {"Scrambling inputs is curcial for cybersecurity."; 
                                 "Take the first two numbers in the inbox, reverse them,"; 
                                 "and then output them. Repeat this until the inbox is empty."
-                                "Tip: You can edit destinations by clicking the destination value."};
+                                "Tip: Click on blocks to remove it or add a block."};
                 case 5
                     challenge = {"Computers have an ALU (Arithmatic logic unit) that allows"; 
                                 "them to do basic math.";

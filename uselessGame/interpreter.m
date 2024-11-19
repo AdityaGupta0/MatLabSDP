@@ -38,6 +38,7 @@ classdef interpreter < handle %class for running the program and executing the b
             obj.stackPointer = 2;
             status = 0;
             obj.stopExecution = false;
+            steps = -1; %offset by -1 because the blank space is counted as a line
             set(obj.screen.my_figure, 'WindowButtonDownFcn', @(src,event)mouseClickCallback(src,event)); %interupt function
             while obj.stackPointer < 16 && status==0 && ~obj.stopExecution %value is 16 because the stackpointer is incremented after the last line is executed
                 fprintf('stackPointer: %d\n',obj.stackPointer);
@@ -48,10 +49,11 @@ classdef interpreter < handle %class for running the program and executing the b
                 pause(0.8);
                 obj.stackPointer = obj.stackPointer + 1;
                 obj.levelArray(obj.stackPointer-1,11) = 101; %advances the line pointer
+                steps = steps + 1;
                 drawnow;
             end
             if status == 1 %if program stops for non-erroneous reasons check if the level is complete
-                obj.autoGrader.finalEval();
+                obj.autoGrader.finalEval(obj.editorWindowArray,steps);
             end
             set(obj.screen.my_figure, 'WindowButtonDownFcn', ''); %clears the mouse click callback
             function mouseClickCallback(~,~) 

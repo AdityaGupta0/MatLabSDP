@@ -31,16 +31,23 @@ classdef evaluator < handle %class for validating the individual line by line ou
             end
         end
 
-        function correct = finalEval(obj)
+        function correct = finalEval(obj,editorWindowArray,stepCount)
             if (obj.outboxNum-1) == length(obj.solution) %checks if the number of outputs is correct. outboxnum is offset bc it increments after the last output
                 correct = true;
                 fprintf('You have completed the level\n');
-                displayMsg('You finished the level!!');
+                count = 0;
+                for i=2:1:15
+                    if editorWindowArray(i,9) ~= 101
+                        count = count + 1;
+                    end
+                end
+                displayMsg(sprintf("Level complete! Used %d blocks, best is %d blocks. Took %d steps, best is %d steps.",count,evaluator.getBestSize(obj.level),stepCount,evaluator.getBestSteps(obj.level)));
             else
                 correct = false;
                 fprintf('Your outputs were correct but did not complete the level.\n');
                 displayMsg('Level Incomplete.');
             end
+
         end
 
         function solve(obj)
@@ -106,6 +113,20 @@ classdef evaluator < handle %class for validating the individual line by line ou
                 case 12 %free play
                     obj.solution = obj.inbox(1)*obj.inbox(2);
             end
+        end
+    end
+    methods (Static)
+        function bestSize = getBestSize(level) %returns the optimal program size in terms of number of lines
+            sizes = [1,2,3,4,5,6,7,8,9,10,11,12];
+            levels = [1,2,3,4,5,6,7,8,9,10,11,12];
+            sizeMap = containers.Map(levels,sizes);
+            bestSize = sizeMap(level);
+        end
+        function bestSteps = getBestSteps(level) %returns the optimal number of steps for the program to do
+            steps = [1,2,3,4,5,6,7,8,9,10,11,12];
+            levels = [1,2,3,4,5,6,7,8,9,10,11,12];
+            stepMap = containers.Map(levels,steps);
+            bestSteps = stepMap(level);
         end
     end
 end

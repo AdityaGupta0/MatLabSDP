@@ -23,7 +23,6 @@ while rungame
     drawScene(screen,getLevelScreenBGArray(levelScreen),getLevelScreenArray(levelScreen),getEditorWindowArray(levelScreen));
     while repeat
         text(55,512*9.25,arrayMaker.getLevelChallenge(level),'VerticalAlignment','top','HorizontalAlignment','left','FontSize',10);
-        text(512,10,'Click on the blocks to add them to your program.','VerticalAlignment','top','HorizontalAlignment','left','FontSize',10);
         [r,c,b] = getMouseInput(screen);
         eventNum = getClickEvent(levelScreen,r,c,b);
         if eventNum == -1 %quit condition
