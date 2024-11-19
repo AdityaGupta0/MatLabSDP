@@ -122,12 +122,13 @@ classdef arrayMaker %static class for generating arrays for the level screens an
                     challenge = {"In computers, there are registers (RAM) to temporarily store";
                                 "information so that a program can manipulate the values."; 
                                 "Use the CopyTo and CopyFrom blocks to Output the number";
-                                "in the inbox two times."};
+                                "in the inbox two times."
+                                "Tip: You can edit destinations by clicking the destination value."};
                 case 4
                     challenge = {"Scrambling inputs is curcial for cybersecurity."; 
                                 "Take the first two numbers in the inbox, reverse them,"; 
-                                "and then output them."; 
-                                "Repeat this until the inbox is empty."};
+                                "and then output them. Repeat this until the inbox is empty."
+                                "Tip: You can edit destinations by clicking the destination value."};
                 case 5
                     challenge = {"Computers have an ALU (Arithmatic logic unit) that allows"; 
                                 "them to do basic math.";

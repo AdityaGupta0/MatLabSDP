@@ -50,7 +50,7 @@ classdef interpreter < handle %class for running the program and executing the b
                 obj.levelArray(obj.stackPointer-1,11) = 101; %advances the line pointer
                 drawnow;
             end
-            if status == 1 %if program stops for non-error reasons check if the level is complete
+            if status == 1 %if program stops for non-erroneous reasons check if the level is complete
                 obj.autoGrader.finalEval();
             end
             set(obj.screen.my_figure, 'WindowButtonDownFcn', ''); %clears the mouse click callback
@@ -61,9 +61,9 @@ classdef interpreter < handle %class for running the program and executing the b
                 disp(x)
                 disp(y)
                 %Defines the region where clicking stops execution
-                if x >= (9*512) && x <=(10*512) && y >= 0 && y <= 512
+                if x >= (9*512) && x <=(10*512) && y >= 0 && y <= 512 %pause button
                     obj.stopExecution = true;
-                    disp('Execution stopped');
+                    fprintf('Execution stopped');
                     displayMsg('Program stopped');
                     drawnow;
                 end
