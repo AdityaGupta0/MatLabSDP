@@ -1,4 +1,4 @@
-classdef destHandler < handle
+classdef destHandler < handle %class for handling the destination/register assignment of jump and manipluation blocks
     properties 
         screen;
         BGArray;

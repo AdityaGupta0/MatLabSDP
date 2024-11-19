@@ -1,4 +1,4 @@
-classdef interpreter < handle
+classdef interpreter < handle %class for running the program and executing the blocks while checking them simultaniously 
     properties 
         editorWindowArray;
         levelArray;
@@ -13,7 +13,7 @@ classdef interpreter < handle
         %THAT=[7,4];
         %LCL=[9,4];
     end
-    properties (Constant)
+    properties (Constant) %helpful conversion hash maps
         toNumber=containers.Map(cat(2,[56:-1:32],[6:1:31]),[-25:1:25]);
         toSprite=containers.Map([-25:1:25],cat(2,[56:-1:32],[6:1:31]));
     end

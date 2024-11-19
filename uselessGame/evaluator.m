@@ -1,4 +1,4 @@
-classdef evaluator < handle
+classdef evaluator < handle %class for validating the individual line by line outputs and overall completion of levels
     properties
         inbox;
         outbox;
@@ -104,7 +104,7 @@ classdef evaluator < handle
                         end
                     end
                 case 12 %free play
-                    obj.solution = obj.inbox;
+                    obj.solution = obj.inbox(1)*obj.inbox(2);
             end
         end
     end

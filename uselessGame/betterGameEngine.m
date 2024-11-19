@@ -1,5 +1,5 @@
 
-classdef betterGameEngine < handle
+classdef betterGameEngine < handle %modified to support third layer and interupt base input handling
     properties
         sprites = {}; % color data of the sprites
         sprites_transparency = {}; % transparency data of the sprites
@@ -68,7 +68,7 @@ classdef betterGameEngine < handle
             end
         end
         
-        function drawScene(obj, background_sprites, foreground_sprites, overlay_sprites)
+        function drawScene(obj, background_sprites, foreground_sprites, overlay_sprites) 
             % draw_scene 
             % Input: 
             %  1. an SGE scene, which gains focus
@@ -86,7 +86,7 @@ classdef betterGameEngine < handle
                     error('Background and foreground matrices of scene must be the same size.')
                 end
             end
-            if nargin > 3
+            if nargin > 3 %modified to support third layer
                 if ~isequal(scene_size, size(overlay_sprites))
                     error('Background and overlay_sprites matrices of scene must be the same size.')
                 end
@@ -201,7 +201,7 @@ classdef betterGameEngine < handle
         function [row,col,button] = getMouseInput(obj)
             figure(obj.my_figure);
             repeat = true;
-            % Get the user mouse input
+            % Get the user mouse input using interupts based input handling so that lines aren't drawn and response time is faster
             set(obj.my_figure, 'WindowButtonDownFcn', @(src,event)mouseClick(src,event));
             X=0;
             Y=0;

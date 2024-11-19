@@ -1,4 +1,4 @@
-classdef arrayMaker
+classdef arrayMaker %static class for generating arrays for the level screens and prompts. 
     methods (Static)
         function BGArray = getBGArray() %returns the background array which has the psirtes for buttons and static ui elements
             BGArray = [82,1,1,1,1,1,1,70,79,80,81;
@@ -97,9 +97,9 @@ classdef arrayMaker
                     if randArray(a,2)~=6 %randomly makes a number zero
                         randArray(a,2) = 6;
                     end
-                case 12 %level 12 generates 7 random numbers
-                    for i=3:9
-                        randArray(i,2) = randi(50)+6;
+                case 12 %level 12 generates 6 random positive numbers less than 6
+                    for i=3:8
+                        randArray(i,2) = randi(5)+6;
                     end
             end
             array = randArray;
@@ -150,20 +150,25 @@ classdef arrayMaker
                                 "the result. Repeat for the entire inbox."};
                 case 9
                     challenge = {"These blocks are limiting, but computer scientists have to" 
-                                "deal with limitations in expression. Compare every two values" 
+                                "work around limitations in expression. Compare every two values" 
                                 "in the inbox with each other, and output the greatest of the two."; 
                                 "If they are the same output either one."};
                 case 10
-                    challenge = {"Computer scientists often need to clean/screen inputs." 
+                    challenge = {"Computer scientists often work with user inputs that" 
+                                "need to be modified/cleaned before being used.";
                                 "Output all the values from the inbox, but make sure all"
                                 "values are positive."};
                 case 11
-                    challenge = {"Time is a difficult problem for computer scientists."; 
+                    challenge = {"Computer scientists have often have to calculate time."; 
                                 "For each value in the inbox, countdown to zero (or up to";
                                 "if negative), outboxing each number along the way."; 
-                                "(Yes, this is possible in 14 lines.)"};
+                                "The bump blocks add or subtract one from a register";
+                                "and the value in LCL."};
                 case 12 
-                    challenge = 'Free Play! Make your own program and see if it works!';
+                    challenge = {"The ALU we earlier can only add and subtract, but engineers";
+                                "need the ability to multiply numbers.";
+                                "For each two values in the inbox, multiply them together";
+                                "and outbox the result. Don't worry about negative numbers"};
             end
         end
     end

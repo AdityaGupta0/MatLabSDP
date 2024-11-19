@@ -1,10 +1,10 @@
-classdef levelSelectScreen < handle
+classdef levelSelectScreen < handle %class for the level select screen and the maps all user inputs to the correct functions
     properties
         levelSelectSceneArray
     end
     methods (Static)
         function obj = levelSelectScreen()
-            obj.levelSelectSceneArray = [1,94,95,1,1;           
+            obj.levelSelectSceneArray = [1,94,95,1,82;           
                                         1,96,97,98,1;
                                         1,99,105,106,1;
                                         1,107,108,109,1
@@ -20,6 +20,11 @@ classdef levelSelectScreen < handle
                 [r,c,b] = getMouseInput(screen);
                 if b==1
                     switch r %i swear there was no cleaner way to do this im sorry
+                        case 1
+                            switch c
+                                case 5
+                                    level = -1; %quit button
+                            end
                         case 2
                             switch c
                                 case 2

@@ -1,4 +1,4 @@
-classdef blockHandler < handle
+classdef blockHandler < handle %class for handling the addition, removal, and editing of blocks in the editor window
     properties
         BGArray;
         editorArray;
