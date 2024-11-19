@@ -15,6 +15,7 @@ len = length(cards);
 for c = 1:draw
 
     value = randi([2, 14],1);
+    %value = 9;
     suit = randi([1,4],1);
     
     % While the card is not in the deck, draw another
