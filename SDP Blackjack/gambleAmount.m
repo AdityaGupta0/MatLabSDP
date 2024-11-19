@@ -28,6 +28,10 @@ function gamble = gambleAmount(money,score)
 
     letMeOut=0;
 
+
+    message = funFact();
+    fact = text(25,880,message,FontSize=14);
+
     % loop to check if gamble input is valid
     while ~valid
 
@@ -86,7 +90,7 @@ function gamble = gambleAmount(money,score)
             delete(amountO)
             amountO = [];
             amount = num2str(gambleSet);
-            amountO = text(25,850,amount, FontSize=14);
+            amountO = text(25,820,amount, FontSize=14);
 
             digit = digit + 1;
 
@@ -99,7 +103,7 @@ function gamble = gambleAmount(money,score)
                 delete(amountO)
                 amountO = [];
                 amount = 'Invalid';
-                amountO = text(25,850,amount, FontSize=14);
+                amountO = text(25,820,amount, FontSize=14);
             else
                 % going through each digit given
                 for i=digit:-1:1
@@ -115,7 +119,7 @@ function gamble = gambleAmount(money,score)
                     delete(amountO)
                     amountO = [];
                     amount = 'Invalid';
-                    amountO = text(25,850,amount, FontSize=14);
+                    amountO = text(25,820,amount, FontSize=14);
                 end
             end
         elseif letMeOut == 1
@@ -130,5 +134,6 @@ function gamble = gambleAmount(money,score)
     delete(amountO)
     delete(scoreDisplay)
     delete(controls)
+    delete(fact)
     clear amount
 end

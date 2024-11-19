@@ -4,6 +4,9 @@
 
 %% MAIN SCRIPT
 
+clear
+clc
+
 % loop for each iteration of the game
 % only saving the money and score variables
 
