@@ -1,4 +1,4 @@
-classdef evaluator < handle
+classdef evaluator < handle %class for validating the individual line by line outputs and overall completion of levels
     properties
         inbox;
         outbox;
@@ -31,16 +31,23 @@ classdef evaluator < handle
             end
         end
 
-        function correct = finalEval(obj)
+        function correct = finalEval(obj,editorWindowArray,stepCount)
             if (obj.outboxNum-1) == length(obj.solution) %checks if the number of outputs is correct. outboxnum is offset bc it increments after the last output
                 correct = true;
                 fprintf('You have completed the level\n');
-                displayMsg('You finished the level!!');
+                count = 0;
+                for i=2:1:15
+                    if editorWindowArray(i,9) ~= 101
+                        count = count + 1;
+                    end
+                end
+                displayMsg(sprintf("Level complete! Your used %d blocks, best is %d. You took %d steps, best is %d.",count,evaluator.getBestSize(obj.level),stepCount,evaluator.getBestSteps(obj.level)));
             else
                 correct = false;
                 fprintf('Your outputs were correct but did not complete the level.\n');
                 displayMsg('Level Incomplete.');
             end
+
         end
 
         function solve(obj)
@@ -86,20 +93,40 @@ classdef evaluator < handle
                 case 10 %absolute value
                     obj.solution = abs(obj.inbox);
                 case 11 %counts down/up for each value in the array
+                    k=1;
                     for i=1:length(obj.inbox)
                         if obj.inbox(i) < 0
-                            for j=0:obj.inbox(i)
-                                obj.solution = obj.inbox(i)+j;
+                            for j=0:-obj.inbox(i) %negates it so that it counts up
+                                obj.solution(k) = obj.inbox(i)+j;
+                                k=k+1;
                             end
+                        elseif obj.inbox(i) == 0 %edge case of zero
+                            obj.solution(k) = 0;
+                            k=k+1;
                         else
-                            for j=0:obj.inbox(i)
-                                obj.solution = obj.inbox(i)-j;
+                            for j=0:obj.inbox(i) %counts down 
+                                obj.solution(k) = obj.inbox(i)-j;
+                                k=k+1;
                             end
                         end
                     end
                 case 12 %free play
-                    %obj.solution = obj.outbox;
+                    obj.solution = [obj.inbox(1)*obj.inbox(2),obj.inbox(3)*obj.inbox(4),obj.inbox(5)*obj.inbox(6)];
             end
+        end
+    end
+    methods (Static)
+        function bestSize = getBestSize(level) %returns the optimal program size in terms of number of lines
+            sizes =  [3,3,5,7,6,5,13,10,11,8,9,13];
+            levels = [1,2,3,4,5,6,7,8,9,10,11,12];
+            sizeMap = containers.Map(levels,sizes);
+            bestSize = sizeMap(level);
+        end
+        function bestSteps = getBestSteps(level) %returns the optimal number of steps for the program to do
+            steps = [4,14,5,21,18,31,34,30,29,38,82,85];
+            levels = [1,2,3,4,5,6,7,8,9,10,11,12];
+            stepMap = containers.Map(levels,steps);
+            bestSteps = stepMap(level);
         end
     end
 end

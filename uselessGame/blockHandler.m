@@ -1,4 +1,4 @@
-classdef blockHandler < handle
+classdef blockHandler < handle %class for handling the addition, removal, and editing of blocks in the editor window
     properties
         BGArray;
         editorArray;
@@ -30,10 +30,10 @@ classdef blockHandler < handle
             obj.linePointer = obj.linePointer + 1;
         end
         function removeBlock(obj)
-            obj.editorArray((obj.linePointer),9) = 101;
-            obj.BGArray((obj.linePointer),10) = 1; %since this is part of the background array, it needs to be reset to blank not transparent
-            obj.editorArray((obj.linePointer),10) = 101;
             if obj.linePointer>1 %makes sure the line pointer doesn't go below 1
+                obj.editorArray((obj.linePointer),9) = 101;
+                obj.BGArray((obj.linePointer),10) = 1; %since this is part of the background array, it needs to be reset to blank not transparent
+                obj.editorArray((obj.linePointer),10) = 101;
                 obj.linePointer = obj.linePointer - 1;
             end
         end

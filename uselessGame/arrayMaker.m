@@ -1,4 +1,4 @@
-classdef arrayMaker
+classdef arrayMaker %static class for generating arrays for the level screens and prompts. 
     methods (Static)
         function BGArray = getBGArray() %returns the background array which has the psirtes for buttons and static ui elements
             BGArray = [82,1,1,1,1,1,1,70,79,80,81;
@@ -51,9 +51,9 @@ classdef arrayMaker
                     for i=3:8
                         randArray(i,2) = randi(50)+6;
                     end
-                case 5 %level 5, generates 6 random positive numbers
+                case 5 %level 5, generates 6 random positive numbers less than 12
                     for i=3:8
-                        randArray(i,2) = randi(25)+6;
+                        randArray(i,2) = randi(12)+6;
                     end
                 case 6 %level 6, generate 7 numbers, with a bias for zero 
                     for i=3:9
@@ -64,8 +64,8 @@ classdef arrayMaker
                         end
                     end
                 case 7 %level 7 generates 1 and 0, then 5 random numbers
-                    randArray(3,2)=1;
-                    randArray(4,2)=0;
+                    randArray(3,2)=6;
+                    randArray(4,2)=7;
                     for i=5:9
                         randArray(i,2) = randi(50)+6;
                     end
@@ -81,22 +81,25 @@ classdef arrayMaker
                     for i=3:9
                         randArray(i,2) = randi(50)+6;
                     end
-                    if randArray((randi(7)+2),2)>0 %randomly makes a number negative
-                        randArray((randi(7)+2),2) = -randArray((randi(7)+2),2);
+                    a=(randi(7)+2); %chooses random number to be negative
+                    if randArray(a,2)<31 
+                        randArray(a,2) = randArray(a,2)+25;
                     end
                 case 11 %level 11 generates 7 random numbers with at least one being zero and one being negative
-                    for i=3:9
-                        randArray(i,2) = randi(50)+6;
+                    for i=3:7
+                        if rand>0.5
+                            randArray(i,2) = randi(5)+7;
+                        else
+                            randArray(i,2) = randi(5)+32;
+                        end
                     end
-                    if randArray((randi(7)+2),2)>0 %randomly makes a number negative
-                        randArray((randi(7)+2),2) = -randArray((randi(7)+2),2);
+                    a=(randi(5)+2); %chooses random number to be zero
+                    if randArray(a,2)~=6 %randomly makes a number zero
+                        randArray(a,2) = 6;
                     end
-                    if randArray((randi(7)+2),2)~=0 %randomly makes a number zero
-                        randArray((randi(7)+2),2) = 0;
-                    end
-                case 12 %level 12 generates 7 random numbers
-                    for i=3:9
-                        randArray(i,2) = randi(50)+6;
+                case 12 %level 12 generates 6 random positive numbers less than 6
+                    for i=3:8
+                        randArray(i,2) = randi(5)+6;
                     end
             end
             array = randArray;
@@ -119,12 +122,13 @@ classdef arrayMaker
                     challenge = {"In computers, there are registers (RAM) to temporarily store";
                                 "information so that a program can manipulate the values."; 
                                 "Use the CopyTo and CopyFrom blocks to Output the number";
-                                "in the inbox two times."};
+                                "in the inbox two times."
+                                "Tip: You can edit blocks with destinations by clicking on them."};
                 case 4
-                    challenge = {"Scrambling inputs is curcial for cybersecurity."; 
+                    challenge = {"Computer scientists work at the forefront of security which";
+                                "often involves scrambling/encrpyting data."; 
                                 "Take the first two numbers in the inbox, reverse them,"; 
-                                "and then output them."; 
-                                "Repeat this until the inbox is empty."};
+                                "and then output them. Repeat this until the inbox is empty."};
                 case 5
                     challenge = {"Computers have an ALU (Arithmatic logic unit) that allows"; 
                                 "them to do basic math.";
@@ -147,20 +151,25 @@ classdef arrayMaker
                                 "the result. Repeat for the entire inbox."};
                 case 9
                     challenge = {"These blocks are limiting, but computer scientists have to" 
-                                "deal with limitations in expression. Compare every two values" 
+                                "work around limitations in expression. Compare every two values" 
                                 "in the inbox with each other, and output the greatest of the two."; 
                                 "If they are the same output either one."};
                 case 10
-                    challenge = {"Computer scientists often need to clean/screen inputs." 
+                    challenge = {"Computer scientists often work with user inputs that" 
+                                "need to be modified/cleaned before being used.";
                                 "Output all the values from the inbox, but make sure all"
                                 "values are positive."};
                 case 11
-                    challenge = "Time is a difficult problem for computer scientists."; 
+                    challenge = {"Computer scientists have often have to calculate time."; 
                                 "For each value in the inbox, countdown to zero (or up to";
                                 "if negative), outboxing each number along the way."; 
-                                "(Yes, this is possible in 14 lines.)";
+                                "The bump blocks add or subtract one from a register";
+                                "and the value in LCL."};
                 case 12 
-                    challenge = 'Free Play! Make your own program and see if it works!';
+                    challenge = {"The ALU we earlier can only add and subtract, but engineers";
+                                "need the ability to multiply numbers.";
+                                "For each two values in the inbox, multiply them together";
+                                "and outbox the result. Don't worry about negative numbers."};
             end
         end
     end

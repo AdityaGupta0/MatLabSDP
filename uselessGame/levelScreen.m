@@ -1,4 +1,4 @@
-classdef levelScreen < handle
+classdef levelScreen < handle %class for the level screen and the editor window and maps all user inputs to the correct functions
     properties
         level;
         screen;
