@@ -86,14 +86,14 @@ classdef arrayMaker %static class for generating arrays for the level screens an
                         randArray(a,2) = randArray(a,2)+25;
                     end
                 case 11 %level 11 generates 7 random numbers with at least one being zero and one being negative
-                    for i=3:9
+                    for i=3:7
                         if rand>0.5
                             randArray(i,2) = randi(5)+7;
                         else
                             randArray(i,2) = randi(5)+32;
                         end
                     end
-                    a=(randi(7)+2); %chooses random number to be zero
+                    a=(randi(5)+2); %chooses random number to be zero
                     if randArray(a,2)~=6 %randomly makes a number zero
                         randArray(a,2) = 6;
                     end
@@ -123,12 +123,12 @@ classdef arrayMaker %static class for generating arrays for the level screens an
                                 "information so that a program can manipulate the values."; 
                                 "Use the CopyTo and CopyFrom blocks to Output the number";
                                 "in the inbox two times."
-                                "Tip: You can edit destinations by clicking the destination value."};
+                                "Tip: You can edit blocks with destinations by clicking on them."};
                 case 4
-                    challenge = {"Scrambling inputs is curcial for cybersecurity."; 
+                    challenge = {"Computer scientists work at the forefront of security which";
+                                "often involves scrambling/encrpyting data."; 
                                 "Take the first two numbers in the inbox, reverse them,"; 
-                                "and then output them. Repeat this until the inbox is empty."
-                                "Tip: Click on blocks to remove it or add a block."};
+                                "and then output them. Repeat this until the inbox is empty."};
                 case 5
                     challenge = {"Computers have an ALU (Arithmatic logic unit) that allows"; 
                                 "them to do basic math.";
@@ -169,7 +169,7 @@ classdef arrayMaker %static class for generating arrays for the level screens an
                     challenge = {"The ALU we earlier can only add and subtract, but engineers";
                                 "need the ability to multiply numbers.";
                                 "For each two values in the inbox, multiply them together";
-                                "and outbox the result. Don't worry about negative numbers"};
+                                "and outbox the result. Don't worry about negative numbers."};
             end
         end
     end

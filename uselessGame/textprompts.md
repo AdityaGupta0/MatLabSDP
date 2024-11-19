@@ -60,4 +60,4 @@ Countdown time! for each value in the inbox, countdown to zero (or up to if nega
 number along the way. (Yes, this is possible in 14 lines.)
 
 # Level 12
-Free play!
+Mutliplication time! for every two values in the inbox, multiply them and output the result.

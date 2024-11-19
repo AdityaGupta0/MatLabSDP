@@ -41,7 +41,7 @@ classdef evaluator < handle %class for validating the individual line by line ou
                         count = count + 1;
                     end
                 end
-                displayMsg(sprintf("Level complete! Used %d blocks, best is %d blocks. Took %d steps, best is %d steps.",count,evaluator.getBestSize(obj.level),stepCount,evaluator.getBestSteps(obj.level)));
+                displayMsg(sprintf("Level complete! Your used %d blocks, best is %d. You took %d steps, best is %d.",count,evaluator.getBestSize(obj.level),stepCount,evaluator.getBestSteps(obj.level)));
             else
                 correct = false;
                 fprintf('Your outputs were correct but did not complete the level.\n');
@@ -111,19 +111,19 @@ classdef evaluator < handle %class for validating the individual line by line ou
                         end
                     end
                 case 12 %free play
-                    obj.solution = obj.inbox(1)*obj.inbox(2);
+                    obj.solution = [obj.inbox(1)*obj.inbox(2),obj.inbox(3)*obj.inbox(4),obj.inbox(5)*obj.inbox(6)];
             end
         end
     end
     methods (Static)
         function bestSize = getBestSize(level) %returns the optimal program size in terms of number of lines
-            sizes = [1,2,3,4,5,6,7,8,9,10,11,12];
+            sizes =  [3,3,5,7,6,5,13,10,11,8,9,13];
             levels = [1,2,3,4,5,6,7,8,9,10,11,12];
             sizeMap = containers.Map(levels,sizes);
             bestSize = sizeMap(level);
         end
         function bestSteps = getBestSteps(level) %returns the optimal number of steps for the program to do
-            steps = [1,2,3,4,5,6,7,8,9,10,11,12];
+            steps = [4,14,5,21,18,31,34,30,29,38,82,85];
             levels = [1,2,3,4,5,6,7,8,9,10,11,12];
             stepMap = containers.Map(levels,steps);
             bestSteps = stepMap(level);
