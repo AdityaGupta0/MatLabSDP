@@ -1,7 +1,21 @@
 classdef arrayMaker %static class for generating arrays for the level screens and prompts. 
-    methods (Static)
-        function BGArray = getBGArray() %returns the background array which has the psirtes for buttons and static ui elements
-            BGArray = [82,1,1,1,1,1,1,70,79,80,81;
+    properties (Constant)
+        baseEditorArray = [101,101,101,101,101,101,101,101,101,101,101;
+        101,101,101,101,101,101,101,7,101,101,101;
+        101,101,101,101,101,101,101,8,101,101,101;
+        101,101,101,101,101,101,101,9,101,101,101;
+        101,101,101,101,101,101,101,10,101,101,101;
+        101,101,101,101,101,101,101,11,101,101,101;
+        101,101,101,101,101,101,101,12,101,101,101;
+        101,101,101,101,101,101,101,13,101,101,101;
+        101,101,101,101,101,101,101,14,101,101,101;
+        101,101,101,101,101,101,101,15,101,101,101;
+        101,101,101,101,101,101,101,16,101,101,101;
+        101,101,101,101,101,101,101,17,101,101,101;
+        101,101,101,101,101,101,101,18,101,101,101;
+        101,101,101,101,101,101,101,19,101,101,101;
+        101,101,101,101,101,101,101,20,101,101,101];
+        BGArray = [82,114,1,1,1,1,1,70,79,80,81;
             1,74,1,73,1,75,1,70,1,1,1;
             1,72,1,72,1,72,1,70,1,1,1;
             1,72,1,76,1,72,1,70,1,1,1;
@@ -16,23 +30,22 @@ classdef arrayMaker %static class for generating arrays for the level screens an
             1,59,1,60,1,102,1,70,1,1,1;
             1,61,1,62,1,103,1,70,1,1,1;
             1,63,1,64,1,65,1,70,1,1,1];
+    end
+    methods (Static)
+        function BGArray = getBGArray() %returns the background array which has the sprites for buttons and static ui elements
+            BGArray = arrayMaker.BGArray;
         end
-        function editorWindowArray = getEditorWindowArray() %transparent except for the line numbers
-            editorWindowArray = [101,101,101,101,101,101,101,101,101,101,101;
-            101,101,101,101,101,101,101,7,101,101,101;
-            101,101,101,101,101,101,101,8,101,101,101;
-            101,101,101,101,101,101,101,9,101,101,101;
-            101,101,101,101,101,101,101,10,101,101,101;
-            101,101,101,101,101,101,101,11,101,101,101;
-            101,101,101,101,101,101,101,12,101,101,101;
-            101,101,101,101,101,101,101,13,101,101,101;
-            101,101,101,101,101,101,101,14,101,101,101;
-            101,101,101,101,101,101,101,15,101,101,101;
-            101,101,101,101,101,101,101,16,101,101,101;
-            101,101,101,101,101,101,101,17,101,101,101;
-            101,101,101,101,101,101,101,18,101,101,101;
-            101,101,101,101,101,101,101,19,101,101,101;
-            101,101,101,101,101,101,101,20,101,101,101];
+        function BGArrayList = getBGArrayList() %returns the background array for each level
+            BGArrayList = repmat({arrayMaker.BGArray},1,12);
+        end
+        function editorWindowArrayList = getEditorWindowArrayList() %transparent except for the line numbers
+            editorWindowArrayList = repmat({arrayMaker.baseEditorArray},1,12);
+        end
+        function editorWindowArray = getEditorWindowArray()
+            editorWindowArray = arrayMaker.baseEditorArray;
+        end
+        function linePointerArray = getLinePointerArray()
+            linePointerArray = ones(1,12);
         end
         function array = getLevelScreenArray(level) %parametric random number generation 
             randArray = (zeros(15,11)+101);
@@ -104,7 +117,7 @@ classdef arrayMaker %static class for generating arrays for the level screens an
             end
             array = randArray;
         end
-        function challenge = getLevelChallenge(level)
+        function challenge = getLevelChallenge(level) 
             switch level
                 case 1
                     challenge = {'Move all the numbers in the inbox to the outbox. Click on the'; 

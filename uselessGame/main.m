@@ -1,5 +1,5 @@
 % This is the main file for the game. It will run the game and handle the logic of the game.
-clear
+clc
 screen = betterGameEngine('CompleteSpriteSheet.png',512,512,1);
 drawScene(screen, [100]);
 getMouseInput(screen);
@@ -21,6 +21,16 @@ while rungame
         break;
     end
     levelScreen = levelScreen(level,screen); %creates a new level screen object using the selected level
+
+    if ~exist('editorWindowArrayList','var') || ~exist('BGArrayList','var') || ~exist('linePointerArray','var') 
+        %checks for prior level save, if not creates new cell array
+        editorWindowArrayList = arrayMaker.getEditorWindowArrayList();
+        BGArrayList = arrayMaker.getBGArrayList();
+        linePointerArray = arrayMaker.getLinePointerArray();
+    end
+    levelScreen.setLevelScreenBGArray(BGArrayList{level});
+    levelScreen.setEditorWindowArray(editorWindowArrayList{level});
+    levelScreen.setLinePointer(linePointerArray(level));
     drawScene(screen,getLevelScreenBGArray(levelScreen),getLevelScreenArray(levelScreen),getEditorWindowArray(levelScreen));
     while repeat
         text(55,512*9.25,arrayMaker.getLevelChallenge(level),'VerticalAlignment','top','HorizontalAlignment','left','FontSize',10); 
@@ -31,6 +41,9 @@ while rungame
         end
         drawScene(screen,getLevelScreenBGArray(levelScreen),getLevelScreenArray(levelScreen),getEditorWindowArray(levelScreen));
     end
+    editorWindowArrayList{level} = getEditorWindowArray(levelScreen); %saves the level progress
+    BGArrayList{level} = getLevelScreenBGArray(levelScreen);
+    linePointerArray(level) = getLinePointer(levelScreen);
 end
 close all %closes the game window before program termination
 
