@@ -23,7 +23,7 @@ while rungame
     levelScreen = levelScreen(level,screen); %creates a new level screen object using the selected level
 
     if ~exist('editorWindowArrayList','var') || ~exist('BGArrayList','var') || ~exist('linePointerArray','var') 
-        %checks for prior level save, if not creates new cell array
+        %checks for prior level save, if not found, creates new cell arrays
         editorWindowArrayList = arrayMaker.getEditorWindowArrayList();
         BGArrayList = arrayMaker.getBGArrayList();
         linePointerArray = arrayMaker.getLinePointerArray();

@@ -18,7 +18,9 @@ classdef evaluator < handle %class for validating the individual line by line ou
             solve(obj);
         end
         function statusCode = evalutate(obj,newLevelArray) %evaluates the output of the program line by line
-            if interpreter.sprite2Number(newLevelArray(3,6)) == obj.solution(obj.outboxNum) %checks if the latst output value lines up with solution
+            if obj.level == 13 %if the level is free play
+                statusCode = 0; %return nominal status code
+            elseif interpreter.sprite2Number(newLevelArray(3,6)) == obj.solution(obj.outboxNum) %checks if the latst output value lines up with solution
                 fprintf('Correct\n');
                 statusCode = 0; %if the output value is correct return nominal status code
                 obj.outboxNum = obj.outboxNum + 1;
@@ -31,7 +33,11 @@ classdef evaluator < handle %class for validating the individual line by line ou
         end
 
         function correct = finalEval(obj,editorWindowArray,stepCount)
-            if (obj.outboxNum-1) == length(obj.solution) %checks if the number of outputs is correct. outboxnum is offset b/c it increments after the last output
+            if obj.level == 13 %if the level is free play
+                correct = true; %return true
+                fprintf('Free Play Program Complete\n');
+                displayMsg('Program Complete!');
+            elseif (obj.outboxNum-1) == length(obj.solution) %checks if the number of outputs is correct. outboxnum is offset b/c it increments after the last output
                 correct = true;
                 fprintf('You have completed the level\n');
                 count = 0;
@@ -111,6 +117,8 @@ classdef evaluator < handle %class for validating the individual line by line ou
                     end
                 case 12 %multiplies every two numbers
                     obj.solution = [obj.inbox(1)*obj.inbox(2),obj.inbox(3)*obj.inbox(4),obj.inbox(5)*obj.inbox(6)];
+                case 13 %free play
+                    obj.solution = [];
             end
         end
     end
