@@ -40,7 +40,7 @@ classdef evaluator < handle %class for validating the individual line by line ou
                         count = count + 1;
                     end
                 end
-                displayMsg(sprintf("Level complete! Your used %d blocks, best is %d. You took %d steps, best is %d.",count,evaluator.getBestSize(obj.level),stepCount,evaluator.getBestSteps(obj.level)));
+                displayMsg(sprintf("Level complete! Your used %d blocks, ideal is %d. You took %d steps, ideal is %d.",count,evaluator.getBestSize(obj.level),stepCount,evaluator.getBestSteps(obj.level)));
             else
                 correct = false; %if the number of outputs is incorrect return false
                 fprintf('Your outputs were correct but did not complete the level.\n');
@@ -122,7 +122,7 @@ classdef evaluator < handle %class for validating the individual line by line ou
             bestSize = sizeMap(level);
         end
         function bestSteps = getBestSteps(level) %returns the optimal number of steps for the program to do
-            steps = [4,14,5,21,18,31,34,30,29,38,82,85];
+            steps = [4,14,5,21,18,31,34,30,29,38,82,65];
             levels = [1,2,3,4,5,6,7,8,9,10,11,12];
             stepMap = containers.Map(levels,steps); %hashmap for optimal number of steps for each level
             bestSteps = stepMap(level);
