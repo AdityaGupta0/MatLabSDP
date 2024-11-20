@@ -94,7 +94,7 @@ while loop
             drawCard(1,2)
             graphicOutput(2)
             while true
-                if total(2) <= total(1) && ~(total(2)>18 && total(2)==total(1))
+                if dealChoice(gamble)
                     drawCard(1,2)
                     graphicOutput(2)
                 else
