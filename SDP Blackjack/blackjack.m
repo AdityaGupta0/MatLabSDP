@@ -42,24 +42,6 @@ while loop
     % their hand
     cards = [];
     
-%% IGNORE - PREVIOUS CODE FOR GAMBLING AMOUNT
-    % REPLACED W/ gambleAmount FUNCTION
-    
-    % prompt user and store value for gambling amount
-    %fprintf('You have $%d\n',money)
-    %gamble=input('How much would you like to gamble?\n');
-    % while loop to check for valid input
-    %while (gamble<0 || gamble>money)
-    %    % value can't be negative
-    %    if gamble<0
-    %        gamble=input('Can''t gamble negative amount\nHow much would you like to gamble?\n');
-        % value CAN be negative, but double checks choice
-    %    elseif gamble>money
-    %        choice=input('You don''t have that much money!');
-    %    end
-    %end
-%%
-    
     % output menu screen
     graphicOutput(-1)
     
@@ -68,16 +50,10 @@ while loop
     
     if gamble >= 0
     
-        %clc
-        
         % initial drawing of first 2 cards for player
         drawCard(2,1)
-        %outputCards(1)
-        
-        % drawing of one card for opponent, and second is "hidden"
-        % the second isn't really hidden, it doesn't exist yet but gives illusion
+        % draw single card for opponet
         drawCard(1,2)
-        %outputCards(2)
         
         graphicOutput(0)
         
@@ -92,19 +68,12 @@ while loop
         while total(1)<21
             % two choices, hit or stand
             % hit gives another card, and stand keeps your cards
-            % choice=input('Hit or Stand?\n',"s");
         
             % if player chose 'hit', then draw another player card and output
             % if player typed anything other than 'h' or 'hit' its read as stand
-            %if strcmpi(choice,'h') | strcmpi(choice,'hit')
             if choice()
-                %clc
                 drawCard(1,1)
-                %outputCards(1)
-        
-            % also reprint opponents cards for player to see
-                %outputCards(2)
-        
+
                 graphicOutput(1)
             else
                 break;
@@ -120,7 +89,7 @@ while loop
         
         % if game isn't immediately over (due to player bust or 21)
         % then draw cards for opponent, but don't output yet
-        % eventually add smart AI and logic here, and potentially difficulty settings
+
         if bust==false && bj==false
             drawCard(1,2)
             graphicOutput(2)
@@ -134,16 +103,7 @@ while loop
             end
         end
             
-        %clc
-        % output final player cards
-        %outputCards(1)
-        % if player blackjack, then output message
-        %if bj
-        %    fprintf('Blackjack!\n\n')
-        %end
-        
-        % output final opponent cards
-        %outputCards(2)
+        % output cards
         graphicOutput(3)
         % if player bust or blackjack, then opponent didn't draw cards, so don't
         % output total
@@ -151,52 +111,24 @@ while loop
         % logic to determine final results, output a proper message, and add to the
         % score and money amount
         if bj
-            %fprintf("Player Wins!\n\n")
             score(1)=score(1)+1;
             money = money + gamble;
         elseif total(1)>21
-            %fprintf('Player Bust\nOpponent Wins.\n\n')
             score(2)=score(2)+1;
             money = money - gamble;
         elseif total(2)>21
-            %fprintf('Opponent Bust\nPlayer Wins!\n\n')
             score(1)=score(1)+1;
             money = money + gamble;
         elseif total(1)>total(2)
-            %fprintf('%d > %d\nPlayer Wins!\n\n',total(1),total(2))
             score(1)=score(1)+1;
             money = money + gamble;
         elseif total(2)>total(1)
-            %fprintf('%d > %d\nOpponent Wins.\n\n',total(2),total(1))
             score(2)=score(2)+1;
             money = money - gamble;
         else
-            %fprintf("%d = %d\nIt's a tie\n\n",total(1),total(2))
             score(3)=score(3)+1;
         end
-        
-%% IGNORE PREVIOUS LOOP METHOD
-         % clear out unused variables for this loop
-        % can't use clear function because still need 'score' and 'money'
-        %clear bust
-        %clear choice
-        %clear bj
-        %clear gamble
-        
-        % output current score & money
-        %fprintf('Player: %d - Opponent: %d - Ties: %d\n',score(1),score(2),score(3))
-        %fprintf('You have $%d\n',money)
-        % if player has money left, repropmt for another iteration
-        %if money>0
-            %choice=input('Play again?\n',"s");
-            %if strcmpi(choice,'y') | strcmpi(choice,'yes')
-            %    clear choice
-            %    loop = true;
-            %end
-            % loop = exitLoop();
-%%
-            loop = true;
-        %end
+        loop = true;
     
     elseif gamble == -1
         loop = false;
@@ -209,9 +141,4 @@ while loop
 end
 
 close
-
-% after player looeses all money or walks away, output final money and
-% profit, and score
-%fprintf('Player: %d - Opponent: %d - Ties: %d\n',score(1),score(2),score(3))
-%fprintf('Final Money: $%d\nProfit: $%d\n', money,money-100);
 clear
