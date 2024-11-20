@@ -183,5 +183,34 @@ classdef arrayMaker %static class for generating arrays for the level screens an
                                 "and outbox the result. Don't worry about negative numbers."};
             end
         end
+        function name = getLevelName(level)
+            switch level
+                case 1
+                    title = 'Introduction';
+                case 2
+                    title = 'Repeat After Me';
+                case 3
+                    title = 'Copycat Copycat';
+                case 4
+                    title = 'Poached or Scrambled?';
+                case 5
+                    title = 'Addition Junction';
+                case 6
+                    title = 'Zero Exterminator';
+                case 7
+                    title = 'Binary Converter';
+                case 8
+                    title = 'Subtraction Station';
+                case 9
+                    title = 'Number Maxxing';
+                case 10
+                    title = 'Absolute Positivity';
+                case 11
+                    title = 'The Final Countdown';
+                case 12
+                    title = 'Multiplication Haven';
+            end
+            name = sprintf('Level %d: %s',level,title);
+        end
     end
 end

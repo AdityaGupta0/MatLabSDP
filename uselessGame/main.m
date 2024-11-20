@@ -33,7 +33,8 @@ while rungame
     levelScreen.setLinePointer(linePointerArray(level));
     drawScene(screen,getLevelScreenBGArray(levelScreen),getLevelScreenArray(levelScreen),getEditorWindowArray(levelScreen));
     while repeat
-        text(55,512*9.25,arrayMaker.getLevelChallenge(level),'VerticalAlignment','top','HorizontalAlignment','left','FontSize',10); 
+        text(55,512*9.25,arrayMaker.getLevelChallenge(level),'VerticalAlignment','top','HorizontalAlignment','left','FontSize',10);
+        text(512*4.5,50,arrayMaker.getLevelName(level),'VerticalAlignment','top','HorizontalAlignment','center','FontSize',12);  
         [r,c,b] = getMouseInput(screen); 
         eventNum = getClickEvent(levelScreen,r,c,b);
         if eventNum == -1 %quit condition
