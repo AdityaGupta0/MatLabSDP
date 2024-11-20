@@ -9,12 +9,12 @@ classdef evaluator < handle %class for validating the individual line by line ou
     methods 
         function obj = evaluator(level,initialLevelArray) %constructor
             obj.level = level;
-            for i=1:7
+            for i=1:7 %retreives inputs from the level array
                 if initialLevelArray(i+2,2) ~= 101
                     obj.inbox(i) = interpreter.sprite2Number(initialLevelArray(i+2,2));
                 end
             end
-            obj.outboxNum = 1;
+            obj.outboxNum = 1; %initializes a counter
             solve(obj);
         end
         function statusCode = evalutate(obj,newLevelArray) %evaluates the output of the program line by line

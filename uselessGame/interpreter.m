@@ -20,7 +20,7 @@ classdef interpreter < handle %class for running the program and executing the b
     methods 
         function obj = interpreter(screen,level,BGArray,levelArray,editorWindowArray) %constructor
             obj.screen = screen;
-            obj.stackPointer = 2;
+            obj.stackPointer = 2; %starts at 2 because the first line has utility functions
             obj.BGArray = BGArray;
             obj.editorWindowArray = editorWindowArray;
             obj.levelArray = levelArray;
@@ -46,7 +46,7 @@ classdef interpreter < handle %class for running the program and executing the b
                 drawScene(obj.screen,obj.BGArray,obj.levelArray,obj.editorWindowArray); 
                 status=executeLine(obj,(obj.editorWindowArray(obj.stackPointer,9))); 
                 set(obj.screen.my_figure, 'WindowButtonDownFcn', @(src,event)mouseClickCallback(src,event)); %interupt function
-                pause(0.8); 
+                pause(0.8); %pause between each line so program can be followed
                 obj.stackPointer = obj.stackPointer + 1; 
                 obj.levelArray(obj.stackPointer-1,11) = 101; %advances the line pointer
                 steps = steps + 1; %increcements the step counter
