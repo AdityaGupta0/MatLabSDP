@@ -18,7 +18,7 @@ classdef interpreter < handle %class for running the program and executing the b
         toSprite=containers.Map([-25:1:25],cat(2,[56:-1:32],[6:1:31]));
     end
     methods 
-        function obj = interpreter(screen,level,BGArray,levelArray,editorWindowArray)
+        function obj = interpreter(screen,level,BGArray,levelArray,editorWindowArray) %constructor
             obj.screen = screen;
             obj.stackPointer = 2;
             obj.BGArray = BGArray;
@@ -27,14 +27,14 @@ classdef interpreter < handle %class for running the program and executing the b
             obj.level = level;
             obj.stopExecution = false;
         end
-        function updateArrays(obj,BGArray,levelArray,editorWindowArray)
+        function updateArrays(obj,BGArray,levelArray,editorWindowArray) %updates the arrays instead of rebuilding entire object
             obj.editorWindowArray = editorWindowArray;
             obj.levelArray = levelArray;
             obj.BGArray = BGArray;
         end
         function run(obj)
             displayMsg('running...')
-            obj.autoGrader = evaluator(obj.level,obj.levelArray);
+            obj.autoGrader = evaluator(obj.level,obj.levelArray); %instantiates an evaluator object
             obj.stackPointer = 2;
             status = 0;
             obj.stopExecution = false;
@@ -44,13 +44,13 @@ classdef interpreter < handle %class for running the program and executing the b
                 fprintf('stackPointer: %d\n',obj.stackPointer);
                 obj.levelArray(obj.stackPointer,11) = 110; %draws line pointer
                 drawScene(obj.screen,obj.BGArray,obj.levelArray,obj.editorWindowArray); 
-                status=executeLine(obj,(obj.editorWindowArray(obj.stackPointer,9)));
+                status=executeLine(obj,(obj.editorWindowArray(obj.stackPointer,9))); 
                 set(obj.screen.my_figure, 'WindowButtonDownFcn', @(src,event)mouseClickCallback(src,event)); %interupt function
-                pause(0.8);
-                obj.stackPointer = obj.stackPointer + 1;
+                pause(0.8); 
+                obj.stackPointer = obj.stackPointer + 1; 
                 obj.levelArray(obj.stackPointer-1,11) = 101; %advances the line pointer
-                steps = steps + 1;
-                drawnow;
+                steps = steps + 1; %increcements the step counter
+                drawnow; %checks callback
             end
             if status == 1 %if program stops for non-erroneous reasons check if the level is complete
                 obj.autoGrader.finalEval(obj.editorWindowArray,steps);
@@ -72,7 +72,7 @@ classdef interpreter < handle %class for running the program and executing the b
             end
         end
         function statusCode = executeLine(obj,blockID)
-            statusCode = 0; %zero means continue execution, 1 means stop, -1 means error
+            statusCode = 0; %zero means continue execution, 1 means stop, -1 means errornous stop
             switch blockID
                 case 57 %inbox
                     if isInboxEmpty(obj) %if inbox is empty
@@ -116,13 +116,13 @@ classdef interpreter < handle %class for running the program and executing the b
                     statusCode=bump(obj,1);
                 case 101 %no block
                     fprintf('no block\n');
-                    statusCode=1;
+                    statusCode=1; %if no block is present, terminate program
             end
         end
-        function popInbox(obj) 
+        function popInbox(obj) %pops the value in the inbox to LCL
             repeat=true;
             i=3;
-            while repeat
+            while repeat %finds the first non-empty inbox slot
                 if obj.levelArray(i,2) ~= 101
                     obj.levelArray(9,4) = obj.levelArray(i,2);
                     obj.levelArray(i,2) = 101;
@@ -138,7 +138,7 @@ classdef interpreter < handle %class for running the program and executing the b
         end
         function pushOutbox(obj) %pushes the value in LCL to the outbox. Allows overwriting of outbox
             for i=8:-1:3
-                obj.levelArray(i+1,6) = obj.levelArray(i,6);
+                obj.levelArray(i+1,6) = obj.levelArray(i,6); %shifts all values in outbox down
             end
             obj.levelArray(3,6) = obj.levelArray(9,4);
             obj.levelArray(9,4) = 101;
@@ -156,7 +156,7 @@ classdef interpreter < handle %class for running the program and executing the b
                 boolean=false;
             end
         end
-        function jump(obj) %jumps to the user defined line
+        function jump(obj) %jumps to the user designated line
             dest = obj.editorWindowArray(obj.stackPointer,10); %gets destination from levelArray
             fprintf('jumping to %d\n',dest);
             dest = obj.toNumber(dest);
@@ -168,7 +168,7 @@ classdef interpreter < handle %class for running the program and executing the b
             if obj.levelArray(3,4) == 101 %if ARG is empty terminate program
                 fprintf('cant jump-if when ARG is empty\n');
                 displayMsg('Error: cant jump-if when ARG is empty');
-                statusCode=-1;
+                statusCode=-1; %terminate program
             else
                 statusCode=0;
                 switch condition
@@ -183,11 +183,11 @@ classdef interpreter < handle %class for running the program and executing the b
                 end
             end
         end
-        function copyTo(obj) 
+        function copyTo(obj) %copies the value in LCL to the register
             addr = (obj.editorWindowArray(obj.stackPointer,10)*2)-1;
             obj.levelArray(addr,4) = obj.levelArray(9,4);
         end
-        function statusCode = copyFrom(obj)
+        function statusCode = copyFrom(obj) %copies the value in the register to LCL
             addr = (obj.editorWindowArray(obj.stackPointer,10)*2)-1;
             if obj.levelArray(addr,4) == 101
                 fprintf('cant copy nothing from register\n');
@@ -198,7 +198,7 @@ classdef interpreter < handle %class for running the program and executing the b
                 statusCode = 0;
             end
         end
-        function statusCode = add(obj)
+        function statusCode = add(obj) %adds the value in the register to LCL
             statusCode = -1;
             addr = (obj.editorWindowArray(obj.stackPointer,10)*2)-1; %converts adress to line number of spirte
             if obj.levelArray(addr,4) == 101
@@ -218,7 +218,7 @@ classdef interpreter < handle %class for running the program and executing the b
                 end
             end
         end
-        function statusCode = subtract(obj)
+        function statusCode = subtract(obj) %subtracts the value in the register from LCL
             statusCode = -1;
             addr = (obj.editorWindowArray(obj.stackPointer,10)*2)-1; %converts adress to line number of spirte
             if obj.levelArray(addr,4) == 101 %checks if the register is empty
@@ -249,7 +249,7 @@ classdef interpreter < handle %class for running the program and executing the b
                 if bumped > 25 || bumped < -25 %validates output is not out of bounds
                     fprintf('bump overflow\n');
                     displayMsg('Error: bump overflow');
-                else
+                else %if bump is valid, updated register and LCL
                     obj.levelArray(addr,4) = obj.toSprite(bumped);
                     obj.levelArray(9,4) = obj.toSprite(bumped);
                     statusCode = 0;
@@ -257,7 +257,7 @@ classdef interpreter < handle %class for running the program and executing the b
             end
         end
     end
-    methods (Static) %these are just conversion helpers for evaluator class
+    methods (Static) %helpful conversion functions
         function spriteID = number2Sprite(num)
             toSprite=containers.Map([-25:1:25],cat(2,[56:-1:32],[6:1:31]));
             spriteID = toSprite(num);

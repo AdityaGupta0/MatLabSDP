@@ -104,8 +104,6 @@ classdef arrayMaker %static class for generating arrays for the level screens an
             end
             array = randArray;
         end
-        function insertEdgeCase()
-        end
         function challenge = getLevelChallenge(level)
             switch level
                 case 1
