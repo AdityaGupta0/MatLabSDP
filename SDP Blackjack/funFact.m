@@ -1,45 +1,54 @@
 function [message] = funFact()
-    i = randi([1,20]);
+    i = randi([1,15]);
     switch i
         case 1
-            message = 'The Eiffel Tower expands and contracts. In summer, it can grow up to 6 inches due to the thermal expansion of iron.';
+            message = {'There is a unit of measurement called a ‘Henry’ (H)', ...
+                'named after Joseph Henry, which is the unit of electrical', ...
+                'inductance.'};
         case 2
-            message = 'The International Space Station (ISS) travels at 28,000 kilometers per hour (17,500 mph) and orbits the Earth every 90 minutes.';
+            message = {'Alternating Current is more efficient than Direct,', ...
+                'Current because of its usage of transformers to travel', ...
+                'over large distances with high voltage and low current.'};
         case 3
-            message = 'The Golden Gate Bridge cables are long enough to encircle the Earth more than three times if unraveled.';
+            message = {'Using only NAND or NOR gates, you can recreate any', ...
+                'combination of basic logic gates.'};
         case 4
-            message = 'Concrete is the second-most-used substance on Earth, after water.';            
+            message = {'Over 8,000 different coding languages exist, but', ...
+                'only about 50-100 are mainly used in the industry.'};            
         case 5
-            message = 'The world''s first programmable computer, the Zuse Z3, was created by German engineer Konrad Zuse in 1941.';
+            message = {'Around 60% of coders are under 35 years old.'};
         case 6
-            message = 'The Hoover Dam is so massive that it could cover the entire state of Delaware in 1 foot of water.';
+            message = {'On average, software developers switch jobs every', ...
+                '2-3 years.'};
         case 7
-            message = 'Lego bricks are manufactured with such accuracy that only 18 out of every million pieces fail to meet quality standards.';
+            message = {'83% of programmers work either fully remote or in', ...
+                'a hybrid environment.'};
         case 8
-            message = 'The Large Hadron Collider (LHC) near Geneva is the largest and most powerful particle accelerator ever built, requiring 27 kilometers (17 miles) of circular tunnels.';
+            message = {'Nikola Tesla created his first AC induction motor', ...
+                'in the late 1800s.'};
         case 9
-            message = 'Biomimicry in engineering inspired velcro, modeled after the way burrs stick to fabric.';
+            message = {'A modern phone contains on average 160 different', ...
+                'microchips, and a hybrid electric car can contain up to', ...
+                '3,500 microchips.'};
         case 10
-            message = 'The ISS (International Space Station) is the most expensive structure ever built, costing over $150 billion.';
+            message = {'AIs learn in a ‘trial and error’, going through', ...
+                'thousands of different iterations with small adjustments.'};
         case 11
-            message = 'The Mars rovers Opportunity and Spirit were designed to last 90 days but exceeded expectations. Opportunity worked for nearly 15 years!';
+            message = {'Engineering can be as simple as a lever and a ' ...
+                'pulley.'};
         case 12
-            message = 'The largest wind turbine in the world, the Haliade-X, has blades longer than a football field and can power thousands of homes.';
+            message = {'All disciplines of engineering use some combination', ...
+                'of physics and math and follow the design process.'};
         case 13
-            message = 'Maglev trains use magnetic levitation to achieve speeds of over 600 km/h (373 mph) without physical contact with the tracks.';
+            message = {'In the early days of Computer Science, it', ...
+                'originated under the college of sciences, hence its name.'};
         case 14
-            message = 'Water jet cutters, used in industrial applications, can slice through steel with a stream of water at pressures over 60,000 psi.';
+            message = {'Ohm’s law states that Voltage is equal to the', ...
+                'product of current and resistance.'};
         case 15
-            message = 'The Millau Viaduct in France, taller than the Eiffel Tower, is the highest road bridge in the world, spanning the Tarn Valley.';
-        case 16
-            message = 'The Deep Sea Challenger, a submersible used by filmmaker James Cameron, can dive to depths of nearly 11 kilometers (7 miles).';
-        case 17
-            message = 'Antarctica''s Halley VI Research Station is built on skis, allowing it to be moved to avoid being buried by snow.';
-        case 18
-            message = 'The Mars Perseverance Rover is powered by a plutonium-powered generator that can last for decades in extreme conditions.';
-        case 19
-            message = 'Self-healing concrete is an emerging technology that uses bacteria to repair cracks, extending the lifespan of structures.';
-        case 20
-            message = 'The Hoover Tower clocks at Stanford University are so accurate they only drift by one second every 300 years.';
+            message = {'In a series circuit, the current is equal between', ...
+                'each object with resistance in the circuit, while in a ', ...
+                'parallel circuit, the voltage is equal between each object', ...
+                ' with resistance.'};
     end
 end
