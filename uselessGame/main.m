@@ -5,6 +5,16 @@ drawScene(screen, [100]);
 getMouseInput(screen);
 rungame = true;
 levelSelectScreen = levelSelectScreen();
+
+if exist('saveData.mat', 'file')
+    % Load saved data
+    load('saveData.mat', 'editorWindowArrayList', 'BGArrayList', 'linePointerArray');
+else
+    % Initialize arrays if no save file
+    editorWindowArrayList = arrayMaker.getEditorWindowArrayList();
+    BGArrayList = arrayMaker.getBGArrayList();
+    linePointerArray = arrayMaker.getLinePointerArray();
+end
 while rungame
     clear levelScreen; %clears the level screen object to prevent memory leaks
     repeat = true;
@@ -21,13 +31,14 @@ while rungame
         break;
     end
     levelScreen = levelScreen(level,screen); %creates a new level screen object using the selected level
-
+    %{
     if ~exist('editorWindowArrayList','var') || ~exist('BGArrayList','var') || ~exist('linePointerArray','var') 
         %checks for prior level save, if not found, creates new cell arrays
         editorWindowArrayList = arrayMaker.getEditorWindowArrayList();
         BGArrayList = arrayMaker.getBGArrayList();
         linePointerArray = arrayMaker.getLinePointerArray();
     end
+    %}
     levelScreen.setLevelScreenBGArray(BGArrayList{level});
     levelScreen.setEditorWindowArray(editorWindowArrayList{level});
     levelScreen.setLinePointer(linePointerArray(level));
@@ -46,5 +57,6 @@ while rungame
     BGArrayList{level} = getLevelScreenBGArray(levelScreen);
     linePointerArray(level) = getLinePointer(levelScreen);
 end
+fprintf('Game Terminated, progress saved.\n');
 close all %closes the game window before program termination
-
+save('saveData.mat', 'editorWindowArrayList', 'BGArrayList', 'linePointerArray');
