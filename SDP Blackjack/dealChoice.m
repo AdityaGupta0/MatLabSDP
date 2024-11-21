@@ -2,18 +2,14 @@ function [smartChoice] = dealChoice(gamble)
     global total;
     global deck;
     global cardsLeft;
-    % tells the opponent to hit or stand
-    % 9, K
-    % Q, 10
+    % tells the opponent to hit or stand    
     goodCards = 0;    
     hit = false;
     smartChoice = false;
     distanceFrom21 = 21-total(2);
     if distanceFrom21 > 10 && total(1) > total(2) && gamble >= 100
         smartChoice = true;
-    elseif total(1) > total(2)     
-        %for i = 1 : deck
-        %[r,c] = size(deck);
+    elseif total(1) > total(2)   
         if distanceFrom21 > 10
             distanceFrom21 = distanceFrom21 - 10;
         end
@@ -26,17 +22,8 @@ function [smartChoice] = dealChoice(gamble)
             if deck(13,i)
                 goodCards = goodCards + 1;
             end
-        end
-    
-        %{
-    >>>>>>> Stashed changes
-        for i = 1 : deck.numel()
-            if deck[] <= distanceFrom21
-                goodCards = goodCards + 1;
-            end
-        end  
-        %}
-    
+        end   
+        
         probability = goodCards / cardsLeft * 100;
         
         if probability >= 50 || total(1) > total(2)
