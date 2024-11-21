@@ -65,7 +65,9 @@ for c = 1:draw
 end
 else
     deck = logical(true(13,4));
+    cardsLeft = 52;
     loop = true;
+    fprintf('reset')
 end
 end
 
