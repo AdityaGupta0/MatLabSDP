@@ -1,7 +1,3 @@
-
-% CHANGE FINAL RESULTS TO ANOTHER FUNCTION
-% POSSIBLE SEPERATE FUNCTION FOR OPP WHEN ADDING SMART AI
-
 %% MAIN SCRIPT
 
 clear
@@ -21,12 +17,6 @@ global total;
 global cards;
 global cardsLeft;
 cardsLeft = 52;
-
-[y,Fs] = audioread('calm-mind-chill-lofi-beat-background-music-259700.mp3');
-audioPlayer = audioplayer(y,Fs);
-audioPlayer.StopFcn = @(~,~) play(audioPlayer);
-play(audioPlayer);
-
 
 % set money and score to default values
 money = 100;
@@ -144,10 +134,11 @@ while loop
     elseif gamble == -2
         money = 100;
         score = [0,0,0];
+        deck = logical(true(13,4));
+        cardsLeft=52;
         loop = true;
     end
 
 end
-stop(audioPlayer);
 close
 clear

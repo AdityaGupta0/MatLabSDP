@@ -29,10 +29,9 @@ function gamble = gambleAmount(money,score)
     letMeOut=0;
 
 
-    message = "Fun Fact: " + funFact();
-    wrappedMessage = wrapText(message,38);
-    fact = text(25,935,wrappedMessage,FontSize=12);
-
+    message = funFact();
+    fact = text(25,900,message,FontSize=9);
+    
     % loop to check if gamble input is valid
     while ~valid
 

@@ -45,24 +45,24 @@ function [smartChoice] = dealChoice(gamble)
             hit = false;
         end
     
-       
-        if gamble > 0 && gamble < 10
-            smartChoice = randomDecision(50) && hit;            
-        elseif gamble >= 10 && gamble < 30
-            smartChoice = randomDecision(60) && hit;  
-        elseif gamble >= 30 && gamble < 80
-            smartChoice = randomDecision(70) && hit;
-        elseif gamble >= 80 && gamble < 150
-            smartChoice = randomDecision(80) && hit;
-        elseif gamble >= 150 && gamble < 250
-            smartChoice = randomDecision(90) && hit;
-        elseif gamble >= 250 && gamble < 400
-            smartChoice = randomDecision(100) && hit;
-        elseif gamble >= 400 && gamble < 500
-            smartChoice = randomDecision(100) && hit;
-        elseif gamble >= 500
-            smartChoice = randomDecision(100) && hit;
-        end
+        smartChoice = hit;
+        %if gamble > 0 && gamble < 10
+        %    smartChoice = randomDecision(50) && hit;            
+        %elseif gamble >= 10 && gamble < 30
+        %    smartChoice = randomDecision(60) && hit;  
+        %elseif gamble >= 30 && gamble < 80
+        %    smartChoice = randomDecision(70) && hit;
+        %elseif gamble >= 80 && gamble < 150
+        %    smartChoice = randomDecision(80) && hit;
+        %elseif gamble >= 150 && gamble < 250
+        %    smartChoice = randomDecision(90) && hit;
+        %elseif gamble >= 250 && gamble < 400
+        %    smartChoice = randomDecision(100) && hit;
+        %elseif gamble >= 400 && gamble < 500
+        %    smartChoice = randomDecision(100) && hit;
+        %elseif gamble >= 500
+        %    smartChoice = randomDecision(100) && hit;
+        %end
     else
         smartChoice = false;
     end    
