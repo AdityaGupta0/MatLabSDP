@@ -35,7 +35,7 @@ classdef interpreter < handle %class for running the program and executing the b
         function run(obj)
             displayMsg('running...')
             obj.autoGrader = evaluator(obj.level,obj.levelArray); %instantiates an evaluator object
-            obj.stackPointer = 2;
+            obj.stackPointer = 2; %offset by 2 because the first two lines are utility functions
             status = 0;
             obj.stopExecution = false;
             steps = -1; %offset by -1 because the blank space is counted as a line

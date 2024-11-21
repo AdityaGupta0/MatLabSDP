@@ -36,16 +36,16 @@ classdef arrayMaker %static class for generating arrays for the level screens an
             BGArray = arrayMaker.BGArray;
         end
         function BGArrayList = getBGArrayList() %returns the background array for each level
-            BGArrayList = repmat({arrayMaker.BGArray},1,12);
+            BGArrayList = repmat({arrayMaker.BGArray},1,13);
         end
         function editorWindowArrayList = getEditorWindowArrayList() %transparent except for the line numbers
-            editorWindowArrayList = repmat({arrayMaker.baseEditorArray},1,12);
+            editorWindowArrayList = repmat({arrayMaker.baseEditorArray},1,13);
         end
         function editorWindowArray = getEditorWindowArray()
             editorWindowArray = arrayMaker.baseEditorArray;
         end
         function linePointerArray = getLinePointerArray()
-            linePointerArray = ones(1,12);
+            linePointerArray = ones(1,13);
         end
         function array = getLevelScreenArray(level) %parametric random number generation 
             randArray = (zeros(15,11)+101);
@@ -114,6 +114,10 @@ classdef arrayMaker %static class for generating arrays for the level screens an
                     for i=3:8
                         randArray(i,2) = randi(5)+6;
                     end
+                case 13 %free play generates 7 random numbers
+                    for i=3:9
+                        randArray(i,2) = randi(50)+6;
+                    end
             end
             array = randArray;
         end
@@ -181,6 +185,9 @@ classdef arrayMaker %static class for generating arrays for the level screens an
                                 "need the ability to multiply numbers.";
                                 "For each two values in the inbox, multiply them together";
                                 "and outbox the result. Don't worry about negative numbers."};
+                case 13 %free play
+                    challenge = {"No Challenge here, just experiment and have fun!"; 
+                                "Tip: You can click on blocks to edit them.";};
             end
         end
         function name = getLevelName(level)
@@ -209,6 +216,9 @@ classdef arrayMaker %static class for generating arrays for the level screens an
                     title = 'The Final Countdown';
                 case 12
                     title = 'Multiplication Haven';
+                case 13
+                    title = 'Free Play!';
+                    level = 0;
             end
             name = sprintf('Level %d: %s',level,title);
         end

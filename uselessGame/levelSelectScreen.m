@@ -4,7 +4,7 @@ classdef levelSelectScreen < handle %class for the level select screen and the m
     end
     methods (Static)
         function obj = levelSelectScreen()
-            obj.levelSelectSceneArray = [1,94,95,1,82;           
+            obj.levelSelectSceneArray = [1,94,95,115,82;           
                                         1,96,97,98,1;
                                         1,99,105,106,1;
                                         1,107,108,109,1
@@ -14,14 +14,17 @@ classdef levelSelectScreen < handle %class for the level select screen and the m
         function levelSelectSceneArray = getLevelSelectSceneArray()
             levelSelectSceneArray = obj.levelSelectSceneArray;
         end
-        function int = getSelectedLevel(screen) %returns the level selected by the user
+        function int = getSelectedLevel(screen,soundEffectPlayer) %returns the level selected by the user
             level=0;
             while level==0
                 [r,c,b] = getMouseInput(screen);
+                play(soundEffectPlayer); %plays the sound effect
                 if b==1
                     switch r %i swear there was no cleaner way to do this im sorry
                         case 1
                             switch c
+                                case 4
+                                    level = 13; %free play
                                 case 5
                                     level = -1; %quit button
                             end
@@ -79,13 +82,13 @@ classdef levelSelectScreen < handle %class for the level select screen and the m
             facts(10) = "Computer scientists work on AI to make computers smarter";
             facts(11) = "Mechanical engineers use computer science for simulation";
             facts(12) = "Matlab is a programming lanugage used by all engineers";
-            facts(13) = "Computer scientists create applications for all devices";
-            facts(14) = "Computer scientists make operating systems for computers";
+            facts(13) = "Computer scientists create applications for all types of devices";
+            facts(14) = "Computer scientists make the operating systems that you use";
             facts(15) = "Computer scientists maintain and develop the internet";
-            facts(16) = "Computer scientists are creative problem solvers";
-            facts(17) = "Computer scientists use a lot of math for algorthims";
+            facts(16) = "Computer scientists need to be creative problem solvers";
+            facts(17) = "Computer scientists utilize math to optimize algorithms";
             facts(18) = "Computer scientists work on the cutting edge of technology";
-            facts(19) = "Software is everywhere, its even on the moon and mars";
+            facts(19) = "Software is everywhere, its even on the moon and mars (in rovers and probes)";
             facts(20) = "without computer engineers the modern world would not exist";
             fact = strcat("Fun Fact: ", facts(randi(length(facts)))); %returns random fact
             fprintf('%s\n',fact);
