@@ -174,8 +174,8 @@ else
     end
     
     drawScene(luigi,[l_deal;s],[skip;oppCards;youCards;score,message]);
-    
-    pause(.75);
+        
+    pause(1);
     
     drawScene(luigi,[l;s],[skip;oppCards;youCards;score,message]);
 end

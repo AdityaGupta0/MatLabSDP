@@ -22,10 +22,11 @@ global cards;
 global cardsLeft;
 cardsLeft = 52;
 
-[y,Fs] = audioread('calm-mind-chill-lofi-beat-background-music-259700.mp3');
+[y,Fs] = audioread('calm-mind-chill-lofi-beat-background-music-259700.mp3',);
 audioPlayer = audioplayer(y,Fs);
-audioPlayer.StopFcn = @(~,~) play(audioPlayer);
+t = timer('TimerFcn',@(~,~) play(audioPlayer), 112)
 play(audioPlayer);
+
 
 
 % set money and score to default values
