@@ -14,7 +14,11 @@ global cardsLeft;
 len = length(cards);
 
 % draw - 'draw' number of cards
-if(cardsLeft>=1)
+loop = true;
+while loop
+loop = false;
+
+if(cardsLeft - draw >= 0)
 for c = 1:draw
 
     % get random numbers 2-14 for value (ace is 14)
@@ -58,6 +62,10 @@ for c = 1:draw
     end
 
     cardsLeft = cardsLeft - 1;
+end
+else
+    deck = logical(true(13,4));
+    loop = true;
 end
 end
 
