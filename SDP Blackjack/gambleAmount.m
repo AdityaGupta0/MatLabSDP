@@ -31,7 +31,7 @@ function gamble = gambleAmount(money,score)
 
     message = "Fun Fact: " + funFact();
     wrappedMessage = wrapText(message,38);
-    fact = text(25,930,wrappedMessage,FontSize=12);
+    fact = text(25,935,wrappedMessage,FontSize=12);
 
     % loop to check if gamble input is valid
     while ~valid
