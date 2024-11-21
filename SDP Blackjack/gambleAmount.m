@@ -30,8 +30,8 @@ function gamble = gambleAmount(money,score)
 
 
     message = funFact();
-    fact = text(25,880,message,FontSize=9);
-
+    fact = text(25,900,message,FontSize=9);
+    
     % loop to check if gamble input is valid
     while ~valid
 
