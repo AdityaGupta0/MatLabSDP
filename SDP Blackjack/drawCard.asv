@@ -14,7 +14,7 @@ global cardsLeft;
 len = length(cards);
 
 % draw - 'draw' number of cards
-if(cardsLeft>=1)
+if(cardsLeft=>1)
 for c = 1:draw
 
     % get random numbers 2-14 for value (ace is 14)
@@ -59,7 +59,7 @@ for c = 1:draw
 
     cardsLeft = cardsLeft - 1;
 end
-end
+e
 
 clear c
 clear value

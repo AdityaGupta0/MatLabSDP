@@ -19,10 +19,15 @@ global deck;
 global numAces;
 global total;
 global cards;
+global cardsLeft;
+cardsLeft = 52;
 
 % set money and score to default values
 money = 100;
 score = [0,0,0];
+
+% deck is the overall deck of undrawn cards, preventing duplicates
+deck = logical(true(13,4));
 
 loop = true;
 while loop
@@ -31,8 +36,6 @@ while loop
     
     %clc
     
-    % deck is the overall deck of undrawn cards, preventing duplicates
-    deck = logical(true(13,4));
     % numAces is used to determine the value of aces for both player & opponent
     % when going over 21, setting it to 1 instead.
     numAces = [0,0];
