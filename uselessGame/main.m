@@ -1,5 +1,4 @@
 % This is the main file for the game. It will run the game and handle the logic of the game.
-clc
 clear
 screen = betterGameEngine('CompleteSpriteSheet.png',512,512,1); %creates the game window
 drawScene(screen, [100]); %draws start screen
