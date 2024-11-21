@@ -25,6 +25,11 @@ score = [0,0,0];
 % deck is the overall deck of undrawn cards, preventing duplicates
 deck = logical(true(13,4));
 
+[y,Fs] = audioread('luigi.mp3');
+audioPlayer = audioplayer(y,Fs);
+audioPlayer.StopFcn = @(~,~) play(audioPlayer);
+play(audioPlayer);
+
 loop = true;
 while loop
     
@@ -141,4 +146,5 @@ while loop
 
 end
 close
+stop(audioPlayer);
 clear
