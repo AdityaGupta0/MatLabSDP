@@ -1,29 +1,27 @@
 % This is the main file for the game. It will run the game and handle the logic of the game.
 clc
 clear
-screen = betterGameEngine('CompleteSpriteSheet.png',512,512,1);
-drawScene(screen, [100]);
-getMouseInput(screen);
+screen = betterGameEngine('CompleteSpriteSheet.png',512,512,1); %creates the game window
+drawScene(screen, [100]); %draws start screen
+getMouseInput(screen); %waits for user input to continue
 rungame = true;
-levelSelectScreen = levelSelectScreen();
-
-if exist('saveData.mat', 'file')
-    % Load saved data
+levelSelectScreen = levelSelectScreen(); %creates the level select screen object
+if exist('saveData.mat', 'file')     % Load saved data
     load('saveData.mat', 'editorWindowArrayList', 'BGArrayList', 'linePointerArray');
 else
-    % Initialize arrays if no save file
+    % Initialize arrays if no save file is found
     editorWindowArrayList = arrayMaker.getEditorWindowArrayList();
     BGArrayList = arrayMaker.getBGArrayList();
     linePointerArray = arrayMaker.getLinePointerArray();
 end
 
 [y,Fs] = audioread('Aditya Gupta SDP portfolio 3 MP3 compress.mp3'); %loads the music file
-musicPlayer = audioplayer(y,Fs); %creates an audio player object
+musicPlayer = audioplayer(y,Fs); %creates an audio player object for the music
 musicPlayer.StopFcn = @(~, ~) play(musicPlayer); %callback function that restarts music when it stops
 play(musicPlayer);
-% Load sound effect file for button clicks
-[se_y, se_Fs] = audioread('CustomClickSoundforSDP.wav');
-soundEffectPlayer = audioplayer(se_y, se_Fs);
+
+[se_y, se_Fs] = audioread('CustomClickSoundforSDP.wav'); %Load sound effect file for button clicks
+soundEffectPlayer = audioplayer(se_y, se_Fs); %creates an audio player object for the sound effect
 
 while rungame %main game loop
     clear levelScreen; %clears the level screen object to prevent memory leaks
@@ -49,7 +47,7 @@ while rungame %main game loop
         text(55,512*9.25,arrayMaker.getLevelChallenge(level),'VerticalAlignment','top','HorizontalAlignment','left','FontSize',10);
         text(512*4.5,50,arrayMaker.getLevelName(level),'VerticalAlignment','top','HorizontalAlignment','center','FontSize',12);  
         [r,c,b] = getMouseInput(screen); 
-        play(soundEffectPlayer); %plays the sound effect
+        play(soundEffectPlayer); %plays the sound effect when a button is clicked
         eventNum = getClickEvent(levelScreen,r,c,b);
         if eventNum == -1 %quit condition
             repeat = false;
