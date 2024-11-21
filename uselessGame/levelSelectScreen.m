@@ -14,10 +14,11 @@ classdef levelSelectScreen < handle %class for the level select screen and the m
         function levelSelectSceneArray = getLevelSelectSceneArray()
             levelSelectSceneArray = obj.levelSelectSceneArray;
         end
-        function int = getSelectedLevel(screen) %returns the level selected by the user
+        function int = getSelectedLevel(screen,soundEffectPlayer) %returns the level selected by the user
             level=0;
             while level==0
                 [r,c,b] = getMouseInput(screen);
+                play(soundEffectPlayer); %plays the sound effect
                 if b==1
                     switch r %i swear there was no cleaner way to do this im sorry
                         case 1
