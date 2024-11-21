@@ -1,46 +1,54 @@
 function [message] = funFact()
-    i = randi([1,20]);
-
+    i = randi([1,15]);
     switch i
         case 1
-            message = 'fact #1';
+            message = {'There is a unit of measurement called a ‘Henry’ (H)', ...
+                'named after Joseph Henry, which is the unit of electrical', ...
+                'inductance.'};
         case 2
-            message = 'fact #2';
+            message = {'Alternating Current is more efficient than Direct,', ...
+                'Current because of its usage of transformers to travel', ...
+                'over large distances with high voltage and low current.'};
         case 3
-            message = 'fact #3';
+            message = {'Using only NAND or NOR gates, you can recreate any', ...
+                'combination of basic logic gates.'};
         case 4
-            message = 'fact #4';            
+            message = {'Over 8,000 different coding languages exist, but', ...
+                'only about 50-100 are mainly used in the industry.'};            
         case 5
-            message = 'fact #5';
+            message = {'Around 60% of coders are under 35 years old.'};
         case 6
-            message = 'fact #6';
+            message = {'On average, software developers switch jobs every', ...
+                '2-3 years.'};
         case 7
-            message = 'fact #7';
+            message = {'83% of programmers work either fully remote or in', ...
+                'a hybrid environment.'};
         case 8
-            message = 'fact #8';
+            message = {'Nikola Tesla created his first AC induction motor', ...
+                'in the late 1800s.'};
         case 9
-            message = 'fact #9';
+            message = {'A modern phone contains on average 160 different', ...
+                'microchips, and a hybrid electric car can contain up to', ...
+                '3,500 microchips.'};
         case 10
-            message = 'fact #10';
+            message = {'AIs learn in a ‘trial and error’, going through', ...
+                'thousands of different iterations with small adjustments.'};
         case 11
-            message = 'fact #11';
+            message = {'Engineering can be as simple as a lever and a ' ...
+                'pulley.'};
         case 12
-            message = 'fact #12';
+            message = {'All disciplines of engineering use some combination', ...
+                'of physics and math and follow the design process.'};
         case 13
-            message = 'fact #13';
+            message = {'In the early days of Computer Science, it', ...
+                'originated under the college of sciences, hence its name.'};
         case 14
-            message = 'fact #14';
+            message = {'Ohm’s law states that Voltage is equal to the', ...
+                'product of current and resistance.'};
         case 15
-            message = 'fact #15';
-        case 16
-            message = 'fact #16';
-        case 17
-            message = 'fact #17';
-        case 18
-            message = 'fact #18';
-        case 19
-            message = 'fact #19';
-        case 20
-            message = 'fact #20';
+            message = {'In a series circuit, the current is equal between', ...
+                'each object with resistance in the circuit, while in a ', ...
+                'parallel circuit, the voltage is equal between each object', ...
+                ' with resistance.'};
     end
 end
