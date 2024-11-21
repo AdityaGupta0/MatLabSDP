@@ -9,13 +9,13 @@ function [smartChoice] = dealChoice(gamble)
     hit = false;
     smartChoice = false;
     distanceFrom21 = 21-total(2);
-    if distanceFrom21 > 10 && total(1) > total(2)
+    if distanceFrom21 > 10 && total(1) > total(2) && gamble >= 100
         smartChoice = true;
     elseif total(1) > total(2)     
         %for i = 1 : deck
         %[r,c] = size(deck);
         for i = 1 : 4
-            for j = 1 : distanceFrom21
+            for j = 1 : distanceFrom21 - 1
                 if deck(j,i)
                     goodCards = goodCards + 1;
                 end
@@ -44,25 +44,25 @@ function [smartChoice] = dealChoice(gamble)
     
        
         if gamble > 0 && gamble < 100
-            smartChoice = randomDecision(100) && hit;            
+            smartChoice = randomDecision(10) && hit;            
         elseif gamble >= 100 && gamble < 300
-            smartChoice = randomDecision(100) && hit;  
+            smartChoice = randomDecision(25) && hit;  
         elseif gamble >= 300 && gamble < 800
-            smartChoice = randomDecision(100) && hit;
+            smartChoice = randomDecision(40) && hit;
         elseif gamble >= 800 && gamble < 2000
-            smartChoice = randomDecision(100) && hit;
+            smartChoice = randomDecision(50) && hit;
         elseif gamble >= 2000 && gamble < 5000
-            smartChoice = randomDecision(100) && hit;
+            smartChoice = randomDecision(65) && hit;
         elseif gamble >= 5000 && gamble < 10000
             smartChoice = randomDecision(80) && hit;
         elseif gamble >= 10000 && gamble < 30000
-            smartChoice = randomDecision(90) && hit;
+            smartChoice = randomDecision(95) && hit;
         elseif gamble >= 30000
             smartChoice = randomDecision(100) && hit;
         end
     else
         smartChoice = false;
-    end
+    end    
 end
 
     %{
