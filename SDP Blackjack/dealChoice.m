@@ -14,8 +14,11 @@ function [smartChoice] = dealChoice(gamble)
     elseif total(1) > total(2)     
         %for i = 1 : deck
         %[r,c] = size(deck);
+        if distanceFrom21 > 10
+            distanceFrom21 = distanceFrom21 - 10;
+        end
         for i = 1 : 4
-            for j = 1 : distanceFrom21 - 1
+            for j = 1 : distanceFrom21-1
                 if deck(j,i)
                     goodCards = goodCards + 1;
                 end
