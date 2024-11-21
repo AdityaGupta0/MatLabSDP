@@ -6,24 +6,15 @@ function [smartChoice] = dealChoice(gamble)
     goodCards = 0;    
     hit = false;
     smartChoice = false;
-<<<<<<< Updated upstream
-    for i = 1 : deck
-=======
     [r,c] = size(deck);
     for i = 1 : c
         for j = 1 : distanceFrom21
-            goodCards = goodCards + 1;
-        end
-    end
-
-    %{
->>>>>>> Stashed changes
+            
     for i = 1 : deck.numel()
         if deck[] <= distanceFrom21
             goodCards = goodCards + 1;
         end
-    end  
-    %}
+    end   
 
     probability = goodCards / deck.numel() * 100;
 
